@@ -17,7 +17,7 @@ class _StartUpScreenState extends State<StartUpScreen> {
   @override
   void initState() {
     super.initState();
-    // context.read<StartupBloc>().add(const StartupEvent.started());
+    context.read<StartupBloc>().add(const StartupEvent.started());
   }
 
   @override

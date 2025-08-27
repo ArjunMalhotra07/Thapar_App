@@ -8,7 +8,7 @@ class StartupLocal implements StartupProvider {
   Future<Credential> fetchCredentials() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    return const Credential(jwt: 'dummy_jwt', refreshToken: 'dummy_refresh_token');
+    return const Credential(jwt: '', refreshToken: 'dummy_refresh_token');
   }
 
   @override
