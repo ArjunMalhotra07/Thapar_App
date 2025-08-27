@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: AppFonts.gilroy,
                           fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
@@ -58,8 +58,8 @@ class HomeScreen extends StatelessWidget {
                         },
                         icon: Image.asset(
                           AppIcons.search,
-                          width: 24,
-                          height: 24,
+                          width: 40,
+                          height: 40,
                         ),
                       ),
                       IconButton(
@@ -68,8 +68,8 @@ class HomeScreen extends StatelessWidget {
                         },
                         icon: Image.asset(
                           AppIcons.logout,
-                          width: 24,
-                          height: 24,
+                          width: 40,
+                          height: 40,
                         ),
                       ),
                     ],
@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: AppFonts.gilroy,
                   fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -109,7 +109,7 @@ class HomeScreen extends StatelessWidget {
                       return FeatureCard(
                         iconPath: AppIcons.locateUs,
                         title: 'Locate Us',
-                        subtitle: 'Explore every corner of your campus.',
+                        subtitle: 'Explore every corner\n   of your campus.',
                         backgroundColor: const Color(0xFFFE655C),
                         onTap: () {
                           // TODO: Navigate to Locate Us screen
@@ -129,7 +129,8 @@ class HomeScreen extends StatelessWidget {
                       return FeatureCard(
                         iconPath: AppIcons.lostandfound,
                         title: 'Lost & Found',
-                        subtitle: 'Helping you reconnect with lost things.',
+                        subtitle:
+                            'Helping you reconnect\n    with lost things.',
                         backgroundColor: const Color(0xFFFFBE34),
                         onTap: () {
                           // TODO: Navigate to Lost & Found screen
@@ -161,7 +162,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: AppFonts.gilroy,
                   fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -185,7 +186,7 @@ class HomeScreen extends StatelessWidget {
                       return FeatureCard(
                         iconPath: AppIcons.medishare,
                         title: 'MediShare',
-                        subtitle: 'A helping hand for your health.',
+                        subtitle: 'A helping hand \n  for your health.',
                         backgroundColor: const Color(0xFF56C167),
                         onTap: () {
                           // TODO: Navigate to MediShare screen (coming soon)
@@ -195,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                       return FeatureCard(
                         iconPath: AppIcons.venue,
                         title: 'Venue Booking',
-                        subtitle: 'Set time and secure your spot.',
+                        subtitle: '  Set time and\nsecure your spot.',
                         backgroundColor: const Color(0xFF737373),
                         onTap: () {
                           // TODO: Navigate to Venue Booking screen (coming soon)

@@ -27,28 +27,22 @@ class FeatureCard extends StatelessWidget {
           color: backgroundColor,
           borderRadius: BorderRadius.circular(20),
         ),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Icon
-            Container(
+            SizedBox(
               width: 50,
               height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(15),
-              ),
               child: Image.asset(
                 iconPath,
                 color: Colors.white,
                 fit: BoxFit.contain,
               ),
             ),
-
             const SizedBox(height: 16),
-
             // Title
             Text(
               title,
@@ -61,7 +55,6 @@ class FeatureCard extends StatelessWidget {
             ),
 
             const SizedBox(height: 4),
-
             // Subtitle
             Text(
               subtitle,
