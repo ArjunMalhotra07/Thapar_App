@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:thaparapp/presentation/constants/app_images.dart';
 import 'package:thaparapp/presentation/widgets/common/bottom_sheets/get_started_bottom_sheet.dart';
-import 'package:thaparapp/presentation/constants/constants.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -43,32 +42,24 @@ class OnboardingScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // LOC8 TIET Text
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'LOC8\n',
-                                style: TextStyle(
-                                  fontSize: 64,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.white,
-                                  height: 0.9,
-                                  letterSpacing: 2.0,
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AppImages.heading,
+                                  width: 280,
+                                  height: 160,
+                                  fit: BoxFit.contain,
                                 ),
-                              ),
-                              TextSpan(
-                                text: 'TIET',
-                                style: TextStyle(
-                                  fontSize: 64,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.white,
-                                  height: 0.9,
-                                  letterSpacing: 2.0,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],

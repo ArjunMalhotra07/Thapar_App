@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
-import 'package:thaparapp/presentation/constants/constants.dart';
+import 'package:thaparapp/presentation/constants/app_images.dart';
 
 class GetStartedBottomSheet extends StatelessWidget {
   const GetStartedBottomSheet({super.key});
@@ -115,17 +114,17 @@ class GetStartedBottomSheet extends StatelessWidget {
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(35),
                       ),
                       elevation: 2,
                     ),
-                    child:  Text(
+                    child: Text(
                       "Let's Get Started",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.5,
-                        fontFamily: AppFonts.gilroy
+                        fontFamily: AppFonts.gilroy,
                       ),
                     ),
                   ),
