@@ -54,8 +54,8 @@ class OnboardingScreen extends StatelessWidget {
                               children: [
                                 Image.asset(
                                   AppImages.heading,
-                                  width: 280,
-                                  height: 160,
+                                  width: 360,
+                                  height: 240,
                                   fit: BoxFit.contain,
                                 ),
                               ],

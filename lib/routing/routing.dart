@@ -17,7 +17,7 @@ class Routing {
 
   static final GoRouter router = GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: AppRoute.startUp,
+    initialLocation: AppRoute.onboarding,
     debugLogDiagnostics: true,
     errorBuilder: (context, state) {
       return Scaffold(body: Center(child: Text('Error: ${state.error}')));

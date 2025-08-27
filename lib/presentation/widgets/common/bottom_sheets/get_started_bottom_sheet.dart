@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_images.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 
 class GetStartedBottomSheet extends StatelessWidget {
   const GetStartedBottomSheet({super.key});
@@ -20,22 +22,13 @@ class GetStartedBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Small icon above the sheet
-          Transform.translate(
-            offset: const Offset(0, -50),
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: const BoxDecoration(
-                color: Color(0xFF640100),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
+          Align(
+            alignment: Alignment.topLeft, // 👈 moves to the left
+            child: Transform.translate(
+              offset: const Offset(0, -60), // still shifts up
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  AppImages.logo2,
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                ),
+                padding: const EdgeInsets.only(left: 20),
+                child: Image.asset(AppImages.logo2, fit: BoxFit.contain),
               ),
             ),
           ),
@@ -107,7 +100,7 @@ class GetStartedBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Implement navigation
+                      GoRouter.of(context).push(AppRoute.login);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF640100),

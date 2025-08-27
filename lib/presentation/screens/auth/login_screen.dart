@@ -33,8 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
         title: contentType == ContentType.success
             ? 'Success!'
             : contentType == ContentType.warning
-                ? 'Warning!'
-                : 'Error!',
+            ? 'Warning!'
+            : 'Error!',
         message: message,
         contentType: contentType,
       ),
@@ -53,7 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (userIdController.text.trim().length < 12) {
-      showCustomSnackbar('User ID must be at least 12 characters long', ContentType.warning);
+      showCustomSnackbar(
+        'User ID must be at least 12 characters long',
+        ContentType.warning,
+      );
       return;
     }
 
@@ -65,7 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Validate Terms acceptance
     if (!isTermsAccepted) {
-      showCustomSnackbar('Please accept the terms of use to continue', ContentType.warning);
+      showCustomSnackbar(
+        'Please accept the terms of use to continue',
+        ContentType.warning,
+      );
       return;
     }
 
@@ -116,27 +122,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Small ti logo
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF640100),
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Image.asset(
-                              AppImages.logo2,
-                              color: Colors.white,
-                              fit: BoxFit.contain,
-                            ),
+                        //! Small ti logo
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Image.asset(
+                            AppImages.logo2,
+                            fit: BoxFit.contain,
                           ),
                         ),
-
                         const SizedBox(height: 20),
-
-                        // LOC8 TIET heading image
+                        //! LOC8 TIET heading image
                         Image.asset(
                           AppImages.heading,
                           width: 280,
@@ -146,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         const SizedBox(height: 16),
 
-                        // Subtitle
+                        //! Subtitle
                         Text(
                           'Login to Your Smart Campus Experience',
                           style: TextStyle(
@@ -198,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             'Use the User ID and Password provided by the Admin to access your campus.',
                             style: TextStyle(
-                              fontFamily:  AppFonts.gilroy,
+                              fontFamily: AppFonts.gilroy,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: Colors.grey[600],
@@ -212,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             'USER ID',
                             style: TextStyle(
-                              fontFamily:  AppFonts.gilroy,
+                              fontFamily: AppFonts.gilroy,
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
                               color: Colors.black,
@@ -224,14 +219,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: userIdController,
                             keyboardType: TextInputType.phone,
                             style: TextStyle(
-                              fontFamily:  AppFonts.gilroy,
+                              fontFamily: AppFonts.gilroy,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: InputDecoration(
                               hintText: 'XXXX-XXXXX-XXXX',
                               hintStyle: TextStyle(
-                                fontFamily:  AppFonts.gilroy,
+                                fontFamily: AppFonts.gilroy,
                                 fontSize: 17,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey[400],
@@ -272,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             'PASSWORD',
                             style: TextStyle(
-                              fontFamily:  AppFonts.gilroy,
+                              fontFamily: AppFonts.gilroy,
                               fontSize: 17,
                               fontWeight: FontWeight.w700,
                               color: Colors.black,
@@ -284,14 +279,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: passwordController,
                             obscureText: !isPasswordVisible,
                             style: TextStyle(
-                              fontFamily:  AppFonts.gilroy,
+                              fontFamily: AppFonts.gilroy,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: InputDecoration(
                               hintText: '••••••••',
                               hintStyle: TextStyle(
-                                fontFamily:  AppFonts.gilroy,
+                                fontFamily: AppFonts.gilroy,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey[400],
@@ -367,7 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Text(
                                       'I agree with ',
                                       style: TextStyle(
-                                        fontFamily:  AppFonts.gilroy,
+                                        fontFamily: AppFonts.gilroy,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
@@ -378,7 +373,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: Text(
                                         'terms of use',
                                         style: TextStyle(
-                                          fontFamily:  AppFonts.gilroy,
+                                          fontFamily: AppFonts.gilroy,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
@@ -403,7 +398,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF640100),
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 18),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 18,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35),
                                 ),
@@ -412,7 +409,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text(
                                 'Log In',
                                 style: TextStyle(
-                                  fontFamily:  AppFonts.gilroy,
+                                  fontFamily: AppFonts.gilroy,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 0.5,
