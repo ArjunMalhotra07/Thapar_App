@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
-import 'package:thaparapp/presentation/screens/pages/splash.dart';
-import 'package:thaparapp/utils/constants/routes.dart';
+import 'package:thaparapp/presentation/screens/splash/splash.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 // ...existing imports...
 
 class StartUpScreen extends StatefulWidget {

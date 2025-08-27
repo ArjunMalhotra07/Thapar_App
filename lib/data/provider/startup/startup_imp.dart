@@ -5,8 +5,8 @@ import 'package:thaparapp/data/model/api_models/verifytoken/verifytoken.dart';
 import 'package:thaparapp/data/model/cred/credential.dart';
 import 'package:thaparapp/data/provider/startup/startup_abs.dart';
 import 'package:thaparapp/network/base_api_service.dart';
-import 'package:thaparapp/utils/constants/constants.dart';
-import 'package:thaparapp/utils/constants/urls.dart';
+import 'package:thaparapp/presentation/constants/constants.dart';
+import 'package:thaparapp/presentation/constants/urls.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StartupImp implements StartupProvider {

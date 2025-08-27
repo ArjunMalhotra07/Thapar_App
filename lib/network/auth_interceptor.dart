@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:thaparapp/data/model/api_models/authresponse/auth_response.dart';
 import 'package:thaparapp/data/model/cred/credential.dart';
 import 'package:thaparapp/data/repo/startup_repo.dart';
-import 'package:thaparapp/utils/constants/urls.dart';
+import 'package:thaparapp/presentation/constants/urls.dart';
 import 'package:thaparapp/utils/navigation_service.dart';
 
 class AuthInterceptor extends Interceptor {

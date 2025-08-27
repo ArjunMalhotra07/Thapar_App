@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:thaparapp/utils/constants/constants.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+import 'package:flutter/material.dart';
+import 'package:thaparapp/presentation/widgets/common/bottom_sheets/get_started_bottom_sheet.dart';
+import 'package:thaparapp/presentation/constants/constants.dart';
+
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,8 @@ class SplashScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Bottom Sheet
+                GetStartedBottomSheet(),
               ],
             ),
           ),

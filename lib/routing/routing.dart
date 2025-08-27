@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
 import 'package:thaparapp/injector.dart';
-import 'package:thaparapp/presentation/screens/pages/home.dart';
-import 'package:thaparapp/presentation/screens/pages/login_screen.dart';
-import 'package:thaparapp/presentation/screens/pages/splash.dart';
-import 'package:thaparapp/presentation/screens/pages/start_up.dart';
-import 'package:thaparapp/utils/constants/routes.dart';
+import 'package:thaparapp/presentation/screens/home/home.dart';
+import 'package:thaparapp/presentation/screens/auth/login_screen.dart';
+import 'package:thaparapp/presentation/screens/splash/splash.dart';
+import 'package:thaparapp/presentation/screens/splash/start_up.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 
 class Routing {
   const Routing._();

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:thaparapp/utils/constants/app_fonts.dart';
-import 'package:thaparapp/utils/constants/constants.dart';
+import 'package:thaparapp/presentation/constants/app_fonts.dart';
+import 'package:thaparapp/presentation/constants/constants.dart';
 
 class GetStartedBottomSheet extends StatelessWidget {
   const GetStartedBottomSheet({super.key});

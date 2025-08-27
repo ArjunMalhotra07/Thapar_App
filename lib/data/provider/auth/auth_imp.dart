@@ -1,7 +1,7 @@
 import 'package:thaparapp/data/provider/auth/auth_abs.dart';
 import 'package:thaparapp/data/model/api_models/authresponse/auth_response.dart';
 import 'package:thaparapp/network/base_api_service.dart';
-import 'package:thaparapp/utils/constants/urls.dart';
+import 'package:thaparapp/presentation/constants/urls.dart';
 
 class AuthImp implements AuthProvider {
   BaseApiService apiService;

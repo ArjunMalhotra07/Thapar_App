@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
-import 'package:thaparapp/utils/constants/routes.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
