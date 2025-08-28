@@ -7,14 +7,25 @@ class StartupLocal implements StartupProvider {
   @override
   Future<Credential> fetchCredentials() async {
     await Future.delayed(const Duration(seconds: 3));
-
-    return const Credential(jwt: '', refreshToken: 'dummy_refresh_token');
+    Credential newlyOnboarded = const Credential(jwt: null, refreshToken: null);
+    Credential validUser = const Credential(
+      jwt: 'dummy_jwt',
+      refreshToken: 'dummy_refresh_token',
+    );
+    return newlyOnboarded;
   }
 
   @override
-  Future<VerifyTokenResponse> checkValidity({required String bearerToken}) async {
+  Future<VerifyTokenResponse> checkValidity({
+    required String bearerToken,
+  }) async {
     await Future.delayed(const Duration(milliseconds: 300));
-    return VerifyTokenResponse(message: "valid", valid: true, userId: "agf", expiresIn: 1000);
+    return VerifyTokenResponse(
+      message: "valid",
+      valid: false,
+      userId: "agf",
+      expiresIn: 1000,
+    );
   }
 
   @override
@@ -23,7 +34,20 @@ class StartupLocal implements StartupProvider {
   }
 
   @override
-  Future<AuthResponse> refreshAccessToken({required String refreshToken}) {
-    throw UnimplementedError();
+  Future<AuthResponse> refreshAccessToken({
+    required String refreshToken,
+  }) async {
+    bool shouldThrowError = true;
+    if (shouldThrowError) {
+      throw UnimplementedError();
+    }
+    await Future.delayed(const Duration(milliseconds: 100));
+    AuthResponse res = AuthResponse(
+      message: "succes",
+      jwt: "dummy_jwt",
+      refreshToken: "dummy_refreshToken",
+      data: "data",
+    );
+    return res;
   }
 }

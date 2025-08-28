@@ -5,8 +5,8 @@ part 'credential.g.dart';
 @freezed
 abstract class Credential with _$Credential {
   const factory Credential({
-    required String jwt,
-    required String refreshToken,
+    required String? jwt,
+    required String? refreshToken,
   }) = _Credential;
 
   factory Credential.fromJson(Map<String, dynamic> json) =>

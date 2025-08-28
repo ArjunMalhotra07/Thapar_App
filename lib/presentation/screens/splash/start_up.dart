@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
+import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
 import 'package:thaparapp/presentation/screens/splash/splash.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
 // ...existing imports...
@@ -37,7 +38,7 @@ class _StartUpScreenState extends State<StartUpScreen> {
               GoRouter.of(context).go(AppRoute.login);
             },
             freshUser: (value) {
-              GoRouter.of(context).go(AppRoute.login);
+              GoRouter.of(context).go(AppRoute.onboarding);
             },
             loggedOutUser: (value) {
               GoRouter.of(context).go(AppRoute.login);
@@ -48,10 +49,7 @@ class _StartUpScreenState extends State<StartUpScreen> {
           );
         },
         builder: (context, state) {
-          return state.maybeMap(
-            initial: (_) => const SplashScreen(),
-            orElse: () => const SplashScreen(),
-          );
+          return state.maybeMap(orElse: () => const SplashScreen());
         },
       ),
     );

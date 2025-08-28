@@ -21,8 +21,8 @@ Credential _$CredentialFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Credential {
-  String get jwt => throw _privateConstructorUsedError;
-  String get refreshToken => throw _privateConstructorUsedError;
+  String? get jwt => throw _privateConstructorUsedError;
+  String? get refreshToken => throw _privateConstructorUsedError;
 
   /// Serializes this Credential to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $CredentialCopyWith<$Res> {
     $Res Function(Credential) then,
   ) = _$CredentialCopyWithImpl<$Res, Credential>;
   @useResult
-  $Res call({String jwt, String refreshToken});
+  $Res call({String? jwt, String? refreshToken});
 }
 
 /// @nodoc
@@ -58,17 +58,17 @@ class _$CredentialCopyWithImpl<$Res, $Val extends Credential>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? jwt = null, Object? refreshToken = null}) {
+  $Res call({Object? jwt = freezed, Object? refreshToken = freezed}) {
     return _then(
       _value.copyWith(
-            jwt: null == jwt
+            jwt: freezed == jwt
                 ? _value.jwt
                 : jwt // ignore: cast_nullable_to_non_nullable
-                      as String,
-            refreshToken: null == refreshToken
+                      as String?,
+            refreshToken: freezed == refreshToken
                 ? _value.refreshToken
                 : refreshToken // ignore: cast_nullable_to_non_nullable
-                      as String,
+                      as String?,
           )
           as $Val,
     );
@@ -84,7 +84,7 @@ abstract class _$$CredentialImplCopyWith<$Res>
   ) = __$$CredentialImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String jwt, String refreshToken});
+  $Res call({String? jwt, String? refreshToken});
 }
 
 /// @nodoc
@@ -100,17 +100,17 @@ class __$$CredentialImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? jwt = null, Object? refreshToken = null}) {
+  $Res call({Object? jwt = freezed, Object? refreshToken = freezed}) {
     return _then(
       _$CredentialImpl(
-        jwt: null == jwt
+        jwt: freezed == jwt
             ? _value.jwt
             : jwt // ignore: cast_nullable_to_non_nullable
-                  as String,
-        refreshToken: null == refreshToken
+                  as String?,
+        refreshToken: freezed == refreshToken
             ? _value.refreshToken
             : refreshToken // ignore: cast_nullable_to_non_nullable
-                  as String,
+                  as String?,
       ),
     );
   }
@@ -125,9 +125,9 @@ class _$CredentialImpl implements _Credential {
       _$$CredentialImplFromJson(json);
 
   @override
-  final String jwt;
+  final String? jwt;
   @override
-  final String refreshToken;
+  final String? refreshToken;
 
   @override
   String toString() {
@@ -164,17 +164,17 @@ class _$CredentialImpl implements _Credential {
 
 abstract class _Credential implements Credential {
   const factory _Credential({
-    required final String jwt,
-    required final String refreshToken,
+    required final String? jwt,
+    required final String? refreshToken,
   }) = _$CredentialImpl;
 
   factory _Credential.fromJson(Map<String, dynamic> json) =
       _$CredentialImpl.fromJson;
 
   @override
-  String get jwt;
+  String? get jwt;
   @override
-  String get refreshToken;
+  String? get refreshToken;
 
   /// Create a copy of Credential
   /// with the given fields replaced by the non-null parameter values.

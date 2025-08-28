@@ -10,7 +10,7 @@ class AuthInterceptor extends Interceptor {
   final StartupRepo startupRepo;
   final Logger logger = Logger();
   final Dio dio;
-  
+
   AuthInterceptor({required this.startupRepo, required this.dio});
 
   @override
@@ -18,20 +18,20 @@ class AuthInterceptor extends Interceptor {
     // Check if error is 401 Unauthorized
     if (err.response?.statusCode == 401) {
       logger.w('401 Unauthorized - Attempting token refresh');
-      
+
       try {
         // Get stored credentials
         final cred = await startupRepo.fetchCredentials();
-        
-        if (cred.refreshToken.isEmpty) {
+
+        if (cred.refreshToken != null && cred.refreshToken!.isEmpty) {
           logger.e('No refresh token available, redirecting to login');
           NavigationService.navigateToLogin();
           return handler.next(err);
         }
 
         // Attempt to refresh the token
-        final refreshResponse = await _refreshToken(cred.refreshToken);
-        
+        final refreshResponse = await _refreshToken(cred.refreshToken ?? "");
+
         if (refreshResponse != null) {
           // Store new tokens
           await startupRepo.storeCredentials(
@@ -40,13 +40,14 @@ class AuthInterceptor extends Interceptor {
               refreshToken: refreshResponse.refreshToken!,
             ),
           );
-          
+
           // Retry the original request with new token
           final originalRequest = err.requestOptions;
-          originalRequest.headers['Authorization'] = 'Bearer ${refreshResponse.jwt}';
-          
+          originalRequest.headers['Authorization'] =
+              'Bearer ${refreshResponse.jwt}';
+
           logger.i('Token refreshed successfully, retrying request');
-          
+
           final response = await dio.fetch(originalRequest);
           return handler.resolve(response);
         } else {
@@ -79,7 +80,7 @@ class AuthInterceptor extends Interceptor {
           extra: {'skipAuthInterceptor': true},
         ),
       );
-      
+
       return AuthResponse.fromJson(response.data);
     } catch (e) {
       logger.e('Refresh token request failed: $e');

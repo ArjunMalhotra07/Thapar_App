@@ -20,7 +20,7 @@ class StartupImp implements StartupProvider {
     final prefs = await SharedPreferences.getInstance();
     final String? creds = prefs.getString(AppConstants.credentials);
     if (creds == null) {
-      return const Credential(jwt: '', refreshToken: '');
+      return const Credential(jwt: null, refreshToken: null);
     }
     try {
       final Map<String, dynamic> credentialsJson = jsonDecode(creds);

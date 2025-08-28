@@ -20,16 +20,18 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
   }
 
   void _onStarted(event, emit) async {
-    emit(const StartupState.processing());
     try {
       cred = await startupRepo.fetchCredentials();
-      if (cred.jwt.isNotEmpty) {
+      if (cred.jwt != null && cred.jwt!.isNotEmpty) {
+        emit(const StartupState.processing());
         add(
           StartupEvent.checkJwtValidity(
             jwt: cred.jwt,
             refreshToken: cred.refreshToken,
           ),
         );
+      } else if (cred.jwt != null && cred.jwt!.isEmpty) {
+        emit(StartupState.loggedOutUser(msg: ''));
       } else {
         emit(StartupState.freshUser());
       }
@@ -44,7 +46,7 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
       VerifyTokenResponse res = await startupRepo.checkValidity(
         bearerToken: event.jwt ?? "",
       );
-      if (res.expiresIn! < 300) {
+      if (res.expiresIn! < 300 || res.valid == false) {
         // Token expires in less than 5 minutes, refresh it
         add(StartupEvent.refreshToken(refreshToken: event.refreshToken));
         return; // Don't emit validUser yet, wait for refresh
@@ -77,7 +79,7 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
         ),
       );
     } catch (e) {
-      emit(StartupState.freshUser());
+      emit(StartupState.loggedOutUser(msg: ''));
     }
     return null;
   }

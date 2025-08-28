@@ -8,8 +8,8 @@ part of 'credential.dart';
 
 _$CredentialImpl _$$CredentialImplFromJson(Map<String, dynamic> json) =>
     _$CredentialImpl(
-      jwt: json['jwt'] as String,
-      refreshToken: json['refreshToken'] as String,
+      jwt: json['jwt'] as String?,
+      refreshToken: json['refreshToken'] as String?,
     );
 
 Map<String, dynamic> _$$CredentialImplToJson(_$CredentialImpl instance) =>

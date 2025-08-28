@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
 import 'package:thaparapp/data/provider/auth/auth_imp.dart';
+import 'package:thaparapp/data/provider/auth/auth_local.dart';
 import 'package:thaparapp/data/provider/startup/startup_imp.dart';
 import 'package:thaparapp/data/provider/startup/startup_local.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
@@ -16,7 +17,7 @@ void init() {
     () => NetworkApiService(),
     instanceName: 'base',
   );
-  // Register StartupRepo with the base service
+  //! StartupRepo
   locator.registerLazySingleton<StartupRepo>(
     () => StartupRepo(
       // startupProvider: StartupImp(
@@ -29,15 +30,16 @@ void init() {
   locator.registerLazySingleton<BaseApiService>(
     () => NetworkApiService(startupRepo: locator<StartupRepo>()),
   );
-  // Register StartupBloc with its dependencies
+  //! StartupBloc 
   locator.registerLazySingleton<StartupBloc>(
     () => StartupBloc(startupRepo: locator<StartupRepo>()),
   );
-  // Register AuthBloc with its dependencies
+  //! AuthBloc
   locator.registerLazySingleton<AuthBloc>(
     () => AuthBloc(
       authRepo: AuthRepo(
-        authProvider: AuthImp(apiService: locator<BaseApiService>()),
+        // authProvider: AuthImp(apiService: locator<BaseApiService>()),
+        authProvider: AuthLocal(),
       ),
       initBloc: locator<StartupBloc>(),
     ),
