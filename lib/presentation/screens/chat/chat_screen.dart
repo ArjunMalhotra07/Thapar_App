@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:thaparapp/data/model/chat/chat_message.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
-import 'package:thaparapp/presentation/constants/app_icons.dart';
+import 'package:thaparapp/presentation/widgets/screen_specific/chat/message_bubble.dart';
+import 'package:thaparapp/presentation/widgets/screen_specific/chat/message_keyboard.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -103,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
+          0.0,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
@@ -172,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          // Chat messages list
+          //! Chat messages list
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -182,174 +183,14 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (context, index) {
                 // Reverse the index to show latest messages at bottom
                 final message = _messages[_messages.length - 1 - index];
-                return _buildMessageBubble(message);
+                return MessageBubble(message: message);
               },
             ),
           ),
-
-          // Message input area
-          _buildMessageInput(),
+          //! Message input area
+          MessageKeyboard(onSend: _sendMessage, controller: _messageController),
         ],
       ),
     );
-  }
-
-  Widget _buildMessageBubble(ChatMessage message) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: message.isUser
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          if (!message.isUser) ...[
-            CircleAvatar(
-              radius: 16,
-              backgroundColor: AppColor.aiChatBotTheme,
-              child: Icon(Icons.smart_toy, color: Colors.white, size: 16),
-            ),
-            SizedBox(width: 8),
-          ],
-
-          Flexible(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75,
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: message.isUser
-                    ? AppColor.aiChatBotTheme
-                    : AppColor.aiChatMessageBubbleTheme,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: message.isUser
-                      ? Radius.circular(20)
-                      : Radius.circular(4),
-                  bottomRight: message.isUser
-                      ? Radius.circular(4)
-                      : Radius.circular(20),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: message.isUser
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    message.message.toString(),
-                    style: TextStyle(
-                      fontFamily: AppFonts.gilroy,
-                      color: message.isUser ? Colors.white : Colors.black87,
-                      fontSize: 14,
-                      height: 1.4,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    _formatTime(message.timeStamp),
-                    style: TextStyle(
-                      fontFamily: AppFonts.gilroy,
-                      color: message.isUser ? Colors.white70 : Colors.grey[500],
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          if (message.isUser) ...[
-            SizedBox(width: 8),
-            CircleAvatar(
-              radius: 16,
-              backgroundColor: Colors.grey[300],
-              child: Icon(Icons.person, color: Colors.grey[600], size: 16),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMessageInput() {
-    return Container(
-      margin: EdgeInsets.all(16), // Add margin to make it float
-      child: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(
-              28,
-            ), // More rounded for floating effect
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8,
-                offset: Offset(0, 2),
-                spreadRadius: 2,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Type a message...',
-                      hintStyle: TextStyle(
-                        fontFamily: AppFonts.gilroy,
-                        color: Colors.grey[500],
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    maxLines: null,
-                    textCapitalization: TextCapitalization.sentences,
-                    onSubmitted: (_) => _sendMessage(),
-                  ),
-                ),
-              ),
-              SizedBox(width: 8),
-              GestureDetector(
-                onTap: _sendMessage,
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  margin: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: AppColor.aiChatBotTheme,
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ), // Rounded edges, not circular
-                  ),
-                  child: Icon(Icons.send, color: Colors.white, size: 20),
-                  // Replace with: Image.asset('assets/images/send_button.png')
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  String _formatTime(DateTime dateTime) {
-    final hour = dateTime.hour.toString().padLeft(2, '0');
-    final minute = dateTime.minute.toString().padLeft(2, '0');
-    return '$hour:$minute';
   }
 }
