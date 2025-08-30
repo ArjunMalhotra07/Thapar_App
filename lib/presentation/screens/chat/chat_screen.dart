@@ -1,23 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:thaparapp/data/model/chat/chat_message.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_icons.dart';
-import 'package:thaparapp/presentation/constants/app_images.dart';
-
-// Chat Message Model
-class ChatMessage {
-  final String id;
-  final String message;
-  final bool isUser;
-  final DateTime timestamp;
-
-  ChatMessage({
-    required this.id,
-    required this.message,
-    required this.isUser,
-    required this.timestamp,
-  });
-}
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -31,33 +16,37 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController _scrollController = ScrollController();
 
   // Local chat data - replace with BLoC later
-  List<ChatMessage> _messages = [
+  final List<ChatMessage> _messages = [
     ChatMessage(
       id: '1',
       message:
           'Hey, I\'m AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I\'ve got the answers.',
       isUser: false,
-      timestamp: DateTime.now().subtract(Duration(minutes: 5)),
+      timeStamp: DateTime.now().subtract(Duration(minutes: 5)),
+      status: null,
     ),
     ChatMessage(
       id: '2',
       message: 'What\'s the first thing you wanna know today?',
       isUser: false,
-      timestamp: DateTime.now().subtract(Duration(minutes: 4)),
+      timeStamp: DateTime.now().subtract(Duration(minutes: 4)),
+      status: null,
     ),
     ChatMessage(
       id: '3',
       message:
           'Who is the founder of Thapar University and when was it established?',
       isUser: true,
-      timestamp: DateTime.now().subtract(Duration(minutes: 3)),
+      timeStamp: DateTime.now().subtract(Duration(minutes: 3)),
+      status: null,
     ),
     ChatMessage(
       id: '4',
       message:
           'Thapar University (TIU) was founded in 1956 by Late Karam Chand Thapar, a visionary industrialist and philanthropist.',
       isUser: false,
-      timestamp: DateTime.now().subtract(Duration(minutes: 2)),
+      timeStamp: DateTime.now().subtract(Duration(minutes: 2)),
+      status: null,
     ),
   ];
 
@@ -77,7 +66,8 @@ class _ChatScreenState extends State<ChatScreen> {
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           message: _messageController.text.trim(),
           isUser: true,
-          timestamp: DateTime.now(),
+          timeStamp: DateTime.now(),
+          status: null,
         ),
       );
     });
@@ -99,7 +89,8 @@ class _ChatScreenState extends State<ChatScreen> {
               message:
                   'Thanks for your question! I\'m processing your request...',
               isUser: false,
-              timestamp: DateTime.now(),
+              timeStamp: DateTime.now(),
+              status: null,
             ),
           );
         });
@@ -131,14 +122,9 @@ class _ChatScreenState extends State<ChatScreen> {
           elevation: 0,
           leading: Padding(
             padding: const EdgeInsets.only(left: 16, top: 12),
-            child: SizedBox(
-              width: 50,
-              height: 50,
-              child: Image.asset(
-                AppIcons.backButton,
-                color: Colors.white,
-                fit: BoxFit.contain,
-              ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white, size: 24),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
           title: Padding(
@@ -149,19 +135,19 @@ class _ChatScreenState extends State<ChatScreen> {
                 Text(
                   'AI ChatBot',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
                     fontFamily: AppFonts.gilroy,
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   'Get Answers | I\'m here for you!',
                   style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
                     fontFamily: AppFonts.gilroy,
+                    color: Colors.white70,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -172,14 +158,11 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: const EdgeInsets.only(right: 16, top: 12),
               child: CircleAvatar(
                 radius: 20,
-                child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Image.asset(
-                    AppIcons.chatbot,
-                    color: Colors.blue,
-                    fit: BoxFit.contain,
-                  ),
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.smart_toy,
+                  color: Color(0xFF4285F4),
+                  size: 24,
                 ),
                 // Replace with: Image.asset('assets/images/ai_avatar.png')
               ),
@@ -193,10 +176,12 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
+              reverse: true, // This makes messages start from bottom
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemCount: _messages.length,
               itemBuilder: (context, index) {
-                final message = _messages[index];
+                // Reverse the index to show latest messages at bottom
+                final message = _messages[_messages.length - 1 - index];
                 return _buildMessageBubble(message);
               },
             ),
@@ -221,7 +206,7 @@ class _ChatScreenState extends State<ChatScreen> {
           if (!message.isUser) ...[
             CircleAvatar(
               radius: 16,
-              backgroundColor: Color(0xFF4285F4),
+              backgroundColor: AppColor.aiChatBotTheme,
               child: Icon(Icons.smart_toy, color: Colors.white, size: 16),
             ),
             SizedBox(width: 8),
@@ -234,7 +219,9 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: message.isUser ? Color(0xFF4285F4) : Colors.white,
+                color: message.isUser
+                    ? AppColor.aiChatBotTheme
+                    : AppColor.aiChatMessageBubbleTheme,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
@@ -254,11 +241,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: message.isUser
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   Text(
-                    message.message,
+                    message.message.toString(),
                     style: TextStyle(
+                      fontFamily: AppFonts.gilroy,
                       color: message.isUser ? Colors.white : Colors.black87,
                       fontSize: 14,
                       height: 1.4,
@@ -266,8 +256,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    _formatTime(message.timestamp),
+                    _formatTime(message.timeStamp),
                     style: TextStyle(
+                      fontFamily: AppFonts.gilroy,
                       color: message.isUser ? Colors.white70 : Colors.grey[500],
                       fontSize: 10,
                     ),
@@ -292,57 +283,65 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildMessageInput() {
     return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: Offset(0, -2),
-          ),
-        ],
-      ),
+      margin: EdgeInsets.all(16), // Add margin to make it float
       child: SafeArea(
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Colors.grey[300]!),
-                ),
-                child: TextField(
-                  controller: _messageController,
-                  decoration: InputDecoration(
-                    hintText: 'Type a message...',
-                    hintStyle: TextStyle(color: Colors.grey[500]),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 12),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              28,
+            ), // More rounded for floating effect
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                offset: Offset(0, 2),
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TextField(
+                    controller: _messageController,
+                    decoration: InputDecoration(
+                      hintText: 'Type a message...',
+                      hintStyle: TextStyle(
+                        fontFamily: AppFonts.gilroy,
+                        color: Colors.grey[500],
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    maxLines: null,
+                    textCapitalization: TextCapitalization.sentences,
+                    onSubmitted: (_) => _sendMessage(),
                   ),
-                  maxLines: null,
-                  textCapitalization: TextCapitalization.sentences,
-                  onSubmitted: (_) => _sendMessage(),
                 ),
               ),
-            ),
-            SizedBox(width: 12),
-            GestureDetector(
-              onTap: _sendMessage,
-              child: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: Color(0xFF4285F4),
-                  borderRadius: BorderRadius.circular(24),
+              SizedBox(width: 8),
+              GestureDetector(
+                onTap: _sendMessage,
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  margin: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppColor.aiChatBotTheme,
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ), // Rounded edges, not circular
+                  ),
+                  child: Icon(Icons.send, color: Colors.white, size: 20),
+                  // Replace with: Image.asset('assets/images/send_button.png')
                 ),
-                child: Icon(Icons.send, color: Colors.white, size: 20),
-                // Replace with: Image.asset('assets/images/send_button.png')
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
