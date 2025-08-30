@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
 import 'package:thaparapp/injector.dart';
+import 'package:thaparapp/presentation/screens/chat/chat_screen.dart';
 import 'package:thaparapp/presentation/screens/home/home.dart';
 import 'package:thaparapp/presentation/screens/auth/login_screen.dart';
 import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
@@ -50,6 +51,7 @@ class Routing {
         path: AppRoute.onboarding,
         builder: (context, state) => OnboardingScreen(),
       ),
+      GoRoute(path: AppRoute.chat, builder: (context, state) => ChatScreen()),
     ],
   );
 }

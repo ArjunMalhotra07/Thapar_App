@@ -8,4 +8,7 @@ class AppIcons {
 
   static const String search = "assets/image/search.png";
   static const String logout = "assets/image/logout.png";
+
+  static const String backButton = "assets/image/backbutton.png";
+  static const String sendChat = "assets/image/sendchat.png";
 }

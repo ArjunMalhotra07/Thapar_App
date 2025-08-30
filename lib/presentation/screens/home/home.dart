@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_icons.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 import 'package:thaparapp/presentation/screens/home/log_out_dialog.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/home/feature_card.dart';
 
@@ -121,8 +123,9 @@ class HomeScreen extends StatelessWidget {
                         iconPath: AppIcons.chatbot,
                         title: 'AI ChatBot',
                         subtitle: 'Got questions..?\nI\'ve got answers.',
-                        backgroundColor: const Color(0xFF4F6BF5),
+                        backgroundColor: AppColor.aiChatBotTheme,
                         onTap: () {
+                          GoRouter.of(context).push(AppRoute.chat);
                           // TODO: Navigate to AI ChatBot screen
                         },
                       );
