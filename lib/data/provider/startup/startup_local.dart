@@ -12,7 +12,7 @@ class StartupLocal implements StartupProvider {
       jwt: 'dummy_jwt',
       refreshToken: 'dummy_refresh_token',
     );
-    return newlyOnboarded;
+    return validUser;
   }
 
   @override
@@ -22,7 +22,7 @@ class StartupLocal implements StartupProvider {
     await Future.delayed(const Duration(milliseconds: 300));
     return VerifyTokenResponse(
       message: "valid",
-      valid: false,
+      valid: true,
       userId: "agf",
       expiresIn: 1000,
     );

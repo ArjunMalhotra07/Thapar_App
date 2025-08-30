@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_icons.dart';
+import 'package:thaparapp/presentation/screens/home/log_out_dialog.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/home/feature_card.dart';
 
 // Main Home Screen
@@ -64,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          // TODO: Implement logout functionality
+                          showLogoutDialog(context);
                         },
                         icon: Image.asset(
                           AppIcons.logout,
