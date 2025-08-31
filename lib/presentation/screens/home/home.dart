@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                         subtitle: 'Explore every corner\n   of your campus.',
                         backgroundColor: const Color(0xFFFE655C),
                         onTap: () {
-                          // TODO: Navigate to Locate Us screen
+                          GoRouter.of(context).push(AppRoute.locations);
                         },
                       );
                     case 1:
@@ -126,7 +126,6 @@ class HomeScreen extends StatelessWidget {
                         backgroundColor: AppColor.aiChatBotTheme,
                         onTap: () {
                           GoRouter.of(context).push(AppRoute.chat);
-                          // TODO: Navigate to AI ChatBot screen
                         },
                       );
                     case 2:
