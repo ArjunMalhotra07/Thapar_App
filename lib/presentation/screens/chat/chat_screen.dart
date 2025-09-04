@@ -24,8 +24,14 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _chatBloc = locator<ChatBloc>();
-    // Initialize chat for the current user (using a default user ID for now)
-    _chatBloc.add(ChatEvent.initializeChat(chatID: "user_123"));
+    // Only initialize if chat hasn't been loaded yet
+    _chatBloc.state.when(
+      initial: () => _chatBloc.add(ChatEvent.initializeChat(chatID: "user_123")),
+      loading: () {},
+      typing: (_) {},
+      success: (_) {},
+      failure: (_) => _chatBloc.add(ChatEvent.initializeChat(chatID: "user_123")),
+    );
   }
 
   @override
