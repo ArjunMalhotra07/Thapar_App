@@ -23,14 +23,14 @@ class NetworkApiService implements BaseApiService {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          // Skip auth interceptor for refresh token requests
-          if (options.extra['skipAuthInterceptor'] == true) {
-            logger.i('Request [${options.method}] ${options.uri} [SKIP AUTH]');
-          } else {
-            logger.i('Request [${options.method}] ${options.uri}');
-          }
-          logger.i('Request Headers: ${options.headers}');
-          logger.i('Request Data: ${options.data}');
+          //! Skip auth interceptor for refresh token requests
+          // if (options.extra['skipAuthInterceptor'] == true) {
+          //   logger.i('Request [${options.method}] ${options.uri} [SKIP AUTH]');
+          // } else {
+          //   logger.i('Request [${options.method}] ${options.uri}');
+          // }
+          // logger.i('Request Headers: ${options.headers}');
+          // logger.i('Request Data: ${options.data}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
@@ -186,7 +186,8 @@ class NetworkApiService implements BaseApiService {
               e.response!.data['message']?.toString() ?? 'Not Found';
           throw PageNotFoundException(message: jsonResponse);
         case 500:
-          final jsonResponse = e.response?.data['message']?.toString() ?? 
+          final jsonResponse =
+              e.response?.data['message']?.toString() ??
               'Internal Server Error';
           throw InternalServerErrorException(message: jsonResponse);
         default:

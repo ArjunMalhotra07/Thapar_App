@@ -11,7 +11,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final ChatRepo chatRepo;
 
   List<ChatMessage> messages = [];
-  String currentChatId = '';
+  String currentUserId = '';
 
   ChatBloc({required this.chatRepo}) : super(_Initial()) {
     on<_InitializeChat>(_onInitializeChat);
@@ -23,34 +23,63 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   void _onInitializeChat(_InitializeChat event, emit) async {
     emit(ChatState.loading());
     try {
-      currentChatId = event.chatID ?? _generateChatId();
+      currentUserId = event.chatID ?? _generateUserId();
       messages = [];
-      // Load initial AI greeting
-      final greeting = ChatMessage(
-        id: _generateMessageId(),
-        message:
-            "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
-        isUser: false,
-        timeStamp: DateTime.now(),
-        status: MessageStatus.sent,
-      );
+      
+      // Try to load existing chat history first
+      try {
+        final history = await chatRepo.getChatHistory(chatId: currentUserId);
+        
+        // Always add the intro message first
+        final greeting = ChatMessage(
+          id: _generateMessageId(),
+          message:
+              "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
+          isUser: false,
+          timeStamp: DateTime.now().subtract(Duration(minutes: 10)),
+          status: MessageStatus.sent,
+        );
+        
+        messages.add(greeting);
+        
+        // If history exists and is not empty, add it after the intro
+        if (history.isNotEmpty) {
+          messages.addAll(history);
+          emit(ChatState.success(messages: List.from(messages)));
+          return;
+        }
+        
+        // If history is empty, just show the intro message
+        emit(ChatState.success(messages: List.from(messages)));
+        
+      } catch (e) {
+        // If API call fails, show initial greeting as fallback
+        final greeting = ChatMessage(
+          id: _generateMessageId(),
+          message:
+              "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
+          isUser: false,
+          timeStamp: DateTime.now(),
+          status: MessageStatus.sent,
+        );
 
-      messages.add(greeting);
-      emit(ChatState.success(messages: List.from(messages)));
+        messages.add(greeting);
+        emit(ChatState.success(messages: List.from(messages)));
+      }
     } catch (e) {
       emit(ChatState.failure(message: e.toString()));
     }
   }
 
   void _onSendMessage(event, emit) async {
-    if (event.message.trim().isEmpty) return;
+    if (event.userMessage?.trim().isEmpty ?? true) return;
     // Add user message immediately
     final userMessage = ChatMessage(
       id: _generateMessageId(),
-      message: event.message,
+      message: event.userMessage!,
       isUser: true,
       timeStamp: DateTime.now(),
-      status: null,
+      status: MessageStatus.sending,
     );
     messages.add(userMessage);
     emit(ChatState.success(messages: List.from(messages)));
@@ -58,28 +87,32 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     emit(ChatState.typing(messages: List.from(messages)));
     try {
       final response = await chatRepo.sendMessage(
-        chatId: currentChatId,
-        message: event.message,
+        chatId: currentUserId,
+        message: event.userMessage!,
       );
 
-      final aiMessage = ChatMessage(
-        id: response.id ?? _generateMessageId(),
-        message: response.message ?? "Sorry, I couldn't process your request.",
-        isUser: false,
-        timeStamp: DateTime.now(),
-        status: null,
-      );
+      // Update user message status to sent
+      final userMessageIndex = messages.indexWhere((m) => m.id == userMessage.id);
+      if (userMessageIndex != -1) {
+        messages[userMessageIndex] = userMessage.copyWith(status: MessageStatus.sent);
+      }
 
-      messages.add(aiMessage);
+      messages.add(response);
       emit(ChatState.success(messages: List.from(messages)));
     } catch (e) {
+      // Update user message status to failed
+      final userMessageIndex = messages.indexWhere((m) => m.id == userMessage.id);
+      if (userMessageIndex != -1) {
+        messages[userMessageIndex] = userMessage.copyWith(status: MessageStatus.failed);
+      }
+      
       final errorMessage = ChatMessage(
         id: _generateMessageId(),
         message:
             "Sorry, I'm having trouble connecting right now. Please try again.",
         isUser: false,
         timeStamp: DateTime.now(),
-        status: null,
+        status: MessageStatus.sent,
       );
       messages.add(errorMessage);
       emit(ChatState.success(messages: List.from(messages)));
@@ -89,9 +122,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   void _onLoadChatHistory(event, emit) async {
     emit(ChatState.loading());
     try {
-      final history = await chatRepo.getChatHistory(chatId: event.chatId);
+      final history = await chatRepo.getChatHistory(chatId: event.chatID);
       messages = history;
-      currentChatId = event.chatId;
+      currentUserId = event.chatID;
       emit(ChatState.success(messages: List.from(messages)));
     } catch (e) {
       emit(ChatState.failure(message: e.toString()));
@@ -100,7 +133,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   void _onClearChat(event, emit) async {
     try {
-      await chatRepo.clearChat(chatId: currentChatId);
+      await chatRepo.clearChat(chatId: currentUserId);
       messages.clear();
       emit(ChatState.success(messages: List.from(messages)));
     } catch (e) {
@@ -108,7 +141,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  String _generateChatId() => DateTime.now().millisecondsSinceEpoch.toString();
+  String _generateUserId() => DateTime.now().millisecondsSinceEpoch.toString();
   String _generateMessageId() =>
       DateTime.now().microsecondsSinceEpoch.toString();
 }

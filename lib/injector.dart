@@ -1,16 +1,18 @@
 import 'package:get_it/get_it.dart';
+import 'package:thaparapp/business/chat/chat_bloc.dart';
 import 'package:thaparapp/business/locations/locations_bloc.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
-import 'package:thaparapp/data/provider/auth/auth_imp.dart';
 import 'package:thaparapp/data/provider/auth/auth_local.dart';
+import 'package:thaparapp/data/provider/chat/chat_imp.dart';
 import 'package:thaparapp/data/provider/locations/locations_local.dart';
-import 'package:thaparapp/data/provider/startup/startup_imp.dart';
 import 'package:thaparapp/data/provider/startup/startup_local.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
+import 'package:thaparapp/data/repo/chat_repo.dart';
 import 'package:thaparapp/data/repo/locations_repo.dart';
 import 'package:thaparapp/data/repo/startup_repo.dart';
 import 'package:thaparapp/network/base_api_service.dart';
+import 'package:thaparapp/network/chat_service.dart';
 import 'package:thaparapp/network/network_api_service.dart';
 
 final locator = GetIt.instance;
@@ -51,6 +53,17 @@ void init() {
   locator.registerLazySingleton<LocationsBloc>(
     () => LocationsBloc(
       locationsRepo: LocationsRepo(locationsProvider: LocationsLocalProvider()),
+    ),
+  );
+  //! Chat
+  locator.registerLazySingleton<ChatService>(
+    () => ChatServiceImpl(apiService: locator<BaseApiService>()),
+  );
+  locator.registerLazySingleton<ChatBloc>(
+    () => ChatBloc(
+      chatRepo: ChatRepo(
+        chatProvider: ChatApiProvider(chatService: locator<ChatService>()),
+      ),
     ),
   );
 }

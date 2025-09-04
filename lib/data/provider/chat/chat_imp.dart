@@ -1,17 +1,11 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:thaparapp/data/model/chat/chat_message.dart';
 import 'package:thaparapp/data/provider/chat/chat_abs.dart';
+import 'package:thaparapp/network/chat_service.dart';
 
 class ChatApiProvider implements ChatProvider {
-  final String baseUrl;
-  final Map<String, String> headers;
+  final ChatService chatService;
 
-  ChatApiProvider({
-    required this.baseUrl,
-    this.headers = const {'Content-Type': 'application/json'},
-  });
+  ChatApiProvider({required this.chatService});
 
   @override
   Future<ChatMessage> sendMessage({
@@ -19,62 +13,48 @@ class ChatApiProvider implements ChatProvider {
     required String message,
   }) async {
     try {
-      // Replace with your actual HTTP implementation
-      final response = await http.post(
-        Uri.parse('$baseUrl/chat/send'),
-        headers: headers,
-        body: jsonEncode({
-          'chatId': chatId,
-          'message': message,
-          'timestamp': DateTime.now().toIso8601String(),
-        }),
+      final response = await chatService.sendMessage(
+        userId: chatId,
+        message: message,
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return ChatMessage.fromJson(data);
-      } else {
-        throw Exception('Failed to send message: ${response.statusCode}');
-      }
+      return ChatMessage(
+        id: _generateMessageId(),
+        message: response.message,
+        isUser: false,
+        timeStamp: DateTime.parse(response.timestamp),
+        status: MessageStatus.sent,
+      );
     } catch (e) {
-      throw Exception('Network error: ${e.toString()}');
+      rethrow;
     }
   }
 
   @override
   Future<List<ChatMessage>> getChatHistory({required String chatId}) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/chat/history/$chatId'),
-        headers: headers,
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final List<dynamic> messagesJson = data['messages'] ?? [];
-
-        return messagesJson.map((json) => ChatMessage.fromJson(json)).toList();
-      } else {
-        throw Exception('Failed to load chat history: ${response.statusCode}');
-      }
+      final response = await chatService.getHistory(userId: chatId);
+      
+      return response.messages.map((historyMessage) {
+        return ChatMessage(
+          id: _generateMessageId(),
+          message: historyMessage.message,
+          isUser: historyMessage.role == 'user',
+          timeStamp: DateTime.parse(historyMessage.timestamp),
+          status: MessageStatus.sent,
+        );
+      }).toList();
     } catch (e) {
-      throw Exception('Network error: ${e.toString()}');
+      rethrow;
     }
   }
 
   @override
   Future<void> clearChat({required String chatId}) async {
-    try {
-      final response = await http.delete(
-        Uri.parse('$baseUrl/chat/$chatId'),
-        headers: headers,
-      );
-
-      if (response.statusCode != 200) {
-        throw Exception('Failed to clear chat: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Network error: ${e.toString()}');
-    }
+    // This endpoint is not provided in the new API specification
+    // Keep empty implementation for now
   }
+
+  String _generateMessageId() =>
+      DateTime.now().microsecondsSinceEpoch.toString();
 }
