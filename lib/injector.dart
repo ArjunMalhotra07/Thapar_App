@@ -12,7 +12,6 @@ import 'package:thaparapp/data/repo/chat_repo.dart';
 import 'package:thaparapp/data/repo/locations_repo.dart';
 import 'package:thaparapp/data/repo/startup_repo.dart';
 import 'package:thaparapp/network/base_api_service.dart';
-import 'package:thaparapp/network/chat_service.dart';
 import 'package:thaparapp/network/network_api_service.dart';
 
 final locator = GetIt.instance;
@@ -56,13 +55,10 @@ void init() {
     ),
   );
   //! Chat
-  locator.registerLazySingleton<ChatService>(
-    () => ChatServiceImpl(apiService: locator<BaseApiService>()),
-  );
   locator.registerLazySingleton<ChatBloc>(
     () => ChatBloc(
       chatRepo: ChatRepo(
-        chatProvider: ChatApiProvider(chatService: locator<ChatService>()),
+        chatProvider: ChatApiProvider(service: locator<BaseApiService>()),
       ),
     ),
   );

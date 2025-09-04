@@ -1,11 +1,14 @@
+import 'package:thaparapp/data/model/api_models/chat_response/chat_response.dart';
+import 'package:thaparapp/data/model/api_models/history_response/history_response.dart';
 import 'package:thaparapp/data/model/chat/chat_message.dart';
 import 'package:thaparapp/data/provider/chat/chat_abs.dart';
-import 'package:thaparapp/network/chat_service.dart';
+import 'package:thaparapp/network/base_api_service.dart';
+import 'package:thaparapp/presentation/constants/urls.dart';
 
 class ChatApiProvider implements ChatProvider {
-  final ChatService chatService;
+  final BaseApiService _service;
 
-  ChatApiProvider({required this.chatService});
+  ChatApiProvider({required BaseApiService service}) : _service = service;
 
   @override
   Future<ChatMessage> sendMessage({
@@ -13,16 +16,21 @@ class ChatApiProvider implements ChatProvider {
     required String message,
   }) async {
     try {
-      final response = await chatService.sendMessage(
-        userId: chatId,
-        message: message,
+      final response = await _service.postAPI(
+        url: AppURL.chat,
+        body: {
+          "userId": chatId,
+          "message": message,
+        },
+        queryParams: null,
       );
-
+      
+      final chatResponse = ChatResponse.fromJson(response);
       return ChatMessage(
         id: _generateMessageId(),
-        message: response.message,
+        message: chatResponse.message,
         isUser: false,
-        timeStamp: DateTime.parse(response.timestamp),
+        timeStamp: DateTime.now(),
         status: MessageStatus.sent,
       );
     } catch (e) {
@@ -33,17 +41,42 @@ class ChatApiProvider implements ChatProvider {
   @override
   Future<List<ChatMessage>> getChatHistory({required String chatId}) async {
     try {
-      final response = await chatService.getHistory(userId: chatId);
+      final response = await _service.getAPI(
+        url: AppURL.getHistory,
+        queryParams: {"userId": chatId},
+        bearerToken: null,
+      );
       
-      return response.messages.map((historyMessage) {
-        return ChatMessage(
-          id: _generateMessageId(),
-          message: historyMessage.message,
-          isUser: historyMessage.role == 'user',
-          timeStamp: DateTime.parse(historyMessage.timestamp),
-          status: MessageStatus.sent,
-        );
-      }).toList();
+      // API returns array directly, not wrapped in object
+      if (response is List) {
+        final historyMessages = response.map((json) => HistoryMessage.fromJson(json)).toList();
+        
+        return historyMessages.map((historyMessage) {
+          final apiTime = DateTime.parse(historyMessage.timestamp);
+          final localTime = apiTime.toLocal();
+          return ChatMessage(
+            id: _generateMessageId(),
+            message: historyMessage.message,
+            isUser: historyMessage.role == 'user',
+            timeStamp: localTime,
+            status: MessageStatus.sent,
+          );
+        }).toList();
+      } else {
+        // Fallback if response is wrapped
+        final historyResponse = HistoryResponse.fromJson(response);
+        return historyResponse.messages.map((historyMessage) {
+          final apiTime = DateTime.parse(historyMessage.timestamp);
+          final localTime = apiTime.toLocal();
+          return ChatMessage(
+            id: _generateMessageId(),
+            message: historyMessage.message,
+            isUser: historyMessage.role == 'user',
+            timeStamp: localTime,
+            status: MessageStatus.sent,
+          );
+        }).toList();
+      }
     } catch (e) {
       rethrow;
     }
