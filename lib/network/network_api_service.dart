@@ -27,7 +27,7 @@ class NetworkApiService implements BaseApiService {
           // if (options.extra['skipAuthInterceptor'] == true) {
           //   logger.i('Request [${options.method}] ${options.uri} [SKIP AUTH]');
           // } else {
-          //   logger.i('Request [${options.method}] ${options.uri}');
+            logger.i('Request [${options.method}] ${options.uri}');
           // }
           // logger.i('Request Headers: ${options.headers}');
           // logger.i('Request Data: ${options.data}');

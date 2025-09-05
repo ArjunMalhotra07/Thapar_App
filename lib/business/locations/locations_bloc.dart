@@ -25,7 +25,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     emit(LocationsState.loading());
     try {
       final response = await locationsRepo.fetchLocations();
-      allLocations = response.locations ?? [];
+      allLocations = response.locations;
       filteredLocations = List.from(allLocations);
 
       if (allLocations.isEmpty) {
@@ -35,6 +35,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
           LocationsState.success(
             locations: List.from(filteredLocations),
             searchQuery: currentSearchQuery,
+            count: response.count,
           ),
         );
       }
@@ -51,17 +52,15 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     } else {
       filteredLocations = allLocations.where((location) {
         final nameMatch =
-            location.name?.toLowerCase().contains(currentSearchQuery) ?? false;
+            location.name.toLowerCase().contains(currentSearchQuery);
+        final descriptionMatch =
+            location.description.toLowerCase().contains(currentSearchQuery);
         final categoryMatch =
-            location.category?.toLowerCase().contains(currentSearchQuery) ??
-            false;
-        final tagsMatch =
-            location.tags?.any(
-              (tag) => tag.toLowerCase().contains(currentSearchQuery),
-            ) ??
-            false;
+            location.category.any(
+              (cat) => cat.toLowerCase().contains(currentSearchQuery),
+            );
 
-        return nameMatch || categoryMatch || tagsMatch;
+        return nameMatch || descriptionMatch || categoryMatch;
       }).toList();
     }
 
@@ -76,6 +75,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
         LocationsState.success(
           locations: List.from(filteredLocations),
           searchQuery: currentSearchQuery,
+          count: filteredLocations.length,
         ),
       );
     }
@@ -89,6 +89,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
       LocationsState.success(
         locations: List.from(filteredLocations),
         searchQuery: currentSearchQuery,
+        count: filteredLocations.length,
       ),
     );
   }
@@ -97,7 +98,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     // Don't show loading for refresh, just update silently
     try {
       final response = await locationsRepo.fetchLocations();
-      allLocations = response.locations ?? [];
+      allLocations = response.locations;
 
       // Reapply current search if any
       if (currentSearchQuery.isNotEmpty) {
@@ -108,6 +109,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
           LocationsState.success(
             locations: List.from(filteredLocations),
             searchQuery: currentSearchQuery,
+            count: filteredLocations.length,
           ),
         );
       }

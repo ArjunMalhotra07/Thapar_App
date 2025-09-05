@@ -73,7 +73,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
                 child: state.when(
                   initial: () => Center(child: Text('Ready to load locations')),
                   loading: () => Center(child: CircularProgressIndicator()),
-                  success: (locations, searchQuery) => LocationsListWidget(
+                  success: (locations, searchQuery, count) => LocationsListWidget(
                     locations: locations,
                     onRefresh: () async {
                       context.read<LocationsBloc>().add(

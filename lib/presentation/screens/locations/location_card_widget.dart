@@ -19,7 +19,7 @@ class LocationCardWidget extends StatelessWidget {
           children: [
             // Location name
             Text(
-              location.name ?? 'Unknown Location',
+              location.name,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -29,9 +29,8 @@ class LocationCardWidget extends StatelessWidget {
             SizedBox(height: 8),
 
             // Description
-            if (location.description != null)
-              Text(
-                location.description!,
+            Text(
+              location.description,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[600],
@@ -41,12 +40,12 @@ class LocationCardWidget extends StatelessWidget {
 
             SizedBox(height: 12),
 
-            // Tags
-            if (location.tags != null && location.tags!.isNotEmpty)
+            // Category tags
+            if (location.category.isNotEmpty)
               Wrap(
                 spacing: 8,
                 runSpacing: 4,
-                children: location.tags!
+                children: location.category
                     .map(
                       (tag) => Container(
                         padding: EdgeInsets.symmetric(
@@ -78,8 +77,8 @@ class LocationCardWidget extends StatelessWidget {
                 Icon(Icons.location_on, size: 16, color: Colors.grey[500]),
                 SizedBox(width: 4),
                 Text(
-                  'Lat: ${location.lat?.toStringAsFixed(4) ?? 'N/A'}, '
-                  'Long: ${location.long?.toStringAsFixed(4) ?? 'N/A'}',
+                  'Lat: ${location.latitude.toStringAsFixed(4)}, '
+                  'Long: ${location.longitude.toStringAsFixed(4)}',
                   style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                 ),
               ],

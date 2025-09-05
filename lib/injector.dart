@@ -5,7 +5,7 @@ import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
 import 'package:thaparapp/data/provider/auth/auth_local.dart';
 import 'package:thaparapp/data/provider/chat/chat_imp.dart';
-import 'package:thaparapp/data/provider/locations/locations_local.dart';
+import 'package:thaparapp/data/provider/locations/locations_imp.dart';
 import 'package:thaparapp/data/provider/startup/startup_local.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
 import 'package:thaparapp/data/repo/chat_repo.dart';
@@ -51,7 +51,9 @@ void init() {
   //! Location
   locator.registerLazySingleton<LocationsBloc>(
     () => LocationsBloc(
-      locationsRepo: LocationsRepo(locationsProvider: LocationsLocalProvider()),
+      locationsRepo: LocationsRepo(
+        locationsProvider: LocationsApiProvider(service: locator<BaseApiService>()),
+      ),
     ),
   );
   //! Chat

@@ -761,7 +761,11 @@ mixin _$LocationsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Location> locations, String searchQuery)
+    required TResult Function(
+      List<Location> locations,
+      String searchQuery,
+      int count,
+    )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
@@ -770,7 +774,8 @@ mixin _$LocationsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Location> locations, String searchQuery)? success,
+    TResult? Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) => throw _privateConstructorUsedError;
@@ -778,7 +783,8 @@ mixin _$LocationsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Location> locations, String searchQuery)? success,
+    TResult Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),
@@ -877,7 +883,11 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Location> locations, String searchQuery)
+    required TResult Function(
+      List<Location> locations,
+      String searchQuery,
+      int count,
+    )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
@@ -890,7 +900,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Location> locations, String searchQuery)? success,
+    TResult? Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) {
@@ -902,7 +913,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Location> locations, String searchQuery)? success,
+    TResult Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),
@@ -1003,7 +1015,11 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Location> locations, String searchQuery)
+    required TResult Function(
+      List<Location> locations,
+      String searchQuery,
+      int count,
+    )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
@@ -1016,7 +1032,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Location> locations, String searchQuery)? success,
+    TResult? Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) {
@@ -1028,7 +1045,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Location> locations, String searchQuery)? success,
+    TResult Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),
@@ -1091,7 +1109,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
     $Res Function(_$SuccessImpl) then,
   ) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Location> locations, String searchQuery});
+  $Res call({List<Location> locations, String searchQuery, int count});
 }
 
 /// @nodoc
@@ -1107,7 +1125,11 @@ class __$$SuccessImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? locations = null, Object? searchQuery = null}) {
+  $Res call({
+    Object? locations = null,
+    Object? searchQuery = null,
+    Object? count = null,
+  }) {
     return _then(
       _$SuccessImpl(
         locations: null == locations
@@ -1118,6 +1140,10 @@ class __$$SuccessImplCopyWithImpl<$Res>
             ? _value.searchQuery
             : searchQuery // ignore: cast_nullable_to_non_nullable
                   as String,
+        count: null == count
+            ? _value.count
+            : count // ignore: cast_nullable_to_non_nullable
+                  as int,
       ),
     );
   }
@@ -1129,6 +1155,7 @@ class _$SuccessImpl implements _Success {
   const _$SuccessImpl({
     required final List<Location> locations,
     required this.searchQuery,
+    required this.count,
   }) : _locations = locations;
 
   final List<Location> _locations;
@@ -1141,10 +1168,12 @@ class _$SuccessImpl implements _Success {
 
   @override
   final String searchQuery;
+  @override
+  final int count;
 
   @override
   String toString() {
-    return 'LocationsState.success(locations: $locations, searchQuery: $searchQuery)';
+    return 'LocationsState.success(locations: $locations, searchQuery: $searchQuery, count: $count)';
   }
 
   @override
@@ -1157,7 +1186,8 @@ class _$SuccessImpl implements _Success {
               _locations,
             ) &&
             (identical(other.searchQuery, searchQuery) ||
-                other.searchQuery == searchQuery));
+                other.searchQuery == searchQuery) &&
+            (identical(other.count, count) || other.count == count));
   }
 
   @override
@@ -1165,6 +1195,7 @@ class _$SuccessImpl implements _Success {
     runtimeType,
     const DeepCollectionEquality().hash(_locations),
     searchQuery,
+    count,
   );
 
   /// Create a copy of LocationsState
@@ -1180,12 +1211,16 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Location> locations, String searchQuery)
+    required TResult Function(
+      List<Location> locations,
+      String searchQuery,
+      int count,
+    )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
   }) {
-    return success(locations, searchQuery);
+    return success(locations, searchQuery, count);
   }
 
   @override
@@ -1193,11 +1228,12 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Location> locations, String searchQuery)? success,
+    TResult? Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call(locations, searchQuery);
+    return success?.call(locations, searchQuery, count);
   }
 
   @override
@@ -1205,13 +1241,14 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Location> locations, String searchQuery)? success,
+    TResult Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(locations, searchQuery);
+      return success(locations, searchQuery, count);
     }
     return orElse();
   }
@@ -1261,10 +1298,12 @@ abstract class _Success implements LocationsState {
   const factory _Success({
     required final List<Location> locations,
     required final String searchQuery,
+    required final int count,
   }) = _$SuccessImpl;
 
   List<Location> get locations;
   String get searchQuery;
+  int get count;
 
   /// Create a copy of LocationsState
   /// with the given fields replaced by the non-null parameter values.
@@ -1345,7 +1384,11 @@ class _$EmptyImpl implements _Empty {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Location> locations, String searchQuery)
+    required TResult Function(
+      List<Location> locations,
+      String searchQuery,
+      int count,
+    )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
@@ -1358,7 +1401,8 @@ class _$EmptyImpl implements _Empty {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Location> locations, String searchQuery)? success,
+    TResult? Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) {
@@ -1370,7 +1414,8 @@ class _$EmptyImpl implements _Empty {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Location> locations, String searchQuery)? success,
+    TResult Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),
@@ -1506,7 +1551,11 @@ class _$FailureImpl implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<Location> locations, String searchQuery)
+    required TResult Function(
+      List<Location> locations,
+      String searchQuery,
+      int count,
+    )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
@@ -1519,7 +1568,8 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Location> locations, String searchQuery)? success,
+    TResult? Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) {
@@ -1531,7 +1581,8 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Location> locations, String searchQuery)? success,
+    TResult Function(List<Location> locations, String searchQuery, int count)?
+    success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),

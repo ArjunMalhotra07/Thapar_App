@@ -21,15 +21,13 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Location {
-  String? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  List<String>? get tags => throw _privateConstructorUsedError;
-  double? get lat => throw _privateConstructorUsedError;
-  double? get long => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
-  bool? get isActive => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  List<String> get category => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this Location to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,15 +45,13 @@ abstract class $LocationCopyWith<$Res> {
       _$LocationCopyWithImpl<$Res, Location>;
   @useResult
   $Res call({
-    String? id,
-    String? name,
-    String? description,
-    List<String>? tags,
-    double? lat,
-    double? long,
-    String? imageUrl,
-    String? category,
-    bool? isActive,
+    int id,
+    String name,
+    String description,
+    List<String> category,
+    double latitude,
+    double longitude,
+    DateTime createdAt,
   });
 }
 
@@ -74,54 +70,44 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? tags = freezed,
-    Object? lat = freezed,
-    Object? long = freezed,
-    Object? imageUrl = freezed,
-    Object? category = freezed,
-    Object? isActive = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? description = null,
+    Object? category = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? createdAt = null,
   }) {
     return _then(
       _value.copyWith(
-            id: freezed == id
+            id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            name: freezed == name
+                      as int,
+            name: null == name
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            description: freezed == description
+                      as String,
+            description: null == description
                 ? _value.description
                 : description // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            tags: freezed == tags
-                ? _value.tags
-                : tags // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            lat: freezed == lat
-                ? _value.lat
-                : lat // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            long: freezed == long
-                ? _value.long
-                : long // ignore: cast_nullable_to_non_nullable
-                      as double?,
-            imageUrl: freezed == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            category: freezed == category
+                      as String,
+            category: null == category
                 ? _value.category
                 : category // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            isActive: freezed == isActive
-                ? _value.isActive
-                : isActive // ignore: cast_nullable_to_non_nullable
-                      as bool?,
+                      as List<String>,
+            latitude: null == latitude
+                ? _value.latitude
+                : latitude // ignore: cast_nullable_to_non_nullable
+                      as double,
+            longitude: null == longitude
+                ? _value.longitude
+                : longitude // ignore: cast_nullable_to_non_nullable
+                      as double,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
           )
           as $Val,
     );
@@ -138,15 +124,13 @@ abstract class _$$LocationImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String? id,
-    String? name,
-    String? description,
-    List<String>? tags,
-    double? lat,
-    double? long,
-    String? imageUrl,
-    String? category,
-    bool? isActive,
+    int id,
+    String name,
+    String description,
+    List<String> category,
+    double latitude,
+    double longitude,
+    DateTime createdAt,
   });
 }
 
@@ -164,54 +148,44 @@ class __$$LocationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? tags = freezed,
-    Object? lat = freezed,
-    Object? long = freezed,
-    Object? imageUrl = freezed,
-    Object? category = freezed,
-    Object? isActive = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? description = null,
+    Object? category = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? createdAt = null,
   }) {
     return _then(
       _$LocationImpl(
-        id: freezed == id
+        id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        name: freezed == name
+                  as int,
+        name: null == name
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        description: freezed == description
+                  as String,
+        description: null == description
             ? _value.description
             : description // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        tags: freezed == tags
-            ? _value._tags
-            : tags // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
-        lat: freezed == lat
-            ? _value.lat
-            : lat // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        long: freezed == long
-            ? _value.long
-            : long // ignore: cast_nullable_to_non_nullable
-                  as double?,
-        imageUrl: freezed == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        category: freezed == category
-            ? _value.category
+                  as String,
+        category: null == category
+            ? _value._category
             : category // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        isActive: freezed == isActive
-            ? _value.isActive
-            : isActive // ignore: cast_nullable_to_non_nullable
-                  as bool?,
+                  as List<String>,
+        latitude: null == latitude
+            ? _value.latitude
+            : latitude // ignore: cast_nullable_to_non_nullable
+                  as double,
+        longitude: null == longitude
+            ? _value.longitude
+            : longitude // ignore: cast_nullable_to_non_nullable
+                  as double,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
       ),
     );
   }
@@ -224,47 +198,39 @@ class _$LocationImpl implements _Location {
     required this.id,
     required this.name,
     required this.description,
-    required final List<String>? tags,
-    required this.lat,
-    required this.long,
-    this.imageUrl,
-    this.category,
-    this.isActive,
-  }) : _tags = tags;
+    required final List<String> category,
+    required this.latitude,
+    required this.longitude,
+    required this.createdAt,
+  }) : _category = category;
 
   factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocationImplFromJson(json);
 
   @override
-  final String? id;
+  final int id;
   @override
-  final String? name;
+  final String name;
   @override
-  final String? description;
-  final List<String>? _tags;
+  final String description;
+  final List<String> _category;
   @override
-  List<String>? get tags {
-    final value = _tags;
-    if (value == null) return null;
-    if (_tags is EqualUnmodifiableListView) return _tags;
+  List<String> get category {
+    if (_category is EqualUnmodifiableListView) return _category;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_category);
   }
 
   @override
-  final double? lat;
+  final double latitude;
   @override
-  final double? long;
+  final double longitude;
   @override
-  final String? imageUrl;
-  @override
-  final String? category;
-  @override
-  final bool? isActive;
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Location(id: $id, name: $name, description: $description, tags: $tags, lat: $lat, long: $long, imageUrl: $imageUrl, category: $category, isActive: $isActive)';
+    return 'Location(id: $id, name: $name, description: $description, category: $category, latitude: $latitude, longitude: $longitude, createdAt: $createdAt)';
   }
 
   @override
@@ -276,15 +242,13 @@ class _$LocationImpl implements _Location {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality().equals(other._tags, _tags) &&
-            (identical(other.lat, lat) || other.lat == lat) &&
-            (identical(other.long, long) || other.long == long) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+            const DeepCollectionEquality().equals(other._category, _category) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -294,12 +258,10 @@ class _$LocationImpl implements _Location {
     id,
     name,
     description,
-    const DeepCollectionEquality().hash(_tags),
-    lat,
-    long,
-    imageUrl,
-    category,
-    isActive,
+    const DeepCollectionEquality().hash(_category),
+    latitude,
+    longitude,
+    createdAt,
   );
 
   /// Create a copy of Location
@@ -318,38 +280,32 @@ class _$LocationImpl implements _Location {
 
 abstract class _Location implements Location {
   const factory _Location({
-    required final String? id,
-    required final String? name,
-    required final String? description,
-    required final List<String>? tags,
-    required final double? lat,
-    required final double? long,
-    final String? imageUrl,
-    final String? category,
-    final bool? isActive,
+    required final int id,
+    required final String name,
+    required final String description,
+    required final List<String> category,
+    required final double latitude,
+    required final double longitude,
+    required final DateTime createdAt,
   }) = _$LocationImpl;
 
   factory _Location.fromJson(Map<String, dynamic> json) =
       _$LocationImpl.fromJson;
 
   @override
-  String? get id;
+  int get id;
   @override
-  String? get name;
+  String get name;
   @override
-  String? get description;
+  String get description;
   @override
-  List<String>? get tags;
+  List<String> get category;
   @override
-  double? get lat;
+  double get latitude;
   @override
-  double? get long;
+  double get longitude;
   @override
-  String? get imageUrl;
-  @override
-  String? get category;
-  @override
-  bool? get isActive;
+  DateTime get createdAt;
 
   /// Create a copy of Location
   /// with the given fields replaced by the non-null parameter values.
