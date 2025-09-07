@@ -82,14 +82,21 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.fromLTRB(
+        3,
+        3,
+        3,
+        16,
+      ), // Add margin on all sides for shadow space
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey.shade300),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 8,
-            offset: Offset(0, 4),
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 2, // Reduced blur for sharper shadow
+            spreadRadius: 1, // This creates even shadow on all sides
+            offset: Offset(0, 2), // Slight downward offset for depth
           ),
         ],
       ),
