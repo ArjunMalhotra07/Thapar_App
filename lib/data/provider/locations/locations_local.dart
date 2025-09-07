@@ -16,6 +16,7 @@ class LocationsLocalProvider implements LocationsProvider {
         category: ['Hiring', 'Event', 'Computer Science'],
         latitude: 30.3535,
         longitude: 76.3654,
+        imageUrl: "",
         createdAt: DateTime.now(),
       ),
     ];

@@ -1,4 +1,6 @@
+// ==================== EMPTY STATE WIDGET ====================
 import 'package:flutter/material.dart';
+import 'package:thaparapp/presentation/constants/app_fonts.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final String message;
@@ -6,10 +8,10 @@ class EmptyStateWidget extends StatelessWidget {
   final VoidCallback? onClear;
 
   const EmptyStateWidget({
-    super.key,
     required this.message,
-    this.showClearButton = false,
+    required this.showClearButton,
     this.onClear,
+    super.key,
   });
 
   @override
@@ -22,12 +24,26 @@ class EmptyStateWidget extends StatelessWidget {
           SizedBox(height: 16),
           Text(
             message,
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontFamily: AppFonts.gilroy,
+            ),
             textAlign: TextAlign.center,
           ),
           if (showClearButton && onClear != null) ...[
             SizedBox(height: 16),
-            ElevatedButton(onPressed: onClear, child: Text('Clear Search')),
+            ElevatedButton(
+              onPressed: onClear,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFFF6B6B),
+                foregroundColor: Colors.white,
+              ),
+              child: Text(
+                'Clear Search',
+                style: TextStyle(fontFamily: AppFonts.gilroy),
+              ),
+            ),
           ],
         ],
       ),

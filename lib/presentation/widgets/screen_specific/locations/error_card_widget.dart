@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:thaparapp/presentation/constants/app_fonts.dart';
 
+// ==================== ERROR STATE WIDGET ====================
 class ErrorStateWidget extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
 
   const ErrorStateWidget({
-    super.key,
     required this.message,
     required this.onRetry,
+    super.key,
   });
 
   @override
@@ -20,11 +22,22 @@ class ErrorStateWidget extends StatelessWidget {
           SizedBox(height: 16),
           Text(
             'Error: $message',
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontFamily: AppFonts.gilroy,
+            ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 16),
-          ElevatedButton(onPressed: onRetry, child: Text('Retry')),
+          ElevatedButton(
+            onPressed: onRetry,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFFF6B6B),
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Retry', style: TextStyle(fontFamily: AppFonts.gilroy)),
+          ),
         ],
       ),
     );

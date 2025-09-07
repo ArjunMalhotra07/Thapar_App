@@ -14,14 +14,14 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
   List<Location> filteredLocations = [];
   String currentSearchQuery = '';
 
-  LocationsBloc({required this.locationsRepo}) : super(_Initial()) {
+  LocationsBloc({required this.locationsRepo}) : super(const LocationsState.initial()) {
     on<_FetchLocations>(_onFetchLocations);
     on<_SearchLocations>(_onSearchLocations);
     on<_ClearSearch>(_onClearSearch);
     on<_RefreshLocations>(_onRefreshLocations);
   }
 
-  void _onFetchLocations(_FetchLocations event, emit) async {
+  void _onFetchLocations(_FetchLocations event, Emitter<LocationsState> emit) async {
     emit(LocationsState.loading());
     try {
       final response = await locationsRepo.fetchLocations();
@@ -44,7 +44,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     }
   }
 
-  void _onSearchLocations(_SearchLocations event, emit) async {
+  void _onSearchLocations(_SearchLocations event, Emitter<LocationsState> emit) async {
     currentSearchQuery = event.query.toLowerCase();
 
     if (currentSearchQuery.isEmpty) {
@@ -52,13 +52,13 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     } else {
       filteredLocations = allLocations.where((location) {
         final nameMatch =
-            location.name.toLowerCase().contains(currentSearchQuery);
+            location.name?.toLowerCase().contains(currentSearchQuery) ?? false;
         final descriptionMatch =
-            location.description.toLowerCase().contains(currentSearchQuery);
-        final categoryMatch =
-            location.category.any(
-              (cat) => cat.toLowerCase().contains(currentSearchQuery),
-            );
+            location.description?.toLowerCase().contains(currentSearchQuery) ??
+            false;
+        final categoryMatch = location.category.any(
+          (cat) => cat.toLowerCase().contains(currentSearchQuery),
+        );
 
         return nameMatch || descriptionMatch || categoryMatch;
       }).toList();
@@ -81,7 +81,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     }
   }
 
-  void _onClearSearch(_ClearSearch event, emit) async {
+  void _onClearSearch(_ClearSearch event, Emitter<LocationsState> emit) async {
     currentSearchQuery = '';
     filteredLocations = List.from(allLocations);
 
@@ -94,7 +94,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     );
   }
 
-  void _onRefreshLocations(_RefreshLocations event, emit) async {
+  void _onRefreshLocations(_RefreshLocations event, Emitter<LocationsState> emit) async {
     // Don't show loading for refresh, just update silently
     try {
       final response = await locationsRepo.fetchLocations();

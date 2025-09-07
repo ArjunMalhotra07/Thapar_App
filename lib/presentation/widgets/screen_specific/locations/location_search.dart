@@ -1,4 +1,6 @@
+// ==================== UPDATED SEARCH WIDGET ====================
 import 'package:flutter/material.dart';
+import 'package:thaparapp/presentation/constants/app_fonts.dart';
 
 class LocationSearchWidget extends StatefulWidget {
   final VoidCallback clearButtonAction;
@@ -20,39 +22,33 @@ class _LocationSearchWidgetState extends State<LocationSearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey[300]!),
       ),
       child: TextField(
         controller: widget.searchController,
         decoration: InputDecoration(
-          hintText: 'Search by name or category...',
-          prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
+          hintText: 'Search Location or Categories...',
+          hintStyle: TextStyle(
+            color: Colors.grey[500],
+            fontSize: 16,
+            fontFamily: AppFonts.gilroy,
+          ),
+          prefixIcon: Icon(Icons.search, color: Colors.grey[500], size: 24),
           suffixIcon: widget.searchController.text.isNotEmpty
               ? IconButton(
                   icon: Icon(Icons.clear, color: Colors.grey[500]),
                   onPressed: () {
                     widget.searchController.clear();
-                    widget.clearButtonAction(); // call parent callback
+                    widget.clearButtonAction();
                     setState(() {});
                   },
                 )
               : null,
-          filled: true,
-          fillColor: Colors.grey[100],
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
         onChanged: (query) {
           setState(() {});
