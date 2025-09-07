@@ -39,7 +39,7 @@ class LocationCardWidget extends StatelessWidget {
                     image: DecorationImage(
                       image: NetworkImage(
                         location.imageUrl ??
-                            'https://via.placeholder.com/400x180',
+                            'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=400&q=80',
                       ),
                       fit: BoxFit.cover,
                     ),

@@ -28,8 +28,12 @@ class _LocationsScreenState extends State<LocationsScreen> {
 
   @override
   void initState() {
-    context.read<LocationsBloc>().add(const LocationsEvent.fetchLocations());
     super.initState();
+    // Only fetch if we don't have data already (check if it's not a success state)
+    final bloc = context.read<LocationsBloc>();
+    if (bloc.allLocations.isEmpty) {
+      bloc.add(const LocationsEvent.fetchLocations());
+    }
   }
 
   @override
