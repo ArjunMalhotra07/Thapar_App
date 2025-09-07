@@ -1,7 +1,9 @@
 // ==================== UPDATED LOCATION CARD WIDGET ====================
 import 'package:flutter/material.dart';
 import 'package:thaparapp/data/model/location_service/location/location.dart';
+import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocationCardWidget extends StatelessWidget {
   final Location location;
@@ -54,8 +56,9 @@ class LocationCardWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 4,
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 12,
+                          spreadRadius: 2,
                           offset: Offset(0, 2),
                         ),
                       ],
@@ -131,7 +134,7 @@ class LocationCardWidget extends StatelessWidget {
                   SizedBox(height: 16),
 
                   // View on Map button
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
@@ -139,11 +142,11 @@ class LocationCardWidget extends StatelessWidget {
                         _showLocationOnMap(context, location);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFF6B6B),
+                        backgroundColor: AppColor.locateUsTheme,
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(6),
                         ),
                         elevation: 0,
                       ),
@@ -152,6 +155,7 @@ class LocationCardWidget extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
+                          fontFamily: AppFonts.gilroy,
                         ),
                       ),
                     ),
@@ -165,31 +169,51 @@ class LocationCardWidget extends StatelessWidget {
     );
   }
 
-  void _showLocationOnMap(BuildContext context, Location location) {
-    // Handle map navigation here
-    print(
-      'Opening map for ${location.name} at ${location.latitude}, ${location.longitude}',
-    );
-
-    // You can integrate with maps here:
-    // - Google Maps
-    // - Apple Maps
-    // - Custom map screen
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Open Map'),
-        content: Text(
-          'Opening ${location.name} on map\nCoordinates: ${location.latitude}, ${location.longitude}',
+  void _showLocationOnMap(BuildContext context, Location location) async {
+    // Check if location has valid coordinates
+    if (location.latitude == null || location.longitude == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Location coordinates not available'),
+          backgroundColor: Colors.red,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
-          ),
-        ],
-      ),
+      );
+      return;
+    }
+
+    // Create Google Maps URL with location coordinates
+    final googleMapsUrl = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}',
     );
+
+    // Try to launch Google Maps
+    try {
+      if (await canLaunchUrl(googleMapsUrl)) {
+        await launchUrl(googleMapsUrl, mode: LaunchMode.externalApplication);
+      } else {
+        // If Google Maps can't be opened, show error message
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Could not open Google Maps'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Handle any errors
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error opening map: ${e.toString()}',
+              style: TextStyle(fontFamily: AppFonts.gilroy),
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thaparapp/business/locations/locations_bloc.dart';
 import 'package:thaparapp/data/model/location_service/location/location.dart';
+import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/locations/empty_card_widget.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/locations/error_card_widget.dart';
@@ -34,9 +35,10 @@ class _LocationsScreenState extends State<LocationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFF6B6B), // Coral/salmon background like figma
+      backgroundColor:
+          AppColor.locateUsTheme, // Coral/salmon background like figma
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6B6B),
+        backgroundColor: AppColor.locateUsTheme,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -92,73 +94,77 @@ class _LocationsScreenState extends State<LocationsScreen> {
       body: Column(
         children: [
           // Search Bar with white container
-          Container(
-            margin: EdgeInsets.all(16),
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              children: [
-                LocationSearchWidget(
-                  searchController: _searchController,
-                  clearButtonAction: () {
-                    context.read<LocationsBloc>().add(
-                      LocationsEvent.clearSearch(),
-                    );
-                  },
-                  onQueryChangeAction: (query) {
-                    context.read<LocationsBloc>().add(
-                      LocationsEvent.searchLocations(query: query),
-                    );
-                  },
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(top: 16),
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
-                SizedBox(height: 16),
-                // Content inside the white container
-                BlocBuilder<LocationsBloc, LocationsState>(
-                  builder: (context, state) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      child: state.when(
-                        initial: () =>
-                            Center(child: Text('Ready to load locations')),
-                        loading: () =>
-                            Center(child: CircularProgressIndicator()),
-                        success: (locations, searchQuery, count) =>
-                            LocationsListWidget(
-                              locations: locations,
-                              onRefresh: () async {
-                                context.read<LocationsBloc>().add(
-                                  LocationsEvent.refreshLocations(),
-                                );
-                              },
-                              itemBuilder: (location) =>
-                                  LocationCardWidget(location: location),
-                            ),
-                        empty: (message) => EmptyStateWidget(
-                          message: message,
-                          showClearButton: _searchController.text.isNotEmpty,
-                          onClear: () {
-                            _searchController.clear();
-                            context.read<LocationsBloc>().add(
-                              LocationsEvent.clearSearch(),
-                            );
-                          },
-                        ),
-                        failure: (message) => ErrorStateWidget(
-                          message: message,
-                          onRetry: () {
-                            context.read<LocationsBloc>().add(
-                              LocationsEvent.fetchLocations(),
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+              ),
+              child: Column(
+                children: [
+                  LocationSearchWidget(
+                    searchController: _searchController,
+                    clearButtonAction: () {
+                      context.read<LocationsBloc>().add(
+                        LocationsEvent.clearSearch(),
+                      );
+                    },
+                    onQueryChangeAction: (query) {
+                      context.read<LocationsBloc>().add(
+                        LocationsEvent.searchLocations(query: query),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  // Content inside the white container
+                  Expanded(
+                    child: BlocBuilder<LocationsBloc, LocationsState>(
+                      builder: (context, state) {
+                        return state.when(
+                          initial: () =>
+                              Center(child: Text('Ready to load locations')),
+                          loading: () =>
+                              Center(child: CircularProgressIndicator()),
+                          success: (locations, searchQuery, count) =>
+                              LocationsListWidget(
+                                locations: locations,
+                                onRefresh: () async {
+                                  context.read<LocationsBloc>().add(
+                                    LocationsEvent.refreshLocations(),
+                                  );
+                                },
+                                itemBuilder: (location) =>
+                                    LocationCardWidget(location: location),
+                              ),
+                          empty: (message) => EmptyStateWidget(
+                            message: message,
+                            showClearButton: _searchController.text.isNotEmpty,
+                            onClear: () {
+                              _searchController.clear();
+                              context.read<LocationsBloc>().add(
+                                LocationsEvent.clearSearch(),
+                              );
+                            },
+                          ),
+                          failure: (message) => ErrorStateWidget(
+                            message: message,
+                            onRetry: () {
+                              context.read<LocationsBloc>().add(
+                                LocationsEvent.fetchLocations(),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -166,7 +172,6 @@ class _LocationsScreenState extends State<LocationsScreen> {
     );
   }
 }
-
 
 // ==================== LOCATIONS LIST WIDGET ====================
 class LocationsListWidget extends StatelessWidget {
@@ -186,9 +191,7 @@ class LocationsListWidget extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: ListView.builder(
-        padding: EdgeInsets.all(
-          0,
-        ), // Remove default padding since we're inside white container
+        // Remove default padding since we're inside white container
         itemCount: locations.length,
         itemBuilder: (context, index) {
           final location = locations[index];
@@ -198,4 +201,3 @@ class LocationsListWidget extends StatelessWidget {
     );
   }
 }
-

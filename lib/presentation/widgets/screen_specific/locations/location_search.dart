@@ -29,6 +29,7 @@ class _LocationSearchWidgetState extends State<LocationSearchWidget> {
       ),
       child: TextField(
         controller: widget.searchController,
+        style: TextStyle(fontFamily: AppFonts.gilroy),
         decoration: InputDecoration(
           hintText: 'Search Location or Categories...',
           hintStyle: TextStyle(

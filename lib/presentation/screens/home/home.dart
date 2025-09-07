@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                         iconPath: AppIcons.locateUs,
                         title: 'Locate Us',
                         subtitle: 'Explore every corner\n   of your campus.',
-                        backgroundColor: const Color(0xFFFE655C),
+                        backgroundColor: AppColor.locateUsTheme,
                         onTap: () {
                           GoRouter.of(context).push(AppRoute.locations);
                         },
