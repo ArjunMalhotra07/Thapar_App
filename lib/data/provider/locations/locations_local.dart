@@ -13,11 +13,12 @@ class LocationsLocalProvider implements LocationsProvider {
         id: 1,
         name: 'Dashmesh Audi',
         description: 'Main auditorium for events and conferences',
-        category: ['Hiring', 'Event', 'Computer Science'],
+        category: "",
         latitude: 30.3535,
         longitude: 76.3654,
         imageUrl: "",
         createdAt: DateTime.now(),
+        features: ['Hiring', 'Event', 'Computer Science'],
       ),
     ];
 

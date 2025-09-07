@@ -14,14 +14,18 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
   List<Location> filteredLocations = [];
   String currentSearchQuery = '';
 
-  LocationsBloc({required this.locationsRepo}) : super(const LocationsState.initial()) {
+  LocationsBloc({required this.locationsRepo})
+    : super(const LocationsState.initial()) {
     on<_FetchLocations>(_onFetchLocations);
     on<_SearchLocations>(_onSearchLocations);
     on<_ClearSearch>(_onClearSearch);
     on<_RefreshLocations>(_onRefreshLocations);
   }
 
-  void _onFetchLocations(_FetchLocations event, Emitter<LocationsState> emit) async {
+  void _onFetchLocations(
+    _FetchLocations event,
+    Emitter<LocationsState> emit,
+  ) async {
     emit(LocationsState.loading());
     try {
       final response = await locationsRepo.fetchLocations();
@@ -44,7 +48,10 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     }
   }
 
-  void _onSearchLocations(_SearchLocations event, Emitter<LocationsState> emit) async {
+  void _onSearchLocations(
+    _SearchLocations event,
+    Emitter<LocationsState> emit,
+  ) async {
     currentSearchQuery = event.query.toLowerCase();
 
     if (currentSearchQuery.isEmpty) {
@@ -56,11 +63,14 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
         final descriptionMatch =
             location.description?.toLowerCase().contains(currentSearchQuery) ??
             false;
-        final categoryMatch = location.category.any(
+        final features = location.features?.any(
           (cat) => cat.toLowerCase().contains(currentSearchQuery),
         );
+        final category = location.category.toLowerCase().contains(
+          currentSearchQuery,
+        );
 
-        return nameMatch || descriptionMatch || categoryMatch;
+        return nameMatch || descriptionMatch || features! || category;
       }).toList();
     }
 
@@ -94,7 +104,10 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
     );
   }
 
-  void _onRefreshLocations(_RefreshLocations event, Emitter<LocationsState> emit) async {
+  void _onRefreshLocations(
+    _RefreshLocations event,
+    Emitter<LocationsState> emit,
+  ) async {
     // Don't show loading for refresh, just update silently
     try {
       final response = await locationsRepo.fetchLocations();

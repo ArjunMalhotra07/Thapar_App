@@ -24,11 +24,12 @@ mixin _$Location {
   int get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  List<String> get category => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
+  List<String>? get features => throw _privateConstructorUsedError;
 
   /// Serializes this Location to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,11 +50,12 @@ abstract class $LocationCopyWith<$Res> {
     int id,
     String? name,
     String? description,
-    List<String> category,
+    String category,
     double? latitude,
     double? longitude,
     DateTime? createdAt,
     String? imageUrl,
+    List<String>? features,
   });
 }
 
@@ -80,6 +82,7 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
     Object? longitude = freezed,
     Object? createdAt = freezed,
     Object? imageUrl = freezed,
+    Object? features = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -98,7 +101,7 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
             category: null == category
                 ? _value.category
                 : category // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
+                      as String,
             latitude: freezed == latitude
                 ? _value.latitude
                 : latitude // ignore: cast_nullable_to_non_nullable
@@ -115,6 +118,10 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
                 ? _value.imageUrl
                 : imageUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
+            features: freezed == features
+                ? _value.features
+                : features // ignore: cast_nullable_to_non_nullable
+                      as List<String>?,
           )
           as $Val,
     );
@@ -134,11 +141,12 @@ abstract class _$$LocationImplCopyWith<$Res>
     int id,
     String? name,
     String? description,
-    List<String> category,
+    String category,
     double? latitude,
     double? longitude,
     DateTime? createdAt,
     String? imageUrl,
+    List<String>? features,
   });
 }
 
@@ -164,6 +172,7 @@ class __$$LocationImplCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? createdAt = freezed,
     Object? imageUrl = freezed,
+    Object? features = freezed,
   }) {
     return _then(
       _$LocationImpl(
@@ -180,9 +189,9 @@ class __$$LocationImplCopyWithImpl<$Res>
             : description // ignore: cast_nullable_to_non_nullable
                   as String?,
         category: null == category
-            ? _value._category
+            ? _value.category
             : category // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
+                  as String,
         latitude: freezed == latitude
             ? _value.latitude
             : latitude // ignore: cast_nullable_to_non_nullable
@@ -199,6 +208,10 @@ class __$$LocationImplCopyWithImpl<$Res>
             ? _value.imageUrl
             : imageUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
+        features: freezed == features
+            ? _value._features
+            : features // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
       ),
     );
   }
@@ -211,12 +224,13 @@ class _$LocationImpl implements _Location {
     required this.id,
     required this.name,
     required this.description,
-    required final List<String> category,
+    required this.category,
     required this.latitude,
     required this.longitude,
     required this.createdAt,
     required this.imageUrl,
-  }) : _category = category;
+    required final List<String>? features,
+  }) : _features = features;
 
   factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocationImplFromJson(json);
@@ -227,14 +241,8 @@ class _$LocationImpl implements _Location {
   final String? name;
   @override
   final String? description;
-  final List<String> _category;
   @override
-  List<String> get category {
-    if (_category is EqualUnmodifiableListView) return _category;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_category);
-  }
-
+  final String category;
   @override
   final double? latitude;
   @override
@@ -243,10 +251,19 @@ class _$LocationImpl implements _Location {
   final DateTime? createdAt;
   @override
   final String? imageUrl;
+  final List<String>? _features;
+  @override
+  List<String>? get features {
+    final value = _features;
+    if (value == null) return null;
+    if (_features is EqualUnmodifiableListView) return _features;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Location(id: $id, name: $name, description: $description, category: $category, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, imageUrl: $imageUrl)';
+    return 'Location(id: $id, name: $name, description: $description, category: $category, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, imageUrl: $imageUrl, features: $features)';
   }
 
   @override
@@ -258,7 +275,8 @@ class _$LocationImpl implements _Location {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality().equals(other._category, _category) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
@@ -266,7 +284,8 @@ class _$LocationImpl implements _Location {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+                other.imageUrl == imageUrl) &&
+            const DeepCollectionEquality().equals(other._features, _features));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -276,11 +295,12 @@ class _$LocationImpl implements _Location {
     id,
     name,
     description,
-    const DeepCollectionEquality().hash(_category),
+    category,
     latitude,
     longitude,
     createdAt,
     imageUrl,
+    const DeepCollectionEquality().hash(_features),
   );
 
   /// Create a copy of Location
@@ -302,11 +322,12 @@ abstract class _Location implements Location {
     required final int id,
     required final String? name,
     required final String? description,
-    required final List<String> category,
+    required final String category,
     required final double? latitude,
     required final double? longitude,
     required final DateTime? createdAt,
     required final String? imageUrl,
+    required final List<String>? features,
   }) = _$LocationImpl;
 
   factory _Location.fromJson(Map<String, dynamic> json) =
@@ -319,7 +340,7 @@ abstract class _Location implements Location {
   @override
   String? get description;
   @override
-  List<String> get category;
+  String get category;
   @override
   double? get latitude;
   @override
@@ -328,6 +349,8 @@ abstract class _Location implements Location {
   DateTime? get createdAt;
   @override
   String? get imageUrl;
+  @override
+  List<String>? get features;
 
   /// Create a copy of Location
   /// with the given fields replaced by the non-null parameter values.

@@ -64,7 +64,7 @@ class LocationCardWidget extends StatelessWidget {
                       ],
                     ),
                     child: Text(
-                      'GENERAL',
+                      location.category.toUpperCase(),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -96,14 +96,14 @@ class LocationCardWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
 
-                  // Tags
-                  if (location.category.isNotEmpty)
+                  // Features tags
+                  if (location.features != null && location.features!.isNotEmpty)
                     Wrap(
                       spacing: 8,
                       runSpacing: 4,
-                      children: location.category
-                          .map(
-                            (tag) => Container(
+                      children: location.features
+                          !.map(
+                            (feature) => Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 12,
                                 vertical: 6,
@@ -117,7 +117,7 @@ class LocationCardWidget extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                tag.toUpperCase(),
+                                feature.toUpperCase(),
                                 style: TextStyle(
                                   fontFamily: AppFonts.gilroy,
                                   fontSize: 12,
@@ -140,6 +140,7 @@ class LocationCardWidget extends StatelessWidget {
                       onPressed: () {
                         // Handle map view navigation
                         _showLocationOnMap(context, location);
+                        // _launchUrl();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.locateUsTheme,
@@ -181,18 +182,27 @@ class LocationCardWidget extends StatelessWidget {
       return;
     }
 
-    // Create Google Maps URL with location coordinates
-    final googleMapsUrl = Uri.parse(
-      'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}',
-    );
+    // Use Google Maps URL with proper zoom level (17 = street level zoom)
+    // Format: @latitude,longitude,zoomz where zoom=17z means zoom level 17
+    final String mapsUrl =
+        'https://www.google.com/maps/@${location.latitude},${location.longitude},17z';
 
-    // Try to launch Google Maps
     try {
-      if (await canLaunchUrl(googleMapsUrl)) {
-        await launchUrl(googleMapsUrl, mode: LaunchMode.externalApplication);
-      } else {
-        // If Google Maps can't be opened, show error message
-        if (context.mounted) {
+      // Try launching with the simplest approach
+      final Uri uri = Uri.parse(mapsUrl);
+      final bool launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+
+      if (!launched && context.mounted) {
+        // Fallback: try with platform default
+        final bool launchedDefault = await launchUrl(
+          uri,
+          mode: LaunchMode.platformDefault,
+        );
+
+        if (!launchedDefault && context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Could not open Google Maps'),
@@ -202,12 +212,13 @@ class LocationCardWidget extends StatelessWidget {
         }
       }
     } catch (e) {
-      // Handle any errors
+      // If url_launcher fails, show error
       if (context.mounted) {
+        print('Error launching maps: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Error opening map: ${e.toString()}',
+              'Unable to open maps. Error: ${e.toString()}',
               style: TextStyle(fontFamily: AppFonts.gilroy),
             ),
             backgroundColor: Colors.red,
