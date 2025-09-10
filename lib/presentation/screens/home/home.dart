@@ -136,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                             'Helping you reconnect\n    with lost things.',
                         backgroundColor: const Color(0xFFFFBE34),
                         onTap: () {
-                          // TODO: Navigate to Lost & Found screen
+                          GoRouter.of(context).push(AppRoute.lostAndFound);
                         },
                       );
                     default:

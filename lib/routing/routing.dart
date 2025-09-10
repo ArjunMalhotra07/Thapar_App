@@ -9,6 +9,7 @@ import 'package:thaparapp/presentation/screens/chat/chat_screen.dart';
 import 'package:thaparapp/presentation/screens/home/home.dart';
 import 'package:thaparapp/presentation/screens/auth/login_screen.dart';
 import 'package:thaparapp/presentation/screens/locations/location_screen.dart';
+import 'package:thaparapp/presentation/screens/lost_and_found/lost_and_found_screen.dart';
 import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
 import 'package:thaparapp/presentation/screens/splash/splash.dart';
 import 'package:thaparapp/presentation/screens/splash/start_up.dart';
@@ -60,6 +61,10 @@ class Routing {
           value: locator<LocationsBloc>(),
           child: LocationsScreen(),
         ),
+      ),
+      GoRoute(
+        path: AppRoute.lostAndFound,
+        builder: (context, state) => LostFoundScreen(),
       ),
     ],
   );

@@ -95,7 +95,7 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
           BoxShadow(
             color: Colors.black.withOpacity(0.15),
             blurRadius: 2, // Reduced blur for sharper shadow
-            spreadRadius: 1, // This creates even shadow on all sides
+            spreadRadius: 0, // This creates even shadow on all sides
             offset: Offset(0, 2), // Slight downward offset for depth
           ),
         ],

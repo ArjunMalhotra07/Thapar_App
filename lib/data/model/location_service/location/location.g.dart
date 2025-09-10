@@ -18,8 +18,8 @@ _$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['createdAt'] as String),
       imageUrl: json['imageUrl'] as String?,
-      features: (json['features'] as List<dynamic>?)
-          ?.map((e) => e as String)
+      features: (json['features'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
     );
 

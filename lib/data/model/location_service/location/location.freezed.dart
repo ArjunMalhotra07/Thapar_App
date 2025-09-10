@@ -29,7 +29,7 @@ mixin _$Location {
   double? get longitude => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
-  List<String>? get features => throw _privateConstructorUsedError;
+  List<String> get features => throw _privateConstructorUsedError;
 
   /// Serializes this Location to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ abstract class $LocationCopyWith<$Res> {
     double? longitude,
     DateTime? createdAt,
     String? imageUrl,
-    List<String>? features,
+    List<String> features,
   });
 }
 
@@ -82,7 +82,7 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
     Object? longitude = freezed,
     Object? createdAt = freezed,
     Object? imageUrl = freezed,
-    Object? features = freezed,
+    Object? features = null,
   }) {
     return _then(
       _value.copyWith(
@@ -118,10 +118,10 @@ class _$LocationCopyWithImpl<$Res, $Val extends Location>
                 ? _value.imageUrl
                 : imageUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
-            features: freezed == features
+            features: null == features
                 ? _value.features
                 : features // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
+                      as List<String>,
           )
           as $Val,
     );
@@ -146,7 +146,7 @@ abstract class _$$LocationImplCopyWith<$Res>
     double? longitude,
     DateTime? createdAt,
     String? imageUrl,
-    List<String>? features,
+    List<String> features,
   });
 }
 
@@ -172,7 +172,7 @@ class __$$LocationImplCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? createdAt = freezed,
     Object? imageUrl = freezed,
-    Object? features = freezed,
+    Object? features = null,
   }) {
     return _then(
       _$LocationImpl(
@@ -208,10 +208,10 @@ class __$$LocationImplCopyWithImpl<$Res>
             ? _value.imageUrl
             : imageUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
-        features: freezed == features
+        features: null == features
             ? _value._features
             : features // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
+                  as List<String>,
       ),
     );
   }
@@ -229,7 +229,7 @@ class _$LocationImpl implements _Location {
     required this.longitude,
     required this.createdAt,
     required this.imageUrl,
-    required final List<String>? features,
+    required final List<String> features,
   }) : _features = features;
 
   factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
@@ -251,14 +251,12 @@ class _$LocationImpl implements _Location {
   final DateTime? createdAt;
   @override
   final String? imageUrl;
-  final List<String>? _features;
+  final List<String> _features;
   @override
-  List<String>? get features {
-    final value = _features;
-    if (value == null) return null;
+  List<String> get features {
     if (_features is EqualUnmodifiableListView) return _features;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_features);
   }
 
   @override
@@ -327,7 +325,7 @@ abstract class _Location implements Location {
     required final double? longitude,
     required final DateTime? createdAt,
     required final String? imageUrl,
-    required final List<String>? features,
+    required final List<String> features,
   }) = _$LocationImpl;
 
   factory _Location.fromJson(Map<String, dynamic> json) =
@@ -350,7 +348,7 @@ abstract class _Location implements Location {
   @override
   String? get imageUrl;
   @override
-  List<String>? get features;
+  List<String> get features;
 
   /// Create a copy of Location
   /// with the given fields replaced by the non-null parameter values.
