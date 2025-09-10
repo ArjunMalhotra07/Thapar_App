@@ -22,6 +22,7 @@ class LostFoundSearchWidget extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade400, width: 2),
       ),
       child: TextField(
+        style: TextStyle(fontFamily: AppFonts.gilroy),
         controller: searchController,
         onChanged: onSearchChanged,
         decoration: InputDecoration(
