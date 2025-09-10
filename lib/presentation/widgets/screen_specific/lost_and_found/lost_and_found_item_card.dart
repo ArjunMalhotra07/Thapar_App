@@ -13,16 +13,16 @@ class LostFoundItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.fromLTRB(3, 3, 3, 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 8,
-            spreadRadius: 1,
-            offset: Offset(0, 3),
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 2,
+            spreadRadius: 0,
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -52,7 +52,7 @@ class LostFoundItemCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(5),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -66,7 +66,7 @@ class LostFoundItemCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Colors.brown,
                         fontFamily: AppFonts.gilroy,
                       ),
                     ),
@@ -102,17 +102,14 @@ class LostFoundItemCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Color(0xFFFDB952),
-                            width: 1,
-                          ),
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.red, width: 1),
                         ),
                         child: Text(
                           item.location ?? "",
                           style: TextStyle(
                             fontSize: 10,
-                            color: Color(0xFFFDB952),
+                            color: Colors.red,
                             fontWeight: FontWeight.w600,
                             fontFamily: AppFonts.gilroy,
                           ),
