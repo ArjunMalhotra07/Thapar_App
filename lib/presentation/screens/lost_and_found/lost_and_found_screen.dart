@@ -25,7 +25,10 @@ class _LostFoundScreenState extends State<LostFoundScreen> {
   void initState() {
     super.initState();
     _bloc = locator<LostAndFoundBloc>();
-    _bloc.add(const LostAndFoundEvent.fetchItems());
+    // Only fetch items if we haven't loaded them yet (first time opening the screen)
+    if (_bloc.allItems.isEmpty) {
+      _bloc.add(const LostAndFoundEvent.fetchItems());
+    }
   }
 
   @override
