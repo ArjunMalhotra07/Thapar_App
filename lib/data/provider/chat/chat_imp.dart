@@ -18,13 +18,10 @@ class ChatApiProvider implements ChatProvider {
     try {
       final response = await _service.postAPI(
         url: AppURL.chat,
-        body: {
-          "userId": chatId,
-          "message": message,
-        },
+        body: {"userId": chatId, "message": message},
         queryParams: null,
       );
-      
+
       final chatResponse = ChatResponse.fromJson(response);
       return ChatMessage(
         id: _generateMessageId(),
@@ -43,16 +40,10 @@ class ChatApiProvider implements ChatProvider {
     try {
       final response = await _service.getAPI(
         url: AppURL.getHistory,
-        queryParams: {"userId": chatId},
+        queryParams: null,
         bearerToken: null,
       );
-      
       final apiResponse = ChatHistoryApiResponse.fromJson(response);
-      
-      if (!apiResponse.success) {
-        throw Exception(apiResponse.error ?? 'Failed to fetch chat history');
-      }
-      
       return apiResponse.data.map((historyMessage) {
         final apiTime = DateTime.parse(historyMessage.timestamp);
         final localTime = apiTime.toLocal();

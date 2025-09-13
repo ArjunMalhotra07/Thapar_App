@@ -7,25 +7,19 @@ import 'package:thaparapp/presentation/constants/urls.dart';
 
 class LostAndFoundApiProvider implements LostAndFoundProvider {
   final BaseApiService service;
-  
+
   LostAndFoundApiProvider({required this.service});
-  
+
   @override
   Future<LostFoundResponse> fetchItems() async {
+    print("here");
     try {
       final response = await service.getAPI(
         url: AppURL.lostAndFound,
-        queryParams: {},
+        queryParams: null,
         bearerToken: null,
       );
-      
       final apiResponse = LostFoundApiResponse.fromJson(response);
-      
-      if (!apiResponse.success) {
-        throw Exception(apiResponse.error ?? 'Failed to fetch lost and found items');
-      }
-      
-      // Convert API items to app items
       final items = apiResponse.data.map((apiItem) {
         return LostFoundItem(
           id: int.tryParse(apiItem.id ?? '0'),
@@ -34,10 +28,12 @@ class LostAndFoundApiProvider implements LostAndFoundProvider {
           color: apiItem.color ?? 'Unknown',
           imageUrl: apiItem.imageUrl,
           location: apiItem.location ?? 'Unknown Location',
-          date: apiItem.createdAt != null ? DateTime.parse(apiItem.createdAt!) : DateTime.now(),
+          date: apiItem.createdAt != null
+              ? DateTime.parse(apiItem.createdAt!)
+              : DateTime.now(),
         );
       }).toList();
-      
+
       return LostFoundResponse(items: items);
     } catch (e) {
       rethrow;
