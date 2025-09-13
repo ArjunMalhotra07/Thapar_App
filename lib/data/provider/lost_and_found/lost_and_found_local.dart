@@ -1,10 +1,9 @@
 import 'package:thaparapp/data/model/lost_and_found_item/lost_found_item.dart';
-import 'package:thaparapp/data/model/lost_and_found_item/lost_found_response.dart';
 import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_abs.dart';
 
 class LostAndFoundLocalProvider implements LostAndFoundProvider {
   @override
-  Future<LostFoundResponse> fetchItems() async {
+  Future<List<LostFoundItem>> fetchItems() async {
     await Future.delayed(Duration(seconds: 1)); // Simulate network delay
     
     // Mock data with updated schema
@@ -88,8 +87,6 @@ class LostAndFoundLocalProvider implements LostAndFoundProvider {
       ),
     ];
     
-    return LostFoundResponse(
-      items: mockItems,
-    );
+    return mockItems;
   }
 }

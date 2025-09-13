@@ -1,4 +1,4 @@
-import 'package:thaparapp/data/model/lost_and_found_item/lost_found_response.dart';
+import 'package:thaparapp/data/model/lost_and_found_item/lost_found_item.dart';
 import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_abs.dart';
 
 class LostAndFoundRepo {
@@ -6,7 +6,7 @@ class LostAndFoundRepo {
   
   LostAndFoundRepo({required this.lostAndFoundProvider});
 
-  Future<LostFoundResponse> fetchItems() async {
+  Future<List<LostFoundItem>> fetchItems() async {
     return await lostAndFoundProvider.fetchItems();
   }
 }

@@ -1,5 +1,5 @@
-import 'package:thaparapp/data/model/lost_and_found_item/lost_found_response.dart';
+import 'package:thaparapp/data/model/lost_and_found_item/lost_found_item.dart';
 
 abstract class LostAndFoundProvider {
-  Future<LostFoundResponse> fetchItems();
+  Future<List<LostFoundItem>> fetchItems();
 }

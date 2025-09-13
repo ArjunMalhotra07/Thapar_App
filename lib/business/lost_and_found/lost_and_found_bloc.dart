@@ -37,8 +37,8 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
     emit(const LostAndFoundState.loading());
     
     try {
-      final response = await lostAndFoundRepo.fetchItems();
-      allItems = response.items;
+      final items = await lostAndFoundRepo.fetchItems();
+      allItems = items;
       filteredItems = List.from(allItems);
       
       if (allItems.isEmpty) {
@@ -119,8 +119,8 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
     Emitter<LostAndFoundState> emit,
   ) async {
     try {
-      final response = await lostAndFoundRepo.fetchItems();
-      allItems = response.items;
+      final items = await lostAndFoundRepo.fetchItems();
+      allItems = items;
       
       if (currentSearchQuery.isNotEmpty) {
         add(LostAndFoundEvent.searchItems(query: currentSearchQuery));

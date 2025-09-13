@@ -15,350 +15,6 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-LostFoundApiItem _$LostFoundApiItemFromJson(Map<String, dynamic> json) {
-  return _LostFoundApiItem.fromJson(json);
-}
-
-/// @nodoc
-mixin _$LostFoundApiItem {
-  @JsonKey(name: '_id')
-  String? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get properties => throw _privateConstructorUsedError;
-  String? get createdAt => throw _privateConstructorUsedError;
-  String? get location => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
-  String? get color => throw _privateConstructorUsedError;
-  String? get contact => throw _privateConstructorUsedError;
-  String? get date => throw _privateConstructorUsedError;
-
-  /// Serializes this LostFoundApiItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of LostFoundApiItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LostFoundApiItemCopyWith<LostFoundApiItem> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $LostFoundApiItemCopyWith<$Res> {
-  factory $LostFoundApiItemCopyWith(
-    LostFoundApiItem value,
-    $Res Function(LostFoundApiItem) then,
-  ) = _$LostFoundApiItemCopyWithImpl<$Res, LostFoundApiItem>;
-  @useResult
-  $Res call({
-    @JsonKey(name: '_id') String? id,
-    String? name,
-    String? properties,
-    String? createdAt,
-    String? location,
-    String? imageUrl,
-    String? color,
-    String? contact,
-    String? date,
-  });
-}
-
-/// @nodoc
-class _$LostFoundApiItemCopyWithImpl<$Res, $Val extends LostFoundApiItem>
-    implements $LostFoundApiItemCopyWith<$Res> {
-  _$LostFoundApiItemCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of LostFoundApiItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? properties = freezed,
-    Object? createdAt = freezed,
-    Object? location = freezed,
-    Object? imageUrl = freezed,
-    Object? color = freezed,
-    Object? contact = freezed,
-    Object? date = freezed,
-  }) {
-    return _then(
-      _value.copyWith(
-            id: freezed == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            name: freezed == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            properties: freezed == properties
-                ? _value.properties
-                : properties // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            createdAt: freezed == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            location: freezed == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            imageUrl: freezed == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            color: freezed == color
-                ? _value.color
-                : color // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            contact: freezed == contact
-                ? _value.contact
-                : contact // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            date: freezed == date
-                ? _value.date
-                : date // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$LostFoundApiItemImplCopyWith<$Res>
-    implements $LostFoundApiItemCopyWith<$Res> {
-  factory _$$LostFoundApiItemImplCopyWith(
-    _$LostFoundApiItemImpl value,
-    $Res Function(_$LostFoundApiItemImpl) then,
-  ) = __$$LostFoundApiItemImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({
-    @JsonKey(name: '_id') String? id,
-    String? name,
-    String? properties,
-    String? createdAt,
-    String? location,
-    String? imageUrl,
-    String? color,
-    String? contact,
-    String? date,
-  });
-}
-
-/// @nodoc
-class __$$LostFoundApiItemImplCopyWithImpl<$Res>
-    extends _$LostFoundApiItemCopyWithImpl<$Res, _$LostFoundApiItemImpl>
-    implements _$$LostFoundApiItemImplCopyWith<$Res> {
-  __$$LostFoundApiItemImplCopyWithImpl(
-    _$LostFoundApiItemImpl _value,
-    $Res Function(_$LostFoundApiItemImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of LostFoundApiItem
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? properties = freezed,
-    Object? createdAt = freezed,
-    Object? location = freezed,
-    Object? imageUrl = freezed,
-    Object? color = freezed,
-    Object? contact = freezed,
-    Object? date = freezed,
-  }) {
-    return _then(
-      _$LostFoundApiItemImpl(
-        id: freezed == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        name: freezed == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        properties: freezed == properties
-            ? _value.properties
-            : properties // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        createdAt: freezed == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        location: freezed == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        imageUrl: freezed == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        color: freezed == color
-            ? _value.color
-            : color // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        contact: freezed == contact
-            ? _value.contact
-            : contact // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        date: freezed == date
-            ? _value.date
-            : date // ignore: cast_nullable_to_non_nullable
-                  as String?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$LostFoundApiItemImpl implements _LostFoundApiItem {
-  const _$LostFoundApiItemImpl({
-    @JsonKey(name: '_id') this.id,
-    required this.name,
-    required this.properties,
-    required this.createdAt,
-    this.location,
-    this.imageUrl,
-    this.color,
-    this.contact,
-    this.date,
-  });
-
-  factory _$LostFoundApiItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LostFoundApiItemImplFromJson(json);
-
-  @override
-  @JsonKey(name: '_id')
-  final String? id;
-  @override
-  final String? name;
-  @override
-  final String? properties;
-  @override
-  final String? createdAt;
-  @override
-  final String? location;
-  @override
-  final String? imageUrl;
-  @override
-  final String? color;
-  @override
-  final String? contact;
-  @override
-  final String? date;
-
-  @override
-  String toString() {
-    return 'LostFoundApiItem(id: $id, name: $name, properties: $properties, createdAt: $createdAt, location: $location, imageUrl: $imageUrl, color: $color, contact: $contact, date: $date)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LostFoundApiItemImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.properties, properties) ||
-                other.properties == properties) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            (identical(other.color, color) || other.color == color) &&
-            (identical(other.contact, contact) || other.contact == contact) &&
-            (identical(other.date, date) || other.date == date));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    name,
-    properties,
-    createdAt,
-    location,
-    imageUrl,
-    color,
-    contact,
-    date,
-  );
-
-  /// Create a copy of LostFoundApiItem
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LostFoundApiItemImplCopyWith<_$LostFoundApiItemImpl> get copyWith =>
-      __$$LostFoundApiItemImplCopyWithImpl<_$LostFoundApiItemImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$LostFoundApiItemImplToJson(this);
-  }
-}
-
-abstract class _LostFoundApiItem implements LostFoundApiItem {
-  const factory _LostFoundApiItem({
-    @JsonKey(name: '_id') final String? id,
-    required final String? name,
-    required final String? properties,
-    required final String? createdAt,
-    final String? location,
-    final String? imageUrl,
-    final String? color,
-    final String? contact,
-    final String? date,
-  }) = _$LostFoundApiItemImpl;
-
-  factory _LostFoundApiItem.fromJson(Map<String, dynamic> json) =
-      _$LostFoundApiItemImpl.fromJson;
-
-  @override
-  @JsonKey(name: '_id')
-  String? get id;
-  @override
-  String? get name;
-  @override
-  String? get properties;
-  @override
-  String? get createdAt;
-  @override
-  String? get location;
-  @override
-  String? get imageUrl;
-  @override
-  String? get color;
-  @override
-  String? get contact;
-  @override
-  String? get date;
-
-  /// Create a copy of LostFoundApiItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LostFoundApiItemImplCopyWith<_$LostFoundApiItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 LostFoundApiResponse _$LostFoundApiResponseFromJson(Map<String, dynamic> json) {
   return _LostFoundApiResponse.fromJson(json);
 }
@@ -367,7 +23,7 @@ LostFoundApiResponse _$LostFoundApiResponseFromJson(Map<String, dynamic> json) {
 mixin _$LostFoundApiResponse {
   bool get success => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
-  List<LostFoundApiItem> get data => throw _privateConstructorUsedError;
+  List<LostFoundItem> get data => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   String? get details => throw _privateConstructorUsedError;
 
@@ -391,7 +47,7 @@ abstract class $LostFoundApiResponseCopyWith<$Res> {
   $Res call({
     bool success,
     int count,
-    List<LostFoundApiItem> data,
+    List<LostFoundItem> data,
     String? error,
     String? details,
   });
@@ -434,7 +90,7 @@ class _$LostFoundApiResponseCopyWithImpl<
             data: null == data
                 ? _value.data
                 : data // ignore: cast_nullable_to_non_nullable
-                      as List<LostFoundApiItem>,
+                      as List<LostFoundItem>,
             error: freezed == error
                 ? _value.error
                 : error // ignore: cast_nullable_to_non_nullable
@@ -461,7 +117,7 @@ abstract class _$$LostFoundApiResponseImplCopyWith<$Res>
   $Res call({
     bool success,
     int count,
-    List<LostFoundApiItem> data,
+    List<LostFoundItem> data,
     String? error,
     String? details,
   });
@@ -500,7 +156,7 @@ class __$$LostFoundApiResponseImplCopyWithImpl<$Res>
         data: null == data
             ? _value._data
             : data // ignore: cast_nullable_to_non_nullable
-                  as List<LostFoundApiItem>,
+                  as List<LostFoundItem>,
         error: freezed == error
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
@@ -520,7 +176,7 @@ class _$LostFoundApiResponseImpl implements _LostFoundApiResponse {
   const _$LostFoundApiResponseImpl({
     required this.success,
     required this.count,
-    required final List<LostFoundApiItem> data,
+    required final List<LostFoundItem> data,
     this.error,
     this.details,
   }) : _data = data;
@@ -532,9 +188,9 @@ class _$LostFoundApiResponseImpl implements _LostFoundApiResponse {
   final bool success;
   @override
   final int count;
-  final List<LostFoundApiItem> _data;
+  final List<LostFoundItem> _data;
   @override
-  List<LostFoundApiItem> get data {
+  List<LostFoundItem> get data {
     if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
@@ -595,7 +251,7 @@ abstract class _LostFoundApiResponse implements LostFoundApiResponse {
   const factory _LostFoundApiResponse({
     required final bool success,
     required final int count,
-    required final List<LostFoundApiItem> data,
+    required final List<LostFoundItem> data,
     final String? error,
     final String? details,
   }) = _$LostFoundApiResponseImpl;
@@ -608,7 +264,7 @@ abstract class _LostFoundApiResponse implements LostFoundApiResponse {
   @override
   int get count;
   @override
-  List<LostFoundApiItem> get data;
+  List<LostFoundItem> get data;
   @override
   String? get error;
   @override
