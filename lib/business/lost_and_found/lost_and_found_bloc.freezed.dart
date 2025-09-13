@@ -24,7 +24,6 @@ mixin _$LostAndFoundEvent {
     required TResult Function(String query) searchItems,
     required TResult Function() clearSearch,
     required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -33,7 +32,6 @@ mixin _$LostAndFoundEvent {
     TResult? Function(String query)? searchItems,
     TResult? Function()? clearSearch,
     TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -42,7 +40,6 @@ mixin _$LostAndFoundEvent {
     TResult Function(String query)? searchItems,
     TResult Function()? clearSearch,
     TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,7 +49,6 @@ mixin _$LostAndFoundEvent {
     required TResult Function(_SearchItems value) searchItems,
     required TResult Function(_ClearSearch value) clearSearch,
     required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -61,7 +57,6 @@ mixin _$LostAndFoundEvent {
     TResult? Function(_SearchItems value)? searchItems,
     TResult? Function(_ClearSearch value)? clearSearch,
     TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -70,7 +65,6 @@ mixin _$LostAndFoundEvent {
     TResult Function(_SearchItems value)? searchItems,
     TResult Function(_ClearSearch value)? clearSearch,
     TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -145,7 +139,6 @@ class _$StartedImpl implements _Started {
     required TResult Function(String query) searchItems,
     required TResult Function() clearSearch,
     required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
   }) {
     return started();
   }
@@ -158,7 +151,6 @@ class _$StartedImpl implements _Started {
     TResult? Function(String query)? searchItems,
     TResult? Function()? clearSearch,
     TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
   }) {
     return started?.call();
   }
@@ -171,7 +163,6 @@ class _$StartedImpl implements _Started {
     TResult Function(String query)? searchItems,
     TResult Function()? clearSearch,
     TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -188,7 +179,6 @@ class _$StartedImpl implements _Started {
     required TResult Function(_SearchItems value) searchItems,
     required TResult Function(_ClearSearch value) clearSearch,
     required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
   }) {
     return started(this);
   }
@@ -201,7 +191,6 @@ class _$StartedImpl implements _Started {
     TResult? Function(_SearchItems value)? searchItems,
     TResult? Function(_ClearSearch value)? clearSearch,
     TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
   }) {
     return started?.call(this);
   }
@@ -214,7 +203,6 @@ class _$StartedImpl implements _Started {
     TResult Function(_SearchItems value)? searchItems,
     TResult Function(_ClearSearch value)? clearSearch,
     TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -276,7 +264,6 @@ class _$FetchItemsImpl implements _FetchItems {
     required TResult Function(String query) searchItems,
     required TResult Function() clearSearch,
     required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
   }) {
     return fetchItems();
   }
@@ -289,7 +276,6 @@ class _$FetchItemsImpl implements _FetchItems {
     TResult? Function(String query)? searchItems,
     TResult? Function()? clearSearch,
     TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
   }) {
     return fetchItems?.call();
   }
@@ -302,7 +288,6 @@ class _$FetchItemsImpl implements _FetchItems {
     TResult Function(String query)? searchItems,
     TResult Function()? clearSearch,
     TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
     required TResult orElse(),
   }) {
     if (fetchItems != null) {
@@ -319,7 +304,6 @@ class _$FetchItemsImpl implements _FetchItems {
     required TResult Function(_SearchItems value) searchItems,
     required TResult Function(_ClearSearch value) clearSearch,
     required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
   }) {
     return fetchItems(this);
   }
@@ -332,7 +316,6 @@ class _$FetchItemsImpl implements _FetchItems {
     TResult? Function(_SearchItems value)? searchItems,
     TResult? Function(_ClearSearch value)? clearSearch,
     TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
   }) {
     return fetchItems?.call(this);
   }
@@ -345,7 +328,6 @@ class _$FetchItemsImpl implements _FetchItems {
     TResult Function(_SearchItems value)? searchItems,
     TResult Function(_ClearSearch value)? clearSearch,
     TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
     required TResult orElse(),
   }) {
     if (fetchItems != null) {
@@ -434,7 +416,6 @@ class _$SearchItemsImpl implements _SearchItems {
     required TResult Function(String query) searchItems,
     required TResult Function() clearSearch,
     required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
   }) {
     return searchItems(query);
   }
@@ -447,7 +428,6 @@ class _$SearchItemsImpl implements _SearchItems {
     TResult? Function(String query)? searchItems,
     TResult? Function()? clearSearch,
     TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
   }) {
     return searchItems?.call(query);
   }
@@ -460,7 +440,6 @@ class _$SearchItemsImpl implements _SearchItems {
     TResult Function(String query)? searchItems,
     TResult Function()? clearSearch,
     TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
     required TResult orElse(),
   }) {
     if (searchItems != null) {
@@ -477,7 +456,6 @@ class _$SearchItemsImpl implements _SearchItems {
     required TResult Function(_SearchItems value) searchItems,
     required TResult Function(_ClearSearch value) clearSearch,
     required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
   }) {
     return searchItems(this);
   }
@@ -490,7 +468,6 @@ class _$SearchItemsImpl implements _SearchItems {
     TResult? Function(_SearchItems value)? searchItems,
     TResult? Function(_ClearSearch value)? clearSearch,
     TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
   }) {
     return searchItems?.call(this);
   }
@@ -503,7 +480,6 @@ class _$SearchItemsImpl implements _SearchItems {
     TResult Function(_SearchItems value)? searchItems,
     TResult Function(_ClearSearch value)? clearSearch,
     TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
     required TResult orElse(),
   }) {
     if (searchItems != null) {
@@ -573,7 +549,6 @@ class _$ClearSearchImpl implements _ClearSearch {
     required TResult Function(String query) searchItems,
     required TResult Function() clearSearch,
     required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
   }) {
     return clearSearch();
   }
@@ -586,7 +561,6 @@ class _$ClearSearchImpl implements _ClearSearch {
     TResult? Function(String query)? searchItems,
     TResult? Function()? clearSearch,
     TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
   }) {
     return clearSearch?.call();
   }
@@ -599,7 +573,6 @@ class _$ClearSearchImpl implements _ClearSearch {
     TResult Function(String query)? searchItems,
     TResult Function()? clearSearch,
     TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
     required TResult orElse(),
   }) {
     if (clearSearch != null) {
@@ -616,7 +589,6 @@ class _$ClearSearchImpl implements _ClearSearch {
     required TResult Function(_SearchItems value) searchItems,
     required TResult Function(_ClearSearch value) clearSearch,
     required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
   }) {
     return clearSearch(this);
   }
@@ -629,7 +601,6 @@ class _$ClearSearchImpl implements _ClearSearch {
     TResult? Function(_SearchItems value)? searchItems,
     TResult? Function(_ClearSearch value)? clearSearch,
     TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
   }) {
     return clearSearch?.call(this);
   }
@@ -642,7 +613,6 @@ class _$ClearSearchImpl implements _ClearSearch {
     TResult Function(_SearchItems value)? searchItems,
     TResult Function(_ClearSearch value)? clearSearch,
     TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
     required TResult orElse(),
   }) {
     if (clearSearch != null) {
@@ -704,7 +674,6 @@ class _$RefreshItemsImpl implements _RefreshItems {
     required TResult Function(String query) searchItems,
     required TResult Function() clearSearch,
     required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
   }) {
     return refreshItems();
   }
@@ -717,7 +686,6 @@ class _$RefreshItemsImpl implements _RefreshItems {
     TResult? Function(String query)? searchItems,
     TResult? Function()? clearSearch,
     TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
   }) {
     return refreshItems?.call();
   }
@@ -730,7 +698,6 @@ class _$RefreshItemsImpl implements _RefreshItems {
     TResult Function(String query)? searchItems,
     TResult Function()? clearSearch,
     TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
     required TResult orElse(),
   }) {
     if (refreshItems != null) {
@@ -747,7 +714,6 @@ class _$RefreshItemsImpl implements _RefreshItems {
     required TResult Function(_SearchItems value) searchItems,
     required TResult Function(_ClearSearch value) clearSearch,
     required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
   }) {
     return refreshItems(this);
   }
@@ -760,7 +726,6 @@ class _$RefreshItemsImpl implements _RefreshItems {
     TResult? Function(_SearchItems value)? searchItems,
     TResult? Function(_ClearSearch value)? clearSearch,
     TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
   }) {
     return refreshItems?.call(this);
   }
@@ -773,7 +738,6 @@ class _$RefreshItemsImpl implements _RefreshItems {
     TResult Function(_SearchItems value)? searchItems,
     TResult Function(_ClearSearch value)? clearSearch,
     TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
     required TResult orElse(),
   }) {
     if (refreshItems != null) {
@@ -788,173 +752,6 @@ abstract class _RefreshItems implements LostAndFoundEvent {
 }
 
 /// @nodoc
-abstract class _$$FilterByTypeImplCopyWith<$Res> {
-  factory _$$FilterByTypeImplCopyWith(
-    _$FilterByTypeImpl value,
-    $Res Function(_$FilterByTypeImpl) then,
-  ) = __$$FilterByTypeImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({LostFoundType? type});
-}
-
-/// @nodoc
-class __$$FilterByTypeImplCopyWithImpl<$Res>
-    extends _$LostAndFoundEventCopyWithImpl<$Res, _$FilterByTypeImpl>
-    implements _$$FilterByTypeImplCopyWith<$Res> {
-  __$$FilterByTypeImplCopyWithImpl(
-    _$FilterByTypeImpl _value,
-    $Res Function(_$FilterByTypeImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of LostAndFoundEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? type = freezed}) {
-    return _then(
-      _$FilterByTypeImpl(
-        type: freezed == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as LostFoundType?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$FilterByTypeImpl implements _FilterByType {
-  const _$FilterByTypeImpl({required this.type});
-
-  @override
-  final LostFoundType? type;
-
-  @override
-  String toString() {
-    return 'LostAndFoundEvent.filterByType(type: $type)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FilterByTypeImpl &&
-            (identical(other.type, type) || other.type == type));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, type);
-
-  /// Create a copy of LostAndFoundEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FilterByTypeImplCopyWith<_$FilterByTypeImpl> get copyWith =>
-      __$$FilterByTypeImplCopyWithImpl<_$FilterByTypeImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() fetchItems,
-    required TResult Function(String query) searchItems,
-    required TResult Function() clearSearch,
-    required TResult Function() refreshItems,
-    required TResult Function(LostFoundType? type) filterByType,
-  }) {
-    return filterByType(type);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? fetchItems,
-    TResult? Function(String query)? searchItems,
-    TResult? Function()? clearSearch,
-    TResult? Function()? refreshItems,
-    TResult? Function(LostFoundType? type)? filterByType,
-  }) {
-    return filterByType?.call(type);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? fetchItems,
-    TResult Function(String query)? searchItems,
-    TResult Function()? clearSearch,
-    TResult Function()? refreshItems,
-    TResult Function(LostFoundType? type)? filterByType,
-    required TResult orElse(),
-  }) {
-    if (filterByType != null) {
-      return filterByType(type);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_FetchItems value) fetchItems,
-    required TResult Function(_SearchItems value) searchItems,
-    required TResult Function(_ClearSearch value) clearSearch,
-    required TResult Function(_RefreshItems value) refreshItems,
-    required TResult Function(_FilterByType value) filterByType,
-  }) {
-    return filterByType(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_FetchItems value)? fetchItems,
-    TResult? Function(_SearchItems value)? searchItems,
-    TResult? Function(_ClearSearch value)? clearSearch,
-    TResult? Function(_RefreshItems value)? refreshItems,
-    TResult? Function(_FilterByType value)? filterByType,
-  }) {
-    return filterByType?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_FetchItems value)? fetchItems,
-    TResult Function(_SearchItems value)? searchItems,
-    TResult Function(_ClearSearch value)? clearSearch,
-    TResult Function(_RefreshItems value)? refreshItems,
-    TResult Function(_FilterByType value)? filterByType,
-    required TResult orElse(),
-  }) {
-    if (filterByType != null) {
-      return filterByType(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _FilterByType implements LostAndFoundEvent {
-  const factory _FilterByType({required final LostFoundType? type}) =
-      _$FilterByTypeImpl;
-
-  LostFoundType? get type;
-
-  /// Create a copy of LostAndFoundEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FilterByTypeImplCopyWith<_$FilterByTypeImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 mixin _$LostAndFoundState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -963,7 +760,6 @@ mixin _$LostAndFoundState {
     required TResult Function(
       List<LostFoundItem> items,
       String searchQuery,
-      LostFoundType? filterType,
       int count,
     )
     success,
@@ -974,12 +770,7 @@ mixin _$LostAndFoundState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult? Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
@@ -988,12 +779,7 @@ mixin _$LostAndFoundState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
@@ -1096,7 +882,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(
       List<LostFoundItem> items,
       String searchQuery,
-      LostFoundType? filterType,
       int count,
     )
     success,
@@ -1111,12 +896,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult? Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
@@ -1129,12 +909,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
@@ -1239,7 +1014,6 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(
       List<LostFoundItem> items,
       String searchQuery,
-      LostFoundType? filterType,
       int count,
     )
     success,
@@ -1254,12 +1028,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult? Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
@@ -1272,12 +1041,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
@@ -1341,12 +1105,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
     $Res Function(_$SuccessImpl) then,
   ) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({
-    List<LostFoundItem> items,
-    String searchQuery,
-    LostFoundType? filterType,
-    int count,
-  });
+  $Res call({List<LostFoundItem> items, String searchQuery, int count});
 }
 
 /// @nodoc
@@ -1365,7 +1124,6 @@ class __$$SuccessImplCopyWithImpl<$Res>
   $Res call({
     Object? items = null,
     Object? searchQuery = null,
-    Object? filterType = freezed,
     Object? count = null,
   }) {
     return _then(
@@ -1378,10 +1136,6 @@ class __$$SuccessImplCopyWithImpl<$Res>
             ? _value.searchQuery
             : searchQuery // ignore: cast_nullable_to_non_nullable
                   as String,
-        filterType: freezed == filterType
-            ? _value.filterType
-            : filterType // ignore: cast_nullable_to_non_nullable
-                  as LostFoundType?,
         count: null == count
             ? _value.count
             : count // ignore: cast_nullable_to_non_nullable
@@ -1397,7 +1151,6 @@ class _$SuccessImpl implements _Success {
   const _$SuccessImpl({
     required final List<LostFoundItem> items,
     required this.searchQuery,
-    required this.filterType,
     required this.count,
   }) : _items = items;
 
@@ -1412,13 +1165,11 @@ class _$SuccessImpl implements _Success {
   @override
   final String searchQuery;
   @override
-  final LostFoundType? filterType;
-  @override
   final int count;
 
   @override
   String toString() {
-    return 'LostAndFoundState.success(items: $items, searchQuery: $searchQuery, filterType: $filterType, count: $count)';
+    return 'LostAndFoundState.success(items: $items, searchQuery: $searchQuery, count: $count)';
   }
 
   @override
@@ -1429,8 +1180,6 @@ class _$SuccessImpl implements _Success {
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.searchQuery, searchQuery) ||
                 other.searchQuery == searchQuery) &&
-            (identical(other.filterType, filterType) ||
-                other.filterType == filterType) &&
             (identical(other.count, count) || other.count == count));
   }
 
@@ -1439,7 +1188,6 @@ class _$SuccessImpl implements _Success {
     runtimeType,
     const DeepCollectionEquality().hash(_items),
     searchQuery,
-    filterType,
     count,
   );
 
@@ -1459,14 +1207,13 @@ class _$SuccessImpl implements _Success {
     required TResult Function(
       List<LostFoundItem> items,
       String searchQuery,
-      LostFoundType? filterType,
       int count,
     )
     success,
     required TResult Function(String message) empty,
     required TResult Function(String message) failure,
   }) {
-    return success(items, searchQuery, filterType, count);
+    return success(items, searchQuery, count);
   }
 
   @override
@@ -1474,17 +1221,12 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult? Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call(items, searchQuery, filterType, count);
+    return success?.call(items, searchQuery, count);
   }
 
   @override
@@ -1492,19 +1234,14 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(items, searchQuery, filterType, count);
+      return success(items, searchQuery, count);
     }
     return orElse();
   }
@@ -1554,13 +1291,11 @@ abstract class _Success implements LostAndFoundState {
   const factory _Success({
     required final List<LostFoundItem> items,
     required final String searchQuery,
-    required final LostFoundType? filterType,
     required final int count,
   }) = _$SuccessImpl;
 
   List<LostFoundItem> get items;
   String get searchQuery;
-  LostFoundType? get filterType;
   int get count;
 
   /// Create a copy of LostAndFoundState
@@ -1645,7 +1380,6 @@ class _$EmptyImpl implements _Empty {
     required TResult Function(
       List<LostFoundItem> items,
       String searchQuery,
-      LostFoundType? filterType,
       int count,
     )
     success,
@@ -1660,12 +1394,7 @@ class _$EmptyImpl implements _Empty {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult? Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
@@ -1678,12 +1407,7 @@ class _$EmptyImpl implements _Empty {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,
@@ -1823,7 +1547,6 @@ class _$FailureImpl implements _Failure {
     required TResult Function(
       List<LostFoundItem> items,
       String searchQuery,
-      LostFoundType? filterType,
       int count,
     )
     success,
@@ -1838,12 +1561,7 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult? Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult? Function(String message)? empty,
     TResult? Function(String message)? failure,
@@ -1856,12 +1574,7 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-      List<LostFoundItem> items,
-      String searchQuery,
-      LostFoundType? filterType,
-      int count,
-    )?
+    TResult Function(List<LostFoundItem> items, String searchQuery, int count)?
     success,
     TResult Function(String message)? empty,
     TResult Function(String message)? failure,

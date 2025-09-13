@@ -12,9 +12,8 @@ _$LostFoundResponseImpl _$$LostFoundResponseImplFromJson(
   items: (json['items'] as List<dynamic>)
       .map((e) => LostFoundItem.fromJson(e as Map<String, dynamic>))
       .toList(),
-  count: (json['count'] as num).toInt(),
 );
 
 Map<String, dynamic> _$$LostFoundResponseImplToJson(
   _$LostFoundResponseImpl instance,
-) => <String, dynamic>{'items': instance.items, 'count': instance.count};
+) => <String, dynamic>{'items': instance.items};

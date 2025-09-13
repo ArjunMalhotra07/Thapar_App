@@ -4,11 +4,11 @@ import 'package:thaparapp/business/locations/locations_bloc.dart';
 import 'package:thaparapp/business/lost_and_found/lost_and_found_bloc.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
-import 'package:thaparapp/data/provider/auth/auth_local.dart';
+import 'package:thaparapp/data/provider/auth/auth_imp.dart';
 import 'package:thaparapp/data/provider/chat/chat_imp.dart';
 import 'package:thaparapp/data/provider/locations/locations_imp.dart';
-import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_local.dart';
-import 'package:thaparapp/data/provider/startup/startup_local.dart';
+import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_imp.dart';
+import 'package:thaparapp/data/provider/startup/startup_imp.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
 import 'package:thaparapp/data/repo/chat_repo.dart';
 import 'package:thaparapp/data/repo/locations_repo.dart';
@@ -27,10 +27,10 @@ void init() {
   //! StartupRepo
   locator.registerLazySingleton<StartupRepo>(
     () => StartupRepo(
-      // startupProvider: StartupImp(
-      //   service: locator<BaseApiService>(instanceName: 'base'),
-      // ),
-      startupProvider: StartupLocal(),
+      startupProvider: StartupImp(
+        service: locator<BaseApiService>(instanceName: 'base'),
+      ),
+      // startupProvider: StartupLocal(),
     ),
   );
   // Register NetworkApiService with StartupRepo for auth interceptor
@@ -45,17 +45,19 @@ void init() {
   locator.registerLazySingleton<AuthBloc>(
     () => AuthBloc(
       authRepo: AuthRepo(
-        // authProvider: AuthImp(apiService: locator<BaseApiService>()),
-        authProvider: AuthLocal(),
+        authProvider: AuthImp(apiService: locator<BaseApiService>()),
       ),
       initBloc: locator<StartupBloc>(),
+      startupRepo: locator<StartupRepo>(),
     ),
   );
   //! Location
   locator.registerLazySingleton<LocationsBloc>(
     () => LocationsBloc(
       locationsRepo: LocationsRepo(
-        locationsProvider: LocationsApiProvider(service: locator<BaseApiService>()),
+        locationsProvider: LocationsApiProvider(
+          service: locator<BaseApiService>(),
+        ),
       ),
     ),
   );
@@ -71,7 +73,9 @@ void init() {
   locator.registerLazySingleton<LostAndFoundBloc>(
     () => LostAndFoundBloc(
       lostAndFoundRepo: LostAndFoundRepo(
-        lostAndFoundProvider: LostAndFoundLocalProvider(),
+        lostAndFoundProvider: LostAndFoundApiProvider(
+          service: locator<BaseApiService>(),
+        ),
       ),
     ),
   );

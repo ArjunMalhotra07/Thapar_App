@@ -62,7 +62,7 @@ class LostFoundItemCard extends StatelessWidget {
                       ],
                     ),
                     child: Text(
-                      _formatDate(item.dateFound ?? DateTime.now()),
+                      _formatDate(item.date ?? DateTime.now()),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ class LostFoundItemCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          item.title ?? "",
+                          item.name ?? "",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -120,9 +120,9 @@ class LostFoundItemCard extends StatelessWidget {
 
                   SizedBox(height: 8),
 
-                  // Description
+                  // Properties
                   Text(
-                    item.description ?? "",
+                    item.properties ?? "",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -137,7 +137,7 @@ class LostFoundItemCard extends StatelessWidget {
 
                   // Collect from
                   Text(
-                    'Collect from : ${item.collectFrom}',
+                    'Collect from : LOST & FOUND Dept.',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.black87,

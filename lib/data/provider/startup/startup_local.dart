@@ -1,5 +1,6 @@
 import 'package:thaparapp/data/model/api_models/authresponse/auth_response.dart';
 import 'package:thaparapp/data/model/api_models/verifytoken/verifytoken.dart';
+import 'package:thaparapp/data/model/user/user.dart';
 import 'package:thaparapp/data/provider/startup/startup_abs.dart';
 import 'package:thaparapp/data/model/cred/credential.dart';
 
@@ -46,7 +47,9 @@ class StartupLocal implements StartupProvider {
       message: "succes",
       jwt: "dummy_jwt",
       refreshToken: "dummy_refreshToken",
-      data: "data",
+      user:User(id: 'userId', name: 'Arjun', email: 'arjun03.malhotra@gmail.com', userId: '', gender: '', category: ''
+        
+      ),
     );
     return res;
   }

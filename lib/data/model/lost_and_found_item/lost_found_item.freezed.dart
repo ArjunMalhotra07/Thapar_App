@@ -22,13 +22,12 @@ LostFoundItem _$LostFoundItemFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LostFoundItem {
   int? get id => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  String? get location => throw _privateConstructorUsedError;
-  String? get collectFrom => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get properties => throw _privateConstructorUsedError;
+  String? get color => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
-  DateTime? get dateFound => throw _privateConstructorUsedError;
-  LostFoundType? get type => throw _privateConstructorUsedError;
+  String? get location => throw _privateConstructorUsedError;
+  DateTime? get date => throw _privateConstructorUsedError;
 
   /// Serializes this LostFoundItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,13 +48,12 @@ abstract class $LostFoundItemCopyWith<$Res> {
   @useResult
   $Res call({
     int? id,
-    String? title,
-    String? description,
-    String? location,
-    String? collectFrom,
+    String? name,
+    String? properties,
+    String? color,
     String? imageUrl,
-    DateTime? dateFound,
-    LostFoundType? type,
+    String? location,
+    DateTime? date,
   });
 }
 
@@ -75,13 +73,12 @@ class _$LostFoundItemCopyWithImpl<$Res, $Val extends LostFoundItem>
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
-    Object? location = freezed,
-    Object? collectFrom = freezed,
+    Object? name = freezed,
+    Object? properties = freezed,
+    Object? color = freezed,
     Object? imageUrl = freezed,
-    Object? dateFound = freezed,
-    Object? type = freezed,
+    Object? location = freezed,
+    Object? date = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -89,34 +86,30 @@ class _$LostFoundItemCopyWithImpl<$Res, $Val extends LostFoundItem>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as int?,
-            title: freezed == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
+            name: freezed == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
                       as String?,
-            description: freezed == description
-                ? _value.description
-                : description // ignore: cast_nullable_to_non_nullable
+            properties: freezed == properties
+                ? _value.properties
+                : properties // ignore: cast_nullable_to_non_nullable
                       as String?,
-            location: freezed == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            collectFrom: freezed == collectFrom
-                ? _value.collectFrom
-                : collectFrom // ignore: cast_nullable_to_non_nullable
+            color: freezed == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
                       as String?,
             imageUrl: freezed == imageUrl
                 ? _value.imageUrl
                 : imageUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
-            dateFound: freezed == dateFound
-                ? _value.dateFound
-                : dateFound // ignore: cast_nullable_to_non_nullable
+            location: freezed == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            date: freezed == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
-            type: freezed == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as LostFoundType?,
           )
           as $Val,
     );
@@ -134,13 +127,12 @@ abstract class _$$LostFoundItemImplCopyWith<$Res>
   @useResult
   $Res call({
     int? id,
-    String? title,
-    String? description,
-    String? location,
-    String? collectFrom,
+    String? name,
+    String? properties,
+    String? color,
     String? imageUrl,
-    DateTime? dateFound,
-    LostFoundType? type,
+    String? location,
+    DateTime? date,
   });
 }
 
@@ -159,13 +151,12 @@ class __$$LostFoundItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
-    Object? location = freezed,
-    Object? collectFrom = freezed,
+    Object? name = freezed,
+    Object? properties = freezed,
+    Object? color = freezed,
     Object? imageUrl = freezed,
-    Object? dateFound = freezed,
-    Object? type = freezed,
+    Object? location = freezed,
+    Object? date = freezed,
   }) {
     return _then(
       _$LostFoundItemImpl(
@@ -173,34 +164,30 @@ class __$$LostFoundItemImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as int?,
-        title: freezed == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
+        name: freezed == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
                   as String?,
-        description: freezed == description
-            ? _value.description
-            : description // ignore: cast_nullable_to_non_nullable
+        properties: freezed == properties
+            ? _value.properties
+            : properties // ignore: cast_nullable_to_non_nullable
                   as String?,
-        location: freezed == location
-            ? _value.location
-            : location // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        collectFrom: freezed == collectFrom
-            ? _value.collectFrom
-            : collectFrom // ignore: cast_nullable_to_non_nullable
+        color: freezed == color
+            ? _value.color
+            : color // ignore: cast_nullable_to_non_nullable
                   as String?,
         imageUrl: freezed == imageUrl
             ? _value.imageUrl
             : imageUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
-        dateFound: freezed == dateFound
-            ? _value.dateFound
-            : dateFound // ignore: cast_nullable_to_non_nullable
+        location: freezed == location
+            ? _value.location
+            : location // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        date: freezed == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
-        type: freezed == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as LostFoundType?,
       ),
     );
   }
@@ -211,13 +198,12 @@ class __$$LostFoundItemImplCopyWithImpl<$Res>
 class _$LostFoundItemImpl implements _LostFoundItem {
   const _$LostFoundItemImpl({
     required this.id,
-    required this.title,
-    required this.description,
-    required this.location,
-    required this.collectFrom,
+    required this.name,
+    required this.properties,
+    required this.color,
     required this.imageUrl,
-    required this.dateFound,
-    required this.type,
+    required this.location,
+    required this.date,
   });
 
   factory _$LostFoundItemImpl.fromJson(Map<String, dynamic> json) =>
@@ -226,23 +212,21 @@ class _$LostFoundItemImpl implements _LostFoundItem {
   @override
   final int? id;
   @override
-  final String? title;
+  final String? name;
   @override
-  final String? description;
+  final String? properties;
   @override
-  final String? location;
-  @override
-  final String? collectFrom;
+  final String? color;
   @override
   final String? imageUrl;
   @override
-  final DateTime? dateFound;
+  final String? location;
   @override
-  final LostFoundType? type;
+  final DateTime? date;
 
   @override
   String toString() {
-    return 'LostFoundItem(id: $id, title: $title, description: $description, location: $location, collectFrom: $collectFrom, imageUrl: $imageUrl, dateFound: $dateFound, type: $type)';
+    return 'LostFoundItem(id: $id, name: $name, properties: $properties, color: $color, imageUrl: $imageUrl, location: $location, date: $date)';
   }
 
   @override
@@ -251,18 +235,15 @@ class _$LostFoundItemImpl implements _LostFoundItem {
         (other.runtimeType == runtimeType &&
             other is _$LostFoundItemImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.collectFrom, collectFrom) ||
-                other.collectFrom == collectFrom) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.properties, properties) ||
+                other.properties == properties) &&
+            (identical(other.color, color) || other.color == color) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.dateFound, dateFound) ||
-                other.dateFound == dateFound) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -270,13 +251,12 @@ class _$LostFoundItemImpl implements _LostFoundItem {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    title,
-    description,
-    location,
-    collectFrom,
+    name,
+    properties,
+    color,
     imageUrl,
-    dateFound,
-    type,
+    location,
+    date,
   );
 
   /// Create a copy of LostFoundItem
@@ -296,13 +276,12 @@ class _$LostFoundItemImpl implements _LostFoundItem {
 abstract class _LostFoundItem implements LostFoundItem {
   const factory _LostFoundItem({
     required final int? id,
-    required final String? title,
-    required final String? description,
-    required final String? location,
-    required final String? collectFrom,
+    required final String? name,
+    required final String? properties,
+    required final String? color,
     required final String? imageUrl,
-    required final DateTime? dateFound,
-    required final LostFoundType? type,
+    required final String? location,
+    required final DateTime? date,
   }) = _$LostFoundItemImpl;
 
   factory _LostFoundItem.fromJson(Map<String, dynamic> json) =
@@ -311,19 +290,17 @@ abstract class _LostFoundItem implements LostFoundItem {
   @override
   int? get id;
   @override
-  String? get title;
+  String? get name;
   @override
-  String? get description;
+  String? get properties;
   @override
-  String? get location;
-  @override
-  String? get collectFrom;
+  String? get color;
   @override
   String? get imageUrl;
   @override
-  DateTime? get dateFound;
+  String? get location;
   @override
-  LostFoundType? get type;
+  DateTime? get date;
 
   /// Create a copy of LostFoundItem
   /// with the given fields replaced by the non-null parameter values.

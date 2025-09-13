@@ -8,7 +8,6 @@ part 'lost_found_response.g.dart';
 class LostFoundResponse with _$LostFoundResponse {
   const factory LostFoundResponse({
     required List<LostFoundItem> items,
-    required int count,
   }) = _LostFoundResponse;
 
   factory LostFoundResponse.fromJson(Map<String, dynamic> json) =>

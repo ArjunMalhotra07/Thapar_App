@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_images.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,9 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    if (userIdController.text.trim().length < 12) {
+    if (userIdController.text.trim().length < 5) {
       showCustomSnackbar(
-        'User ID must be at least 12 characters long',
+        'User ID must be at least 5 characters long',
         ContentType.warning,
       );
       return;
@@ -77,7 +81,14 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     // If all validations pass
-    showCustomSnackbar('Login successful!', ContentType.success);
+    context.read<AuthBloc>().add(
+      AuthEvent.hitLogin(
+        data: {
+          "password": passwordController.text,
+          "userId": userIdController.text,
+        },
+      ),
+    );
     // TODO: Implement actual login logic here
   }
 
@@ -391,32 +402,62 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           const SizedBox(height: 32),
 
-                          // Login Button
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: validateAndLogin,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColor.appThemeColor,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 18,
+                          // Login Button with BlocListener for navigation
+                          BlocConsumer<AuthBloc, AuthState>(
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                success: (user, msg) {
+                                  showCustomSnackbar(msg, ContentType.success);
+                                  GoRouter.of(context).go(AppRoute.home);
+                                },
+                                failure: (message) {
+                                  showCustomSnackbar(message, ContentType.failure);
+                                },
+                                orElse: () {},
+                              );
+                            },
+                            builder: (context, state) {
+                              final isLoading = state.maybeWhen(
+                                loading: () => true,
+                                orElse: () => false,
+                              );
+                              
+                              return SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: isLoading ? null : validateAndLogin,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColor.appThemeColor,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 18,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(35),
+                                    ),
+                                    elevation: 2,
+                                  ),
+                                  child: isLoading
+                                      ? const SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : Text(
+                                          'Log In',
+                                          style: TextStyle(
+                                            fontFamily: AppFonts.gilroy,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35),
-                                ),
-                                elevation: 2,
-                              ),
-                              child: Text(
-                                'Log In',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.gilroy,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
+                              );
+                            },
                           ),
 
                           const SizedBox(height: 32),

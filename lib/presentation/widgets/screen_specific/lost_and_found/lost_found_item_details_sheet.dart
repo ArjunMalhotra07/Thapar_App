@@ -57,7 +57,7 @@ class LostFoundItemDetailsSheet extends StatelessWidget {
 
                   // Title
                   Text(
-                    item.title ?? "",
+                    item.name ?? "",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -88,9 +88,9 @@ class LostFoundItemDetailsSheet extends StatelessWidget {
 
                   SizedBox(height: 16),
 
-                  // Description
+                  // Properties
                   Text(
-                    item.description ?? "",
+                    item.properties ?? "",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey[700],
@@ -123,7 +123,7 @@ class LostFoundItemDetailsSheet extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'Collect from: ${item.collectFrom}',
+                          'Collect from: LOST & FOUND Dept.',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[700],
@@ -132,7 +132,7 @@ class LostFoundItemDetailsSheet extends StatelessWidget {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          'Found on: ${_formatDate(item.dateFound ?? DateTime.now())}',
+                          'Found on: ${_formatDate(item.date ?? DateTime.now())}',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[700],

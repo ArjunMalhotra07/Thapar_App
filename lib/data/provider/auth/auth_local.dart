@@ -1,4 +1,5 @@
 import 'package:thaparapp/data/model/api_models/authresponse/auth_response.dart';
+import 'package:thaparapp/data/model/user/user.dart';
 import 'package:thaparapp/data/provider/auth/auth_abs.dart';
 
 class AuthLocal implements AuthProvider {
@@ -8,7 +9,11 @@ class AuthLocal implements AuthProvider {
       message: "success",
       jwt: "dummy_jwt",
       refreshToken: "dummy_refresh_token",
-      data: data,
+      user: User(
+        id: "userID",
+        name: "Arjun",
+        email: "arjun03.malhotra@gmail.com", userId: '', gender: '', category: '',
+      ),
     );
     try {
       await Future.delayed(const Duration(seconds: 3));

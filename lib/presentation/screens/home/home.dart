@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_icons.dart';
@@ -28,28 +30,36 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Greeting and Name
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hi,',
-                        style: TextStyle(
-                          fontFamily: AppFonts.gilroy,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        'Om Arora',
-                        style: TextStyle(
-                          fontFamily: AppFonts.gilroy,
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      final userName = state.maybeWhen(
+                        success: (user, msg) => user?.name ?? 'User',
+                        orElse: () => 'User',
+                      );
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hi,',
+                            style: TextStyle(
+                              fontFamily: AppFonts.gilroy,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            userName,
+                            style: TextStyle(
+                              fontFamily: AppFonts.gilroy,
+                              fontSize: 32,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
 
                   // Search and Logout Icons

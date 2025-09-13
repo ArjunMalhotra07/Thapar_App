@@ -13,7 +13,6 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
   List<LostFoundItem> allItems = [];
   List<LostFoundItem> filteredItems = [];
   String currentSearchQuery = '';
-  LostFoundType? currentFilterType;
 
   LostAndFoundBloc({required this.lostAndFoundRepo}) 
       : super(const LostAndFoundState.initial()) {
@@ -22,7 +21,6 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
     on<_SearchItems>(_onSearchItems);
     on<_ClearSearch>(_onClearSearch);
     on<_RefreshItems>(_onRefreshItems);
-    on<_FilterByType>(_onFilterByType);
   }
 
   Future<void> _onStarted(
@@ -51,7 +49,6 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
         emit(LostAndFoundState.success(
           items: filteredItems,
           searchQuery: '',
-          filterType: null,
           count: filteredItems.length,
         ));
       }
@@ -69,15 +66,15 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
     currentSearchQuery = event.query;
     
     if (event.query.isEmpty) {
-      filteredItems = _applyTypeFilter(List.from(allItems));
+      filteredItems = List.from(allItems);
     } else {
-      filteredItems = _applyTypeFilter(allItems.where((item) {
+      filteredItems = allItems.where((item) {
         final query = event.query.toLowerCase();
-        return (item.title?.toLowerCase().contains(query) ?? false) ||
-               (item.description?.toLowerCase().contains(query) ?? false) ||
+        return (item.name?.toLowerCase().contains(query) ?? false) ||
+               (item.properties?.toLowerCase().contains(query) ?? false) ||
                (item.location?.toLowerCase().contains(query) ?? false) ||
-               (item.collectFrom?.toLowerCase().contains(query) ?? false);
-      }).toList());
+               (item.location?.toLowerCase().contains(query) ?? false);
+      }).toList();
     }
     
     if (filteredItems.isEmpty && event.query.isNotEmpty) {
@@ -92,7 +89,6 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
       emit(LostAndFoundState.success(
         items: filteredItems,
         searchQuery: event.query,
-        filterType: currentFilterType,
         count: filteredItems.length,
       ));
     }
@@ -103,7 +99,7 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
     Emitter<LostAndFoundState> emit,
   ) async {
     currentSearchQuery = '';
-    filteredItems = _applyTypeFilter(List.from(allItems));
+    filteredItems = List.from(allItems);
     
     if (filteredItems.isEmpty) {
       emit(const LostAndFoundState.empty(
@@ -113,7 +109,6 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
       emit(LostAndFoundState.success(
         items: filteredItems,
         searchQuery: '',
-        filterType: currentFilterType,
         count: filteredItems.length,
       ));
     }
@@ -130,7 +125,7 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
       if (currentSearchQuery.isNotEmpty) {
         add(LostAndFoundEvent.searchItems(query: currentSearchQuery));
       } else {
-        filteredItems = _applyTypeFilter(List.from(allItems));
+        filteredItems = List.from(allItems);
         
         if (filteredItems.isEmpty) {
           emit(const LostAndFoundState.empty(
@@ -140,7 +135,6 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
           emit(LostAndFoundState.success(
             items: filteredItems,
             searchQuery: currentSearchQuery,
-            filterType: currentFilterType,
             count: filteredItems.length,
           ));
         }
@@ -150,38 +144,4 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
     }
   }
 
-  Future<void> _onFilterByType(
-    _FilterByType event,
-    Emitter<LostAndFoundState> emit,
-  ) async {
-    currentFilterType = event.type;
-    
-    if (currentSearchQuery.isNotEmpty) {
-      add(LostAndFoundEvent.searchItems(query: currentSearchQuery));
-    } else {
-      filteredItems = _applyTypeFilter(List.from(allItems));
-      
-      if (filteredItems.isEmpty) {
-        emit(LostAndFoundState.empty(
-          message: event.type != null 
-            ? 'No ${event.type == LostFoundType.lost ? "lost" : "found"} items'
-            : 'No items available',
-        ));
-      } else {
-        emit(LostAndFoundState.success(
-          items: filteredItems,
-          searchQuery: currentSearchQuery,
-          filterType: event.type,
-          count: filteredItems.length,
-        ));
-      }
-    }
-  }
-
-  List<LostFoundItem> _applyTypeFilter(List<LostFoundItem> items) {
-    if (currentFilterType == null) {
-      return items;
-    }
-    return items.where((item) => item.type == currentFilterType).toList();
-  }
 }

@@ -22,7 +22,6 @@ LostFoundResponse _$LostFoundResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LostFoundResponse {
   List<LostFoundItem> get items => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
 
   /// Serializes this LostFoundResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +40,7 @@ abstract class $LostFoundResponseCopyWith<$Res> {
     $Res Function(LostFoundResponse) then,
   ) = _$LostFoundResponseCopyWithImpl<$Res, LostFoundResponse>;
   @useResult
-  $Res call({List<LostFoundItem> items, int count});
+  $Res call({List<LostFoundItem> items});
 }
 
 /// @nodoc
@@ -58,17 +57,13 @@ class _$LostFoundResponseCopyWithImpl<$Res, $Val extends LostFoundResponse>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? items = null, Object? count = null}) {
+  $Res call({Object? items = null}) {
     return _then(
       _value.copyWith(
             items: null == items
                 ? _value.items
                 : items // ignore: cast_nullable_to_non_nullable
                       as List<LostFoundItem>,
-            count: null == count
-                ? _value.count
-                : count // ignore: cast_nullable_to_non_nullable
-                      as int,
           )
           as $Val,
     );
@@ -84,7 +79,7 @@ abstract class _$$LostFoundResponseImplCopyWith<$Res>
   ) = __$$LostFoundResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<LostFoundItem> items, int count});
+  $Res call({List<LostFoundItem> items});
 }
 
 /// @nodoc
@@ -100,17 +95,13 @@ class __$$LostFoundResponseImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? items = null, Object? count = null}) {
+  $Res call({Object? items = null}) {
     return _then(
       _$LostFoundResponseImpl(
         items: null == items
             ? _value._items
             : items // ignore: cast_nullable_to_non_nullable
                   as List<LostFoundItem>,
-        count: null == count
-            ? _value.count
-            : count // ignore: cast_nullable_to_non_nullable
-                  as int,
       ),
     );
   }
@@ -119,10 +110,8 @@ class __$$LostFoundResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LostFoundResponseImpl implements _LostFoundResponse {
-  const _$LostFoundResponseImpl({
-    required final List<LostFoundItem> items,
-    required this.count,
-  }) : _items = items;
+  const _$LostFoundResponseImpl({required final List<LostFoundItem> items})
+    : _items = items;
 
   factory _$LostFoundResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$LostFoundResponseImplFromJson(json);
@@ -136,11 +125,8 @@ class _$LostFoundResponseImpl implements _LostFoundResponse {
   }
 
   @override
-  final int count;
-
-  @override
   String toString() {
-    return 'LostFoundResponse(items: $items, count: $count)';
+    return 'LostFoundResponse(items: $items)';
   }
 
   @override
@@ -148,17 +134,13 @@ class _$LostFoundResponseImpl implements _LostFoundResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LostFoundResponseImpl &&
-            const DeepCollectionEquality().equals(other._items, _items) &&
-            (identical(other.count, count) || other.count == count));
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_items),
-    count,
-  );
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
 
   /// Create a copy of LostFoundResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -178,18 +160,14 @@ class _$LostFoundResponseImpl implements _LostFoundResponse {
 }
 
 abstract class _LostFoundResponse implements LostFoundResponse {
-  const factory _LostFoundResponse({
-    required final List<LostFoundItem> items,
-    required final int count,
-  }) = _$LostFoundResponseImpl;
+  const factory _LostFoundResponse({required final List<LostFoundItem> items}) =
+      _$LostFoundResponseImpl;
 
   factory _LostFoundResponse.fromJson(Map<String, dynamic> json) =
       _$LostFoundResponseImpl.fromJson;
 
   @override
   List<LostFoundItem> get items;
-  @override
-  int get count;
 
   /// Create a copy of LostFoundResponse
   /// with the given fields replaced by the non-null parameter values.

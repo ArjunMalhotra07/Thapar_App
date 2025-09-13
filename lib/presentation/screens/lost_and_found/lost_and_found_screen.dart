@@ -128,31 +128,32 @@ class _LostFoundScreenState extends State<LostFoundScreen> {
                       child: BlocBuilder<LostAndFoundBloc, LostAndFoundState>(
                         builder: (context, state) {
                           return state.when(
-                            initial: () => Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            loading: () => Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            success: (items, searchQuery, filterType, count) => 
-                              ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: items.length,
-                                itemBuilder: (context, index) {
-                                  return LostFoundItemCard(
-                                    item: items[index],
-                                    onTap: () => _showItemDetails(items[index]),
-                                  );
-                                },
-                              ),
+                            initial: () =>
+                                Center(child: CircularProgressIndicator()),
+                            loading: () =>
+                                Center(child: CircularProgressIndicator()),
+                            success: (items, searchQuery, filterType) =>
+                                ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: items.length,
+                                  itemBuilder: (context, index) {
+                                    return LostFoundItemCard(
+                                      item: items[index],
+                                      onTap: () =>
+                                          _showItemDetails(items[index]),
+                                    );
+                                  },
+                                ),
                             empty: (message) => _buildEmptyState(message),
                             failure: (message) => Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.error_outline, 
-                                       size: 64, 
-                                       color: Colors.red[400]),
+                                  Icon(
+                                    Icons.error_outline,
+                                    size: 64,
+                                    color: Colors.red[400],
+                                  ),
                                   SizedBox(height: 16),
                                   Text(
                                     'Error',

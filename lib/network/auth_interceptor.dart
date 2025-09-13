@@ -14,6 +14,24 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor({required this.startupRepo, required this.dio});
 
   @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    // Skip auth for login endpoint
+    if (options.path.contains('/login')) {
+      return handler.next(options);
+    }
+    
+    // Get stored credentials
+    final cred = await startupRepo.fetchCredentials();
+    
+    // Add JWT to headers if available
+    if (cred.jwt != null && cred.jwt!.isNotEmpty) {
+      options.headers['Authorization'] = 'Bearer ${cred.jwt}';
+    }
+    
+    return handler.next(options);
+  }
+
+  @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     // Check if error is 401 Unauthorized
     if (err.response?.statusCode == 401) {

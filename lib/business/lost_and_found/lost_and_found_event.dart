@@ -7,5 +7,4 @@ class LostAndFoundEvent with _$LostAndFoundEvent {
   const factory LostAndFoundEvent.searchItems({required String query}) = _SearchItems;
   const factory LostAndFoundEvent.clearSearch() = _ClearSearch;
   const factory LostAndFoundEvent.refreshItems() = _RefreshItems;
-  const factory LostAndFoundEvent.filterByType({required LostFoundType? type}) = _FilterByType;
 }

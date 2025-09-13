@@ -10,17 +10,15 @@ part 'lost_found_item.g.dart';
 class LostFoundItem with _$LostFoundItem {
   const factory LostFoundItem({
     required int? id,
-    required String? title,
-    required String? description,
-    required String? location,
-    required String? collectFrom,
+    required String? name,
+    required String? properties,
+    required String? color,
     required String? imageUrl,
-    required DateTime? dateFound,
-    required LostFoundType? type,
+    required String? location,
+    required DateTime? date,
+    // required LostFoundType? type,
   }) = _LostFoundItem;
 
   factory LostFoundItem.fromJson(Map<String, dynamic> json) =>
       _$LostFoundItemFromJson(json);
 }
-
-enum LostFoundType { lost, found }

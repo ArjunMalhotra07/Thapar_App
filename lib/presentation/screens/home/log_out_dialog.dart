@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thaparapp/business/login/auth_bloc.dart';
+import 'package:thaparapp/injector.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_images.dart';
+import 'package:thaparapp/presentation/constants/routes.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -79,30 +84,50 @@ class LogoutDialog extends StatelessWidget {
               const SizedBox(height: 16),
 
               // "Yes, Log Me Out" button
-              Container(
-                width: double.infinity,
-                height: 56,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    side: BorderSide(color: AppColor.appThemeColor, width: 1.5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Text(
-                    'Yes, Log Me Out',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColor.appThemeColor,
-                      fontFamily: AppFonts.gilroy,
-                    ),
-                  ),
-                ),
+              BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  state.mapOrNull(
+                    noUser: (value) {
+                      GoRouter.of(context).go(AppRoute.login);
+                    },
+                  );
+                },
+                builder: (context, state) {
+                  return state.maybeMap(
+                    loading: (_) => CircularProgressIndicator(),
+                    orElse: () {
+                      return SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            context.read<AuthBloc>().add(AuthEvent.hitLogout());
+                            // Navigator.of(context).pop();
+                          },
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: BorderSide(
+                              color: AppColor.appThemeColor,
+                              width: 1.5,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            'Yes, Log Me Out',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.appThemeColor,
+                              fontFamily: AppFonts.gilroy,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
@@ -118,7 +143,10 @@ void showLogoutDialog(BuildContext context) {
     barrierDismissible: true,
     barrierColor: Colors.transparent, // We handle overlay in the dialog itself
     builder: (BuildContext context) {
-      return const LogoutDialog();
+      return BlocProvider.value(
+        value: locator<AuthBloc>(),
+        child: const LogoutDialog(),
+      );
     },
   );
 }

@@ -21,18 +21,17 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
 
   void _onStarted(event, emit) async {
     try {
-      cred = await startupRepo.fetchCredentials();
-      if (cred.jwt != null && cred.jwt!.isNotEmpty) {
-        emit(const StartupState.processing());
-        add(
-          StartupEvent.checkJwtValidity(
-            jwt: cred.jwt,
-            refreshToken: cred.refreshToken,
-          ),
-        );
-      } else if (cred.jwt != null && cred.jwt!.isEmpty) {
-        emit(StartupState.loggedOutUser(msg: ''));
+      emit(const StartupState.processing());
+      
+      // Check if we have a stored user and token
+      final user = await startupRepo.fetchUser();
+      final token = await startupRepo.fetchToken();
+      
+      if (user != null && token != null) {
+        // User data and token exist, they're logged in
+        emit(StartupState.validUser(user: user));
       } else {
+        // No user data or token, they need to login
         emit(StartupState.freshUser());
       }
     } catch (e) {
@@ -53,7 +52,7 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
       }
       emit(
         StartupState.validUser(
-          user: User(name: "name", email: "email", id: res.userId),
+          user: User(name: "name", email: "email", id: res.userId, userId: '', gender: '', category: ''),
         ),
       );
     } catch (e) {
@@ -75,7 +74,7 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
       await save(res.jwt ?? "", res.refreshToken ?? "");
       emit(
         StartupState.validUser(
-          user: User(email: "", name: "", id: ''),
+          user: User(email: "", name: "", id: '', userId: '', gender: '', category: ''),
         ),
       );
     } catch (e) {
