@@ -1,3 +1,5 @@
+import 'package:thaparapp/data/model/api_models/lost_found_response/lost_found_api_response.dart';
+import 'package:thaparapp/data/model/lost_and_found_item/lost_found_item.dart';
 import 'package:thaparapp/data/model/lost_and_found_item/lost_found_response.dart';
 import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_abs.dart';
 import 'package:thaparapp/network/base_api_service.dart';
@@ -10,11 +12,35 @@ class LostAndFoundApiProvider implements LostAndFoundProvider {
   
   @override
   Future<LostFoundResponse> fetchItems() async {
-    final response = await service.getAPI(
-      url: AppURL.lostAndFound,
-      queryParams: {},
-      bearerToken: null,
-    );
-    return LostFoundResponse.fromJson(response);
+    try {
+      final response = await service.getAPI(
+        url: AppURL.lostAndFound,
+        queryParams: {},
+        bearerToken: null,
+      );
+      
+      final apiResponse = LostFoundApiResponse.fromJson(response);
+      
+      if (!apiResponse.success) {
+        throw Exception(apiResponse.error ?? 'Failed to fetch lost and found items');
+      }
+      
+      // Convert API items to app items
+      final items = apiResponse.data.map((apiItem) {
+        return LostFoundItem(
+          id: int.tryParse(apiItem.id ?? '0'),
+          name: apiItem.title,
+          properties: apiItem.description,
+          color: apiItem.color ?? 'Unknown',
+          imageUrl: apiItem.imageUrl,
+          location: apiItem.location ?? 'Unknown Location',
+          date: apiItem.createdAt != null ? DateTime.parse(apiItem.createdAt!) : DateTime.now(),
+        );
+      }).toList();
+      
+      return LostFoundResponse(items: items);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

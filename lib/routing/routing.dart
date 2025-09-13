@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thaparapp/business/locations/locations_bloc.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
+import 'package:thaparapp/business/lost_and_found/lost_and_found_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
 import 'package:thaparapp/injector.dart';
 import 'package:thaparapp/presentation/screens/chat/chat_screen.dart';
@@ -64,7 +65,10 @@ class Routing {
       ),
       GoRoute(
         path: AppRoute.lostAndFound,
-        builder: (context, state) => LostFoundScreen(),
+        builder: (context, state) => BlocProvider.value(
+          value: locator<LostAndFoundBloc>(),
+          child: LostFoundScreen(),
+        ),
       ),
     ],
   );

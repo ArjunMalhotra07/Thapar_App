@@ -10,8 +10,20 @@ import 'package:thaparapp/presentation/screens/home/log_out_dialog.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/home/feature_card.dart';
 
 // Main Home Screen
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Trigger the started event to load user data
+    context.read<AuthBloc>().add(const AuthEvent.started());
+  }
 
   @override
   Widget build(BuildContext context) {

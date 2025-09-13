@@ -18,18 +18,13 @@ class LocationsApiProvider implements LocationsProvider {
         queryParams: null,
         bearerToken: null,
       );
-      
+
       final apiResponse = LocationsApiResponse.fromJson(response);
-      
-      if (apiResponse.success) {
-        return LocationsResponse(
-          locations: apiResponse.data,
-          count: apiResponse.count,
-          limit: apiResponse.count,
-        );
-      } else {
-        throw Exception(apiResponse.error ?? 'Failed to fetch locations');
-      }
+      return LocationsResponse(
+        locations: apiResponse.data,
+        count: apiResponse.count,
+        limit: apiResponse.count,
+      );
     } catch (e) {
       rethrow;
     }

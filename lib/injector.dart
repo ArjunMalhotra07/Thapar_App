@@ -8,6 +8,7 @@ import 'package:thaparapp/data/provider/auth/auth_imp.dart';
 import 'package:thaparapp/data/provider/chat/chat_imp.dart';
 import 'package:thaparapp/data/provider/locations/locations_imp.dart';
 import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_imp.dart';
+import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_local.dart';
 import 'package:thaparapp/data/provider/startup/startup_imp.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
 import 'package:thaparapp/data/repo/chat_repo.dart';
@@ -73,6 +74,7 @@ void init() {
   locator.registerLazySingleton<LostAndFoundBloc>(
     () => LostAndFoundBloc(
       lostAndFoundRepo: LostAndFoundRepo(
+        // lostAndFoundProvider: LostAndFoundLocalProvider(),
         lostAndFoundProvider: LostAndFoundApiProvider(
           service: locator<BaseApiService>(),
         ),

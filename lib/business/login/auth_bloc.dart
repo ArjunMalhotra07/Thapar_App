@@ -19,8 +19,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required this.authRepo, required this.initBloc, required this.startupRepo})
     : super(_Initial()) {
+    on<_Started>(_onStarted);
     on<_Login>(_onHitLogin);
     on<_Logout>(_onHitLogout);
+  }
+
+  void _onStarted(event, emit) async {
+    try {
+      // Load user data and JWT token from storage
+      final storedUser = await startupRepo.fetchUser();
+      final storedToken = await startupRepo.fetchToken();
+      
+      if (storedUser != null && storedToken != null) {
+        // User is logged in, populate data in memory
+        user = storedUser;
+        jwtToken = storedToken;
+        emit(AuthState.success(user: storedUser, msg: "Welcome back"));
+      } else {
+        // No stored user/token, user needs to login
+        emit(AuthState.initial());
+      }
+    } catch (e) {
+      emit(AuthState.failure(message: "Failed to load user data"));
+    }
   }
 
   void _onHitLogin(event, emit) async {

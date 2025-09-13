@@ -1,5 +1,5 @@
 import 'package:thaparapp/data/model/api_models/chat_response/chat_response.dart';
-import 'package:thaparapp/data/model/api_models/history_response/history_response.dart';
+import 'package:thaparapp/data/model/api_models/chat_history_response/chat_history_response.dart';
 import 'package:thaparapp/data/model/chat/chat_message.dart';
 import 'package:thaparapp/data/provider/chat/chat_abs.dart';
 import 'package:thaparapp/network/base_api_service.dart';
@@ -47,36 +47,23 @@ class ChatApiProvider implements ChatProvider {
         bearerToken: null,
       );
       
-      // API returns array directly, not wrapped in object
-      if (response is List) {
-        final historyMessages = response.map((json) => HistoryMessage.fromJson(json)).toList();
-        
-        return historyMessages.map((historyMessage) {
-          final apiTime = DateTime.parse(historyMessage.timestamp);
-          final localTime = apiTime.toLocal();
-          return ChatMessage(
-            id: _generateMessageId(),
-            message: historyMessage.message,
-            isUser: historyMessage.role == 'user',
-            timeStamp: localTime,
-            status: MessageStatus.sent,
-          );
-        }).toList();
-      } else {
-        // Fallback if response is wrapped
-        final historyResponse = HistoryResponse.fromJson(response);
-        return historyResponse.messages.map((historyMessage) {
-          final apiTime = DateTime.parse(historyMessage.timestamp);
-          final localTime = apiTime.toLocal();
-          return ChatMessage(
-            id: _generateMessageId(),
-            message: historyMessage.message,
-            isUser: historyMessage.role == 'user',
-            timeStamp: localTime,
-            status: MessageStatus.sent,
-          );
-        }).toList();
+      final apiResponse = ChatHistoryApiResponse.fromJson(response);
+      
+      if (!apiResponse.success) {
+        throw Exception(apiResponse.error ?? 'Failed to fetch chat history');
       }
+      
+      return apiResponse.data.map((historyMessage) {
+        final apiTime = DateTime.parse(historyMessage.timestamp);
+        final localTime = apiTime.toLocal();
+        return ChatMessage(
+          id: _generateMessageId(),
+          message: historyMessage.message,
+          isUser: historyMessage.role == 'user',
+          timeStamp: localTime,
+          status: MessageStatus.sent,
+        );
+      }).toList();
     } catch (e) {
       rethrow;
     }

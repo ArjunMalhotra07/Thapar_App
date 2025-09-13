@@ -20,11 +20,10 @@ class LostFoundScreen extends StatefulWidget {
 class _LostFoundScreenState extends State<LostFoundScreen> {
   final TextEditingController _searchController = TextEditingController();
   late LostAndFoundBloc _bloc;
-
   @override
   void initState() {
     super.initState();
-    _bloc = locator<LostAndFoundBloc>();
+    _bloc = context.read<LostAndFoundBloc>();
     // Only fetch items if we haven't loaded them yet (first time opening the screen)
     if (_bloc.allItems.isEmpty) {
       _bloc.add(const LostAndFoundEvent.fetchItems());
@@ -103,96 +102,92 @@ class _LostFoundScreenState extends State<LostFoundScreen> {
           ),
         ],
       ),
-      body: BlocProvider.value(
-        value: _bloc,
-        child: Column(
-          children: [
-            // Search section with white container
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(top: 16),
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  children: [
-                    LostFoundSearchWidget(
-                      searchController: _searchController,
-                      onSearchChanged: _onSearchChanged,
-                    ),
-                    SizedBox(height: 16),
-                    // Items list
-                    Expanded(
-                      child: BlocBuilder<LostAndFoundBloc, LostAndFoundState>(
-                        builder: (context, state) {
-                          return state.when(
-                            initial: () =>
-                                Center(child: CircularProgressIndicator()),
-                            loading: () =>
-                                Center(child: CircularProgressIndicator()),
-                            success: (items, searchQuery, filterType) =>
-                                ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  itemCount: items.length,
-                                  itemBuilder: (context, index) {
-                                    return LostFoundItemCard(
-                                      item: items[index],
-                                      onTap: () =>
-                                          _showItemDetails(items[index]),
-                                    );
-                                  },
-                                ),
-                            empty: (message) => _buildEmptyState(message),
-                            failure: (message) => Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.error_outline,
-                                    size: 64,
-                                    color: Colors.red[400],
-                                  ),
-                                  SizedBox(height: 16),
-                                  Text(
-                                    'Error',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.grey[600],
-                                      fontFamily: AppFonts.gilroy,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    message,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[500],
-                                      fontFamily: AppFonts.gilroy,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: 16),
-                                  ElevatedButton(
-                                    onPressed: () => _bloc.add(
-                                      const LostAndFoundEvent.fetchItems(),
-                                    ),
-                                    child: Text('Retry'),
-                                  ),
-                                ],
+      body: Column(
+        children: [
+          // Search section with white container
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(top: 16),
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  LostFoundSearchWidget(
+                    searchController: _searchController,
+                    onSearchChanged: _onSearchChanged,
+                  ),
+                  SizedBox(height: 16),
+                  // Items list
+                  Expanded(
+                    child: BlocBuilder<LostAndFoundBloc, LostAndFoundState>(
+                      builder: (context, state) {
+                        return state.when(
+                          initial: () =>
+                              Center(child: CircularProgressIndicator()),
+                          loading: () =>
+                              Center(child: CircularProgressIndicator()),
+                          success: (items, searchQuery, count) =>
+                              ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  return LostFoundItemCard(
+                                    item: items[index],
+                                    onTap: () => _showItemDetails(items[index]),
+                                  );
+                                },
                               ),
+                          empty: (message) => _buildEmptyState(message),
+                          failure: (message) => Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  size: 64,
+                                  color: Colors.red[400],
+                                ),
+                                SizedBox(height: 16),
+                                Text(
+                                  'Error',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.grey[600],
+                                    fontFamily: AppFonts.gilroy,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  message,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[500],
+                                    fontFamily: AppFonts.gilroy,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 16),
+                                ElevatedButton(
+                                  onPressed: () => _bloc.add(
+                                    const LostAndFoundEvent.fetchItems(),
+                                  ),
+                                  child: Text('Retry'),
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
