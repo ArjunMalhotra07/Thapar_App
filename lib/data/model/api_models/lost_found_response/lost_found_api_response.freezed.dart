@@ -23,13 +23,14 @@ LostFoundApiItem _$LostFoundApiItemFromJson(Map<String, dynamic> json) {
 mixin _$LostFoundApiItem {
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get properties => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
-  String? get contactInfo => throw _privateConstructorUsedError;
+  String? get contact => throw _privateConstructorUsedError;
+  String? get date => throw _privateConstructorUsedError;
 
   /// Serializes this LostFoundApiItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,13 +51,14 @@ abstract class $LostFoundApiItemCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: '_id') String? id,
-    String? title,
-    String? description,
+    String? name,
+    String? properties,
     String? createdAt,
     String? location,
     String? imageUrl,
     String? color,
-    String? contactInfo,
+    String? contact,
+    String? date,
   });
 }
 
@@ -76,13 +78,14 @@ class _$LostFoundApiItemCopyWithImpl<$Res, $Val extends LostFoundApiItem>
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? name = freezed,
+    Object? properties = freezed,
     Object? createdAt = freezed,
     Object? location = freezed,
     Object? imageUrl = freezed,
     Object? color = freezed,
-    Object? contactInfo = freezed,
+    Object? contact = freezed,
+    Object? date = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -90,13 +93,13 @@ class _$LostFoundApiItemCopyWithImpl<$Res, $Val extends LostFoundApiItem>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as String?,
-            title: freezed == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
+            name: freezed == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
                       as String?,
-            description: freezed == description
-                ? _value.description
-                : description // ignore: cast_nullable_to_non_nullable
+            properties: freezed == properties
+                ? _value.properties
+                : properties // ignore: cast_nullable_to_non_nullable
                       as String?,
             createdAt: freezed == createdAt
                 ? _value.createdAt
@@ -114,9 +117,13 @@ class _$LostFoundApiItemCopyWithImpl<$Res, $Val extends LostFoundApiItem>
                 ? _value.color
                 : color // ignore: cast_nullable_to_non_nullable
                       as String?,
-            contactInfo: freezed == contactInfo
-                ? _value.contactInfo
-                : contactInfo // ignore: cast_nullable_to_non_nullable
+            contact: freezed == contact
+                ? _value.contact
+                : contact // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            date: freezed == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
                       as String?,
           )
           as $Val,
@@ -135,13 +142,14 @@ abstract class _$$LostFoundApiItemImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: '_id') String? id,
-    String? title,
-    String? description,
+    String? name,
+    String? properties,
     String? createdAt,
     String? location,
     String? imageUrl,
     String? color,
-    String? contactInfo,
+    String? contact,
+    String? date,
   });
 }
 
@@ -160,13 +168,14 @@ class __$$LostFoundApiItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? name = freezed,
+    Object? properties = freezed,
     Object? createdAt = freezed,
     Object? location = freezed,
     Object? imageUrl = freezed,
     Object? color = freezed,
-    Object? contactInfo = freezed,
+    Object? contact = freezed,
+    Object? date = freezed,
   }) {
     return _then(
       _$LostFoundApiItemImpl(
@@ -174,13 +183,13 @@ class __$$LostFoundApiItemImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as String?,
-        title: freezed == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
+        name: freezed == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
                   as String?,
-        description: freezed == description
-            ? _value.description
-            : description // ignore: cast_nullable_to_non_nullable
+        properties: freezed == properties
+            ? _value.properties
+            : properties // ignore: cast_nullable_to_non_nullable
                   as String?,
         createdAt: freezed == createdAt
             ? _value.createdAt
@@ -198,9 +207,13 @@ class __$$LostFoundApiItemImplCopyWithImpl<$Res>
             ? _value.color
             : color // ignore: cast_nullable_to_non_nullable
                   as String?,
-        contactInfo: freezed == contactInfo
-            ? _value.contactInfo
-            : contactInfo // ignore: cast_nullable_to_non_nullable
+        contact: freezed == contact
+            ? _value.contact
+            : contact // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        date: freezed == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
                   as String?,
       ),
     );
@@ -212,13 +225,14 @@ class __$$LostFoundApiItemImplCopyWithImpl<$Res>
 class _$LostFoundApiItemImpl implements _LostFoundApiItem {
   const _$LostFoundApiItemImpl({
     @JsonKey(name: '_id') this.id,
-    required this.title,
-    required this.description,
+    required this.name,
+    required this.properties,
     required this.createdAt,
     this.location,
     this.imageUrl,
     this.color,
-    this.contactInfo,
+    this.contact,
+    this.date,
   });
 
   factory _$LostFoundApiItemImpl.fromJson(Map<String, dynamic> json) =>
@@ -228,9 +242,9 @@ class _$LostFoundApiItemImpl implements _LostFoundApiItem {
   @JsonKey(name: '_id')
   final String? id;
   @override
-  final String? title;
+  final String? name;
   @override
-  final String? description;
+  final String? properties;
   @override
   final String? createdAt;
   @override
@@ -240,11 +254,13 @@ class _$LostFoundApiItemImpl implements _LostFoundApiItem {
   @override
   final String? color;
   @override
-  final String? contactInfo;
+  final String? contact;
+  @override
+  final String? date;
 
   @override
   String toString() {
-    return 'LostFoundApiItem(id: $id, title: $title, description: $description, createdAt: $createdAt, location: $location, imageUrl: $imageUrl, color: $color, contactInfo: $contactInfo)';
+    return 'LostFoundApiItem(id: $id, name: $name, properties: $properties, createdAt: $createdAt, location: $location, imageUrl: $imageUrl, color: $color, contact: $contact, date: $date)';
   }
 
   @override
@@ -253,9 +269,9 @@ class _$LostFoundApiItemImpl implements _LostFoundApiItem {
         (other.runtimeType == runtimeType &&
             other is _$LostFoundApiItemImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.properties, properties) ||
+                other.properties == properties) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.location, location) ||
@@ -263,8 +279,8 @@ class _$LostFoundApiItemImpl implements _LostFoundApiItem {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.color, color) || other.color == color) &&
-            (identical(other.contactInfo, contactInfo) ||
-                other.contactInfo == contactInfo));
+            (identical(other.contact, contact) || other.contact == contact) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -272,13 +288,14 @@ class _$LostFoundApiItemImpl implements _LostFoundApiItem {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    title,
-    description,
+    name,
+    properties,
     createdAt,
     location,
     imageUrl,
     color,
-    contactInfo,
+    contact,
+    date,
   );
 
   /// Create a copy of LostFoundApiItem
@@ -301,13 +318,14 @@ class _$LostFoundApiItemImpl implements _LostFoundApiItem {
 abstract class _LostFoundApiItem implements LostFoundApiItem {
   const factory _LostFoundApiItem({
     @JsonKey(name: '_id') final String? id,
-    required final String? title,
-    required final String? description,
+    required final String? name,
+    required final String? properties,
     required final String? createdAt,
     final String? location,
     final String? imageUrl,
     final String? color,
-    final String? contactInfo,
+    final String? contact,
+    final String? date,
   }) = _$LostFoundApiItemImpl;
 
   factory _LostFoundApiItem.fromJson(Map<String, dynamic> json) =
@@ -317,9 +335,9 @@ abstract class _LostFoundApiItem implements LostFoundApiItem {
   @JsonKey(name: '_id')
   String? get id;
   @override
-  String? get title;
+  String? get name;
   @override
-  String? get description;
+  String? get properties;
   @override
   String? get createdAt;
   @override
@@ -329,7 +347,9 @@ abstract class _LostFoundApiItem implements LostFoundApiItem {
   @override
   String? get color;
   @override
-  String? get contactInfo;
+  String? get contact;
+  @override
+  String? get date;
 
   /// Create a copy of LostFoundApiItem
   /// with the given fields replaced by the non-null parameter values.

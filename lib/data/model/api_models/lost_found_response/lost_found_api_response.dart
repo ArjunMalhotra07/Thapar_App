@@ -7,13 +7,14 @@ part 'lost_found_api_response.g.dart';
 class LostFoundApiItem with _$LostFoundApiItem {
   const factory LostFoundApiItem({
     @JsonKey(name: '_id') String? id,
-    required String? title,
-    required String? description,
+    required String? name,
+    required String? properties,
     required String? createdAt,
     String? location,
     String? imageUrl,
     String? color,
-    String? contactInfo,
+    String? contact,
+    String? date,
   }) = _LostFoundApiItem;
 
   factory LostFoundApiItem.fromJson(Map<String, dynamic> json) =>

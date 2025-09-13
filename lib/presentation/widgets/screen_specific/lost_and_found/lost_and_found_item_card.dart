@@ -39,7 +39,10 @@ class LostFoundItemCard extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(item.imageUrl ?? ""),
+                      // image: NetworkImage(item.imageUrl ?? ""),
+                      image: NetworkImage(
+                        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),

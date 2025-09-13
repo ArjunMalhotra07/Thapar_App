@@ -10,26 +10,28 @@ _$LostFoundApiItemImpl _$$LostFoundApiItemImplFromJson(
   Map<String, dynamic> json,
 ) => _$LostFoundApiItemImpl(
   id: json['_id'] as String?,
-  title: json['title'] as String?,
-  description: json['description'] as String?,
+  name: json['name'] as String?,
+  properties: json['properties'] as String?,
   createdAt: json['createdAt'] as String?,
   location: json['location'] as String?,
   imageUrl: json['imageUrl'] as String?,
   color: json['color'] as String?,
-  contactInfo: json['contactInfo'] as String?,
+  contact: json['contact'] as String?,
+  date: json['date'] as String?,
 );
 
 Map<String, dynamic> _$$LostFoundApiItemImplToJson(
   _$LostFoundApiItemImpl instance,
 ) => <String, dynamic>{
   '_id': instance.id,
-  'title': instance.title,
-  'description': instance.description,
+  'name': instance.name,
+  'properties': instance.properties,
   'createdAt': instance.createdAt,
   'location': instance.location,
   'imageUrl': instance.imageUrl,
   'color': instance.color,
-  'contactInfo': instance.contactInfo,
+  'contact': instance.contact,
+  'date': instance.date,
 };
 
 _$LostFoundApiResponseImpl _$$LostFoundApiResponseImplFromJson(

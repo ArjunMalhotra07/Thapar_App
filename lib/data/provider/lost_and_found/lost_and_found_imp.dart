@@ -23,8 +23,8 @@ class LostAndFoundApiProvider implements LostAndFoundProvider {
       final items = apiResponse.data.map((apiItem) {
         return LostFoundItem(
           id: int.tryParse(apiItem.id ?? '0'),
-          name: apiItem.title,
-          properties: apiItem.description,
+          name: apiItem.name,
+          properties: apiItem.properties,
           color: apiItem.color ?? 'Unknown',
           imageUrl: apiItem.imageUrl,
           location: apiItem.location ?? 'Unknown Location',

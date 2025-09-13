@@ -47,7 +47,9 @@ class LostFoundItemDetailsSheet extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
-                        image: NetworkImage(item.imageUrl ?? ""),
+                        image: NetworkImage(
+                          'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
