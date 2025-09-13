@@ -11,7 +11,6 @@ class LostAndFoundApiProvider implements LostAndFoundProvider {
 
   @override
   Future<List<LostFoundItem>> fetchItems() async {
-    print("here");
     try {
       final response = await service.getAPI(
         url: AppURL.lostAndFound,
