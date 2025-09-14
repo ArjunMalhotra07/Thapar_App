@@ -7,9 +7,35 @@ import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/app_images.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
-class LogoutDialog extends StatelessWidget {
+class LogoutDialog extends StatefulWidget {
   const LogoutDialog({super.key});
+
+  @override
+  State<LogoutDialog> createState() => _LogoutDialogState();
+}
+
+class _LogoutDialogState extends State<LogoutDialog> {
+  void showCustomSnackbar(String message, ContentType contentType) {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: contentType == ContentType.success
+            ? 'Success!'
+            : contentType == ContentType.warning
+            ? 'Warning!'
+            : 'Error!',
+        message: message,
+        contentType: contentType,
+      ),
+    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +108,12 @@ class LogoutDialog extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-
               // "Yes, Log Me Out" button
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
                   state.mapOrNull(
-                    noUser: (value) {
+                    noUser: (value) async {
+                      showCustomSnackbar(value.message, ContentType.success);
                       GoRouter.of(context).go(AppRoute.login);
                     },
                   );

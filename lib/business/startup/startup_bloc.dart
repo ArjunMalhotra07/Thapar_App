@@ -22,11 +22,11 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
   void _onStarted(event, emit) async {
     try {
       emit(const StartupState.processing());
-      
+      await Future.delayed(Duration(milliseconds: 1400));
       // Check if we have a stored user and token
       final user = await startupRepo.fetchUser();
       final token = await startupRepo.fetchToken();
-      
+
       if (user != null && token != null) {
         // User data and token exist, they're logged in
         emit(StartupState.validUser(user: user));
@@ -52,7 +52,14 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
       }
       emit(
         StartupState.validUser(
-          user: User(name: "name", email: "email", id: res.userId, userId: '', gender: '', category: ''),
+          user: User(
+            name: "name",
+            email: "email",
+            id: res.userId,
+            userId: '',
+            gender: '',
+            category: '',
+          ),
         ),
       );
     } catch (e) {
@@ -74,7 +81,14 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
       await save(res.jwt ?? "", res.refreshToken ?? "");
       emit(
         StartupState.validUser(
-          user: User(email: "", name: "", id: '', userId: '', gender: '', category: ''),
+          user: User(
+            email: "",
+            name: "",
+            id: '',
+            userId: '',
+            gender: '',
+            category: '',
+          ),
         ),
       );
     } catch (e) {

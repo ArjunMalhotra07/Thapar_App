@@ -20,8 +20,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   String? jwtToken;
 
   AuthBloc({
-    required this.authRepo, 
-    required this.initBloc, 
+    required this.authRepo,
+    required this.initBloc,
     required this.startupRepo,
   }) : super(_Initial()) {
     on<_Started>(_onStarted);
@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // Load user data and JWT token from storage
       final storedUser = await startupRepo.fetchUser();
       final storedToken = await startupRepo.fetchToken();
-      
+
       if (storedUser != null && storedToken != null) {
         // User is logged in, populate data in memory
         user = storedUser;
@@ -53,22 +53,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState.loading());
     try {
       final res = await authRepo.login(data: event.data);
-      
+
       // Store JWT and refresh token (keeping for future use if needed)
       initBloc.save(res.jwt ?? "", res.refreshToken ?? "");
-      
+
       // Store user data and JWT token separately
       if (res.user != null) {
         await startupRepo.storeUser(user: res.user!);
         user = res.user;
       }
-      
+
       // Store JWT token for API calls
       if (res.jwt != null) {
         await startupRepo.storeToken(token: res.jwt!);
         jwtToken = res.jwt;
       }
-      
+
       emit(AuthState.success(user: res.user, msg: res.message ?? "Welcome"));
     } catch (e) {
       emit(AuthState.failure(message: e.toString()));
@@ -76,25 +76,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onHitLogout(event, emit) async {
+    // Show loading state, but DO NOT clear user yet
     emit(AuthState.loading());
-    
-    // Clear JWT tokens
-    initBloc.save('', '');
-    
-    // Clear user data
-    await startupRepo.clearUserData();
+    // Emit a logout signal without clearing data yet
+    emit(AuthState.noUser(message: "Successfully logged out!"));
+
+    // Now actually clear all user data in background
     user = null;
     jwtToken = null;
-    
-    // Clear chat messages except welcome message
+
     try {
       final chatBloc = locator<ChatBloc>();
       chatBloc.add(const ChatEvent.clearMessagesOnLogout());
-    } catch (e) {
-      // Chat bloc might not be initialized yet, ignore the error
-    }
-    
-    await Future.delayed(const Duration(milliseconds: 400));
-    emit(AuthState.noUser(message: "Successfully logged out!"));
+    } catch (_) {}
+
+    initBloc.save('', '');
+    await startupRepo.clearUserData();
   }
 }
