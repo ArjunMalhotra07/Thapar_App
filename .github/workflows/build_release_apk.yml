@@ -1,103 +1,73 @@
-name: Build, Upload APK to GCS and Send Link
+name: Build APK and Send Download Link
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Manual trigger only
+  # Or use this for automatic builds:
+  # push:
+  #   branches: [ main ]  # Triggers on every push to main branch
 
 jobs:
-  build-upload-send:
+  build-and-release:
     runs-on: ubuntu-latest
-
+    
     steps:
-      # Checkout your repo
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # Setup Flutter
+        
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
-
-      # Build the release APK
+          
+      - name: Get Flutter dependencies
+        run: flutter pub get
+        
       - name: Build APK
         run: flutter build apk --release
-
-      # Setup Node.js to use GCS and Nodemailer
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: |
-          npm init -y
-          npm install @google-cloud/storage nodemailer
-
-      # Upload APK to Google Cloud Storage
-      - name: Upload to GCS
-        run: |
-          echo '${{ secrets.GCP_SA_KEY }}' > sa.json
-          APK_PATH=build/app/outputs/flutter-apk/app-release.apk
-          UPLOAD_NAME=app-release-$(date +%s).apk
-
-          node <<'EOF'
-          const { Storage } = require('@google-cloud/storage');
-          const fs = require('fs');
-          const path = require('path');
-          const storage = new Storage({ keyFilename: 'sa.json' });
-          const bucketName = 'thapar-app-apk-uploads-bucket';  // change if needed
-
-          (async () => {
-            const [buckets] = await storage.getBuckets();
-            if (!buckets.find(b => b.name === bucketName)) {
-              await storage.createBucket(bucketName);
-            }
-
-            const uploadName = `app-release-${Date.now()}.apk`;
-            await storage.bucket(bucketName)
-              .upload('build/app/outputs/flutter-apk/app-release.apk', {
-                destination: uploadName,
-                gzip: true
-              });
-
-            await storage.bucket(bucketName).file(uploadName).makePublic();
-
-            const publicUrl = \`https://storage.googleapis.com/\${bucketName}/\${uploadName}\`;
-            fs.writeFileSync('download_link.txt', publicUrl);
-            console.log('✅ Uploaded to: ' + publicUrl);
-          })();
-          EOF
-
-      # Send email with the download link
-      - name: Send email
-        run: |
-          DOWNLOAD_LINK=$(cat download_link.txt)
-
-          node <<EOF
-          const nodemailer = require('nodemailer');
-          const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: '${{ secrets.EMAIL_USER }}',
-              pass: '${{ secrets.EMAIL_PASS }}'
-            }
-          });
-
-          const mailOptions = {
-            from: '${{ secrets.EMAIL_USER }}',
-            to: '${{ secrets.EMAIL_TO }}',
-            subject: 'New APK Build Available',
-            text: 'Download the latest APK here: ' + process.env.DOWNLOAD_LINK
-          };
-
-          transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.error(error);
-              process.exit(1);
-            } else {
-              console.log('📧 Email sent: ' + info.response);
-            }
-          });
-          EOF
+        
+      - name: Get current timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_OUTPUT
+        
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          DOWNLOAD_LINK: ${{ steps.upload.outputs.link }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "build-${{ steps.timestamp.outputs.timestamp }}"
+          release_name: "APK Build ${{ steps.timestamp.outputs.timestamp }}"
+          body: |
+            Automated APK build generated on ${{ steps.timestamp.outputs.timestamp }}
+            
+            Download the APK below and install on your Android device.
+          draft: false
+          prerelease: false
+          
+      - name: Upload APK to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/app/outputs/flutter-apk/app-release.apk
+          asset_name: app-release-${{ steps.timestamp.outputs.timestamp }}.apk
+          asset_content_type: application/vnd.android.package-archive
+          
+      - name: Send Email with Download Link
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "📱 New APK Build Available - ${{ steps.timestamp.outputs.timestamp }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_USERNAME }}
+          html_body: |
+            <h2>🚀 New APK Build Ready!</h2>
+            <p><strong>Build Time:</strong> ${{ steps.timestamp.outputs.timestamp }}</p>
+            <p><strong>Repository:</strong> ${{ github.repository }}</p>
+            <p><strong>Download Link:</strong></p>
+            <p><a href="https://github.com/${{ github.repository }}/releases/tag/build-${{ steps.timestamp.outputs.timestamp }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">📱 Download APK from GitHub</a></p>
+            <p><small>Click the link above to go to the release page, then download the APK file.</small></p>
