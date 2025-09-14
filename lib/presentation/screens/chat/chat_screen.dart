@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thaparapp/business/chat/chat_bloc.dart';
+import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/data/model/chat/chat_message.dart';
 import 'package:thaparapp/injector.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
@@ -19,20 +20,28 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   late ChatBloc _chatBloc;
+  late AuthBloc _authBloc;
 
   @override
   void initState() {
     super.initState();
     _chatBloc = locator<ChatBloc>();
+    _authBloc = locator<AuthBloc>();
+    
+    // Get current user ID from AuthBloc
+    final userId = _authBloc.user?.id?.toString() ?? _generateUserId();
+    
     // Only initialize if chat hasn't been loaded yet
     _chatBloc.state.when(
-      initial: () => _chatBloc.add(ChatEvent.initializeChat(chatID: "user_123")),
+      initial: () => _chatBloc.add(ChatEvent.initializeChat(chatID: userId)),
       loading: () {},
       typing: (_) {},
       success: (_) {},
-      failure: (_) => _chatBloc.add(ChatEvent.initializeChat(chatID: "user_123")),
+      failure: (_) => _chatBloc.add(ChatEvent.initializeChat(chatID: userId)),
     );
   }
+
+  String _generateUserId() => DateTime.now().millisecondsSinceEpoch.toString();
 
   @override
   void dispose() {
@@ -176,7 +185,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           SizedBox(height: 16),
                           ElevatedButton(
                             onPressed: () {
-                              _chatBloc.add(ChatEvent.initializeChat(chatID: "user_123"));
+                              final userId = _authBloc.user?.id?.toString() ?? _generateUserId();
+                              _chatBloc.add(ChatEvent.initializeChat(chatID: userId));
                             },
                             child: Text('Retry'),
                           ),

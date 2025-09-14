@@ -9,5 +9,5 @@ class ChatEvent with _$ChatEvent {
       _SendMessage;
   const factory ChatEvent.loadChatHistory({required String? chatID}) =
       _LoadChatHistory;
-  const factory ChatEvent.clearChat() = _ClearChat;
+  const factory ChatEvent.clearMessagesOnLogout() = _ClearMessagesOnLogout;
 }

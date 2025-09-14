@@ -18,52 +18,58 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<_SendMessage>(_onSendMessage);
     on<_LoadChatHistory>(_onLoadChatHistory);
     on<_ClearChat>(_onClearChat);
+    on<_ClearMessagesOnLogout>(_onClearMessagesOnLogout);
   }
 
   void _onInitializeChat(_InitializeChat event, emit) async {
     emit(ChatState.loading());
     try {
-      currentUserId = event.chatID ?? _generateUserId();
-      messages = [];
+      final newUserId = event.chatID ?? _generateUserId();
       
-      // Try to load existing chat history first
-      try {
-        final history = await chatRepo.getChatHistory(chatId: currentUserId);
+      // Only reinitialize if user ID has changed or messages are empty
+      if (currentUserId != newUserId || messages.isEmpty) {
+        currentUserId = newUserId;
+        messages = [];
         
-        // Always add the intro message first
-        final greeting = ChatMessage(
-          id: _generateMessageId(),
-          message:
-              "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
-          isUser: false,
-          timeStamp: DateTime.now().subtract(Duration(minutes: 10)),
-          status: MessageStatus.sent,
-        );
-        
-        messages.add(greeting);
-        
-        // If history exists and is not empty, add it after the intro
-        if (history.isNotEmpty) {
-          messages.addAll(history);
+        // Try to load existing chat history first
+        try {
+          final history = await chatRepo.getChatHistory(chatId: currentUserId);
+          
+          // Always add the intro message first
+          final greeting = ChatMessage(
+            id: _generateMessageId(),
+            message:
+                "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
+            isUser: false,
+            timeStamp: DateTime.now().subtract(Duration(minutes: 10)),
+            status: MessageStatus.sent,
+          );
+          
+          messages.add(greeting);
+          
+          // If history exists and is not empty, add it after the intro
+          if (history.isNotEmpty) {
+            messages.addAll(history);
+          }
+          
           emit(ChatState.success(messages: List.from(messages)));
-          return;
-        }
-        
-        // If history is empty, just show the intro message
-        emit(ChatState.success(messages: List.from(messages)));
-        
-      } catch (e) {
-        // If API call fails, show initial greeting as fallback
-        final greeting = ChatMessage(
-          id: _generateMessageId(),
-          message:
-              "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
-          isUser: false,
-          timeStamp: DateTime.now(),
-          status: MessageStatus.sent,
-        );
+          
+        } catch (e) {
+          // If API call fails, show initial greeting as fallback
+          final greeting = ChatMessage(
+            id: _generateMessageId(),
+            message:
+                "Hey, I'm AI ChatBot, your smart buddy at Thapar University. From class schedules to campus updates, I've got the answers.\n\nWhat's the first thing you wanna know today?",
+            isUser: false,
+            timeStamp: DateTime.now(),
+            status: MessageStatus.sent,
+          );
 
-        messages.add(greeting);
+          messages.add(greeting);
+          emit(ChatState.success(messages: List.from(messages)));
+        }
+      } else {
+        // User ID hasn't changed and messages exist, just emit current state
         emit(ChatState.success(messages: List.from(messages)));
       }
     } catch (e) {
@@ -139,6 +145,18 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     } catch (e) {
       emit(ChatState.failure(message: e.toString()));
     }
+  }
+
+  void _onClearMessagesOnLogout(event, emit) async {
+    // Keep only the welcome message (first message) and clear the rest
+    if (messages.isNotEmpty) {
+      final welcomeMessage = messages.first;
+      messages.clear();
+      messages.add(welcomeMessage);
+    }
+    // Reset current user ID to force re-initialization on next login
+    currentUserId = '';
+    emit(ChatState.initial());
   }
 
   String _generateUserId() => DateTime.now().millisecondsSinceEpoch.toString();

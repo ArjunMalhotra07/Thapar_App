@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
+import 'package:thaparapp/business/chat/chat_bloc.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
 import 'package:thaparapp/data/repo/startup_repo.dart';
 import 'package:thaparapp/data/model/user/user.dart';
+import 'package:thaparapp/injector.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -17,8 +19,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   User? user;
   String? jwtToken;
 
-  AuthBloc({required this.authRepo, required this.initBloc, required this.startupRepo})
-    : super(_Initial()) {
+  AuthBloc({
+    required this.authRepo, 
+    required this.initBloc, 
+    required this.startupRepo,
+  }) : super(_Initial()) {
     on<_Started>(_onStarted);
     on<_Login>(_onHitLogin);
     on<_Logout>(_onHitLogout);
@@ -80,6 +85,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await startupRepo.clearUserData();
     user = null;
     jwtToken = null;
+    
+    // Clear chat messages except welcome message
+    try {
+      final chatBloc = locator<ChatBloc>();
+      chatBloc.add(const ChatEvent.clearMessagesOnLogout());
+    } catch (e) {
+      // Chat bloc might not be initialized yet, ignore the error
+    }
     
     await Future.delayed(const Duration(milliseconds: 400));
     emit(AuthState.noUser(message: "Successfully logged out!"));

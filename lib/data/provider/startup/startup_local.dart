@@ -53,4 +53,34 @@ class StartupLocal implements StartupProvider {
     );
     return res;
   }
+  
+  @override
+  Future<void> clearUserData() {
+    // TODO: implement clearUserData
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<String?> fetchToken() {
+    // TODO: implement fetchToken
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<User?> fetchUser() {
+    // TODO: implement fetchUser
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<void> storeToken({required String token}) {
+    // TODO: implement storeToken
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<void> storeUser({required User user}) {
+    // TODO: implement storeUser
+    throw UnimplementedError();
+  }
 }

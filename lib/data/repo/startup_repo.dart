@@ -14,47 +14,37 @@ class StartupRepo {
     return await startupProvider.fetchCredentials();
   }
 
-  Future<VerifyTokenResponse> checkValidity({required String bearerToken}) async { 
+  Future<VerifyTokenResponse> checkValidity({
+    required String bearerToken,
+  }) async {
     return await startupProvider.checkValidity(bearerToken: bearerToken);
   }
 
   Future<void> storeCredentials({required Credential cred}) async {
     await startupProvider.storeCredential(cred: cred);
   }
-  
-  Future<AuthResponse> refreshAccessToken({required String bearerToken}) async{
+
+  Future<AuthResponse> refreshAccessToken({required String bearerToken}) async {
     return await startupProvider.refreshAccessToken(refreshToken: bearerToken);
   }
-  
+
   Future<void> storeUser({required User user}) async {
-    if (startupProvider is StartupImp) {
-      await (startupProvider as StartupImp).storeUser(user: user);
-    }
+    await (startupProvider as StartupImp).storeUser(user: user);
   }
-  
+
   Future<void> storeToken({required String token}) async {
-    if (startupProvider is StartupImp) {
-      await (startupProvider as StartupImp).storeToken(token: token);
-    }
+    await (startupProvider as StartupImp).storeToken(token: token);
   }
-  
+
   Future<User?> fetchUser() async {
-    if (startupProvider is StartupImp) {
-      return await (startupProvider as StartupImp).fetchUser();
-    }
-    return null;
+    return await (startupProvider as StartupImp).fetchUser();
   }
-  
+
   Future<String?> fetchToken() async {
-    if (startupProvider is StartupImp) {
-      return await (startupProvider as StartupImp).fetchToken();
-    }
-    return null;
+    return await (startupProvider as StartupImp).fetchToken();
   }
-  
+
   Future<void> clearUserData() async {
-    if (startupProvider is StartupImp) {
-      await (startupProvider as StartupImp).clearUserData();
-    }
+    await (startupProvider as StartupImp).clearUserData();
   }
 }

@@ -61,7 +61,9 @@ class StartupImp implements StartupProvider {
   }
 
   @override
-  Future<AuthResponse> refreshAccessToken({required String refreshToken}) async {
+  Future<AuthResponse> refreshAccessToken({
+    required String refreshToken,
+  }) async {
     try {
       final response = await _service.getAPI(
         url: AppURL.refreshToken,
@@ -74,18 +76,17 @@ class StartupImp implements StartupProvider {
     }
   }
 
+  @override
   Future<void> storeUser({required User user}) async {
     final prefs = await SharedPreferences.getInstance();
     try {
-      await prefs.setString(
-        'user_data',
-        jsonEncode(user.toJson()),
-      );
+      await prefs.setString('user_data', jsonEncode(user.toJson()));
     } catch (e) {
       rethrow;
     }
   }
-  
+
+  @override
   Future<void> storeToken({required String token}) async {
     final prefs = await SharedPreferences.getInstance();
     try {
@@ -95,6 +96,7 @@ class StartupImp implements StartupProvider {
     }
   }
 
+  @override
   Future<User?> fetchUser() async {
     final prefs = await SharedPreferences.getInstance();
     final String? userData = prefs.getString('user_data');
@@ -108,12 +110,14 @@ class StartupImp implements StartupProvider {
       return null;
     }
   }
-  
+
+  @override
   Future<String?> fetchToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('jwt_token');
   }
 
+  @override
   Future<void> clearUserData() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_data');
