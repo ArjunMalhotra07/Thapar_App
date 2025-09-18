@@ -2,13 +2,14 @@ import 'dart:io';
 
 class AppURL {
   static String get baseURL {
-    if (Platform.isAndroid) {
-      return "http://10.0.2.2:3000/api";
-    } else if (Platform.isIOS) {
-      return "http://localhost:3000/api";
-    } else {
-      return "http://localhost:3000/api";
-    }
+    // if (Platform.isAndroid) {
+    //   return "http://10.0.2.2:3000/api";
+    // } else if (Platform.isIOS) {
+    //   return "http://localhost:3000/api";
+    // } else {
+    //   return "http://localhost:3000/api";
+    // }
+    return "http://65.1.242.198:3000/api";
   }
 
   static String get login => "$baseURL/login";
