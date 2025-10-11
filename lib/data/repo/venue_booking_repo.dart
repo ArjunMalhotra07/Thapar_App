@@ -8,7 +8,7 @@ class VenueBookingRepo {
     return VenueBookingResponse(success: "hey", count: 5, venues: []);
   }
 
-  Future<VenueBookingResponse> bookVenue() async {
-    return VenueBookingResponse(success: "hey", count: 5, venues: null);
+  Future<VenueBookingResponse> bookVenue(Map<String, dynamic> body) async {
+    return await venueBookingProvider.bookVenue(body);
   }
 }
