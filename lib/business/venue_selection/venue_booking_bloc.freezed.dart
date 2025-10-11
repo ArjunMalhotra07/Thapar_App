@@ -19,7 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VenueBookingEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVenues,
+    required TResult Function(String date) fetchVenues,
     required TResult Function(
       String? roomId,
       DateTime? startTime,
@@ -29,13 +29,13 @@ mixin _$VenueBookingEvent {
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVenues,
+    TResult? Function(String date)? fetchVenues,
     TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
     bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVenues,
+    TResult Function(String date)? fetchVenues,
     TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
     bookVenue,
     required TResult orElse(),
@@ -86,6 +86,8 @@ abstract class _$$FetchVenuesImplCopyWith<$Res> {
     _$FetchVenuesImpl value,
     $Res Function(_$FetchVenuesImpl) then,
   ) = __$$FetchVenuesImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String date});
 }
 
 /// @nodoc
@@ -99,31 +101,56 @@ class __$$FetchVenuesImplCopyWithImpl<$Res>
 
   /// Create a copy of VenueBookingEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? date = null}) {
+    return _then(
+      _$FetchVenuesImpl(
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
 class _$FetchVenuesImpl implements _FetchVenues {
-  const _$FetchVenuesImpl();
+  const _$FetchVenuesImpl({required this.date});
+
+  @override
+  final String date;
 
   @override
   String toString() {
-    return 'VenueBookingEvent.fetchVenues()';
+    return 'VenueBookingEvent.fetchVenues(date: $date)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchVenuesImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$FetchVenuesImpl &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, date);
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchVenuesImplCopyWith<_$FetchVenuesImpl> get copyWith =>
+      __$$FetchVenuesImplCopyWithImpl<_$FetchVenuesImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVenues,
+    required TResult Function(String date) fetchVenues,
     required TResult Function(
       String? roomId,
       DateTime? startTime,
@@ -131,29 +158,29 @@ class _$FetchVenuesImpl implements _FetchVenues {
     )
     bookVenue,
   }) {
-    return fetchVenues();
+    return fetchVenues(date);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVenues,
+    TResult? Function(String date)? fetchVenues,
     TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
     bookVenue,
   }) {
-    return fetchVenues?.call();
+    return fetchVenues?.call(date);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVenues,
+    TResult Function(String date)? fetchVenues,
     TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
     bookVenue,
     required TResult orElse(),
   }) {
     if (fetchVenues != null) {
-      return fetchVenues();
+      return fetchVenues(date);
     }
     return orElse();
   }
@@ -191,7 +218,15 @@ class _$FetchVenuesImpl implements _FetchVenues {
 }
 
 abstract class _FetchVenues implements VenueBookingEvent {
-  const factory _FetchVenues() = _$FetchVenuesImpl;
+  const factory _FetchVenues({required final String date}) = _$FetchVenuesImpl;
+
+  String get date;
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FetchVenuesImplCopyWith<_$FetchVenuesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -287,7 +322,7 @@ class _$BookVenueImpl implements _BookVenue {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fetchVenues,
+    required TResult Function(String date) fetchVenues,
     required TResult Function(
       String? roomId,
       DateTime? startTime,
@@ -301,7 +336,7 @@ class _$BookVenueImpl implements _BookVenue {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fetchVenues,
+    TResult? Function(String date)? fetchVenues,
     TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
     bookVenue,
   }) {
@@ -311,7 +346,7 @@ class _$BookVenueImpl implements _BookVenue {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fetchVenues,
+    TResult Function(String date)? fetchVenues,
     TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
     bookVenue,
     required TResult orElse(),

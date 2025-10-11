@@ -18,7 +18,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
     try {
       emit(const VenueBookingState.loading());
       await Future.delayed(Duration(milliseconds: 1400));
-      final venues = await venueBookingRepo.fetchVenues();
+      final venues = await venueBookingRepo.fetchVenues(event.date);
       emit(VenueBookingState.success(response: venues));
     } catch (e) {
       emit(VenueBookingState.failure(message: e.toString()));

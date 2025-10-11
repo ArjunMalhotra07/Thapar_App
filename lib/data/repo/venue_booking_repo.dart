@@ -4,8 +4,8 @@ import 'package:thaparapp/data/provider/venue-booking/venue_booking_abs.dart';
 class VenueBookingRepo {
   final VenueBookingProvider venueBookingProvider;
   VenueBookingRepo({required this.venueBookingProvider});
-  Future<VenueBookingResponse> fetchVenues() async {
-    return VenueBookingResponse(success: "hey", count: 5, venues: []);
+  Future<VenueBookingResponse> fetchVenues(String date) async {
+    return await venueBookingProvider.fetchVenues(date);
   }
 
   Future<VenueBookingResponse> bookVenue(Map<String, dynamic> body) async {
