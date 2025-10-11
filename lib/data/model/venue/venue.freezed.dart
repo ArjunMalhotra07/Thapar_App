@@ -237,7 +237,10 @@ mixin _$Room {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get capacity => throw _privateConstructorUsedError;
-  bool? get isBooked => throw _privateConstructorUsedError;
+  @JsonKey(name: "start_time")
+  DateTime? get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "end_time")
+  DateTime? get endTime => throw _privateConstructorUsedError;
 
   /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -257,7 +260,8 @@ abstract class $RoomCopyWith<$Res> {
     @JsonKey(name: "id") String? id,
     String? name,
     String? capacity,
-    bool? isBooked,
+    @JsonKey(name: "start_time") DateTime? startTime,
+    @JsonKey(name: "end_time") DateTime? endTime,
   });
 }
 
@@ -279,7 +283,8 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? id = freezed,
     Object? name = freezed,
     Object? capacity = freezed,
-    Object? isBooked = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -295,10 +300,14 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
                 ? _value.capacity
                 : capacity // ignore: cast_nullable_to_non_nullable
                       as String?,
-            isBooked: freezed == isBooked
-                ? _value.isBooked
-                : isBooked // ignore: cast_nullable_to_non_nullable
-                      as bool?,
+            startTime: freezed == startTime
+                ? _value.startTime
+                : startTime // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            endTime: freezed == endTime
+                ? _value.endTime
+                : endTime // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
           )
           as $Val,
     );
@@ -317,7 +326,8 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
     @JsonKey(name: "id") String? id,
     String? name,
     String? capacity,
-    bool? isBooked,
+    @JsonKey(name: "start_time") DateTime? startTime,
+    @JsonKey(name: "end_time") DateTime? endTime,
   });
 }
 
@@ -336,7 +346,8 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? capacity = freezed,
-    Object? isBooked = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
   }) {
     return _then(
       _$RoomImpl(
@@ -352,10 +363,14 @@ class __$$RoomImplCopyWithImpl<$Res>
             ? _value.capacity
             : capacity // ignore: cast_nullable_to_non_nullable
                   as String?,
-        isBooked: freezed == isBooked
-            ? _value.isBooked
-            : isBooked // ignore: cast_nullable_to_non_nullable
-                  as bool?,
+        startTime: freezed == startTime
+            ? _value.startTime
+            : startTime // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        endTime: freezed == endTime
+            ? _value.endTime
+            : endTime // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
       ),
     );
   }
@@ -368,7 +383,8 @@ class _$RoomImpl implements _Room {
     @JsonKey(name: "id") required this.id,
     required this.name,
     required this.capacity,
-    required this.isBooked,
+    @JsonKey(name: "start_time") required this.startTime,
+    @JsonKey(name: "end_time") required this.endTime,
   });
 
   factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
@@ -382,11 +398,15 @@ class _$RoomImpl implements _Room {
   @override
   final String? capacity;
   @override
-  final bool? isBooked;
+  @JsonKey(name: "start_time")
+  final DateTime? startTime;
+  @override
+  @JsonKey(name: "end_time")
+  final DateTime? endTime;
 
   @override
   String toString() {
-    return 'Room(id: $id, name: $name, capacity: $capacity, isBooked: $isBooked)';
+    return 'Room(id: $id, name: $name, capacity: $capacity, startTime: $startTime, endTime: $endTime)';
   }
 
   @override
@@ -398,13 +418,15 @@ class _$RoomImpl implements _Room {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.capacity, capacity) ||
                 other.capacity == capacity) &&
-            (identical(other.isBooked, isBooked) ||
-                other.isBooked == isBooked));
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, capacity, isBooked);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, capacity, startTime, endTime);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -425,7 +447,8 @@ abstract class _Room implements Room {
     @JsonKey(name: "id") required final String? id,
     required final String? name,
     required final String? capacity,
-    required final bool? isBooked,
+    @JsonKey(name: "start_time") required final DateTime? startTime,
+    @JsonKey(name: "end_time") required final DateTime? endTime,
   }) = _$RoomImpl;
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
@@ -438,7 +461,11 @@ abstract class _Room implements Room {
   @override
   String? get capacity;
   @override
-  bool? get isBooked;
+  @JsonKey(name: "start_time")
+  DateTime? get startTime;
+  @override
+  @JsonKey(name: "end_time")
+  DateTime? get endTime;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.

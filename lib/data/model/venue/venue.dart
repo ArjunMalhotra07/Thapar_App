@@ -18,7 +18,8 @@ abstract class Room with _$Room {
     @JsonKey(name: "id") required String? id,
     required final String? name,
     required final String? capacity,
-    required final bool? isBooked,
+    @JsonKey(name: "start_time") required final DateTime? startTime,
+    @JsonKey(name: "end_time") required final DateTime? endTime,
   }) = _Room;
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
 }

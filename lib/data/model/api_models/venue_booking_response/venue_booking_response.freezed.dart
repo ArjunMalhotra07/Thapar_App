@@ -23,7 +23,7 @@ VenueBookingResponse _$VenueBookingResponseFromJson(Map<String, dynamic> json) {
 mixin _$VenueBookingResponse {
   String? get success => throw _privateConstructorUsedError;
   int? get count => throw _privateConstructorUsedError;
-  Venue? get venues => throw _privateConstructorUsedError;
+  List<Venue>? get venues => throw _privateConstructorUsedError;
 
   /// Serializes this VenueBookingResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,9 +42,7 @@ abstract class $VenueBookingResponseCopyWith<$Res> {
     $Res Function(VenueBookingResponse) then,
   ) = _$VenueBookingResponseCopyWithImpl<$Res, VenueBookingResponse>;
   @useResult
-  $Res call({String? success, int? count, Venue? venues});
-
-  $VenueCopyWith<$Res>? get venues;
+  $Res call({String? success, int? count, List<Venue>? venues});
 }
 
 /// @nodoc
@@ -82,24 +80,10 @@ class _$VenueBookingResponseCopyWithImpl<
             venues: freezed == venues
                 ? _value.venues
                 : venues // ignore: cast_nullable_to_non_nullable
-                      as Venue?,
+                      as List<Venue>?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of VenueBookingResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $VenueCopyWith<$Res>? get venues {
-    if (_value.venues == null) {
-      return null;
-    }
-
-    return $VenueCopyWith<$Res>(_value.venues!, (value) {
-      return _then(_value.copyWith(venues: value) as $Val);
-    });
   }
 }
 
@@ -112,10 +96,7 @@ abstract class _$$VenueBookingResponseImplCopyWith<$Res>
   ) = __$$VenueBookingResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? success, int? count, Venue? venues});
-
-  @override
-  $VenueCopyWith<$Res>? get venues;
+  $Res call({String? success, int? count, List<Venue>? venues});
 }
 
 /// @nodoc
@@ -147,9 +128,9 @@ class __$$VenueBookingResponseImplCopyWithImpl<$Res>
             : count // ignore: cast_nullable_to_non_nullable
                   as int?,
         venues: freezed == venues
-            ? _value.venues
+            ? _value._venues
             : venues // ignore: cast_nullable_to_non_nullable
-                  as Venue?,
+                  as List<Venue>?,
       ),
     );
   }
@@ -161,8 +142,8 @@ class _$VenueBookingResponseImpl implements _VenueBookingResponse {
   const _$VenueBookingResponseImpl({
     required this.success,
     required this.count,
-    required this.venues,
-  });
+    required final List<Venue>? venues,
+  }) : _venues = venues;
 
   factory _$VenueBookingResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$VenueBookingResponseImplFromJson(json);
@@ -171,8 +152,15 @@ class _$VenueBookingResponseImpl implements _VenueBookingResponse {
   final String? success;
   @override
   final int? count;
+  final List<Venue>? _venues;
   @override
-  final Venue? venues;
+  List<Venue>? get venues {
+    final value = _venues;
+    if (value == null) return null;
+    if (_venues is EqualUnmodifiableListView) return _venues;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -186,12 +174,17 @@ class _$VenueBookingResponseImpl implements _VenueBookingResponse {
             other is _$VenueBookingResponseImpl &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.count, count) || other.count == count) &&
-            (identical(other.venues, venues) || other.venues == venues));
+            const DeepCollectionEquality().equals(other._venues, _venues));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, count, venues);
+  int get hashCode => Object.hash(
+    runtimeType,
+    success,
+    count,
+    const DeepCollectionEquality().hash(_venues),
+  );
 
   /// Create a copy of VenueBookingResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -215,7 +208,7 @@ abstract class _VenueBookingResponse implements VenueBookingResponse {
   const factory _VenueBookingResponse({
     required final String? success,
     required final int? count,
-    required final Venue? venues,
+    required final List<Venue>? venues,
   }) = _$VenueBookingResponseImpl;
 
   factory _VenueBookingResponse.fromJson(Map<String, dynamic> json) =
@@ -226,7 +219,7 @@ abstract class _VenueBookingResponse implements VenueBookingResponse {
   @override
   int? get count;
   @override
-  Venue? get venues;
+  List<Venue>? get venues;
 
   /// Create a copy of VenueBookingResponse
   /// with the given fields replaced by the non-null parameter values.

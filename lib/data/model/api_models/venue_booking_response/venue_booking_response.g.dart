@@ -11,9 +11,9 @@ _$VenueBookingResponseImpl _$$VenueBookingResponseImplFromJson(
 ) => _$VenueBookingResponseImpl(
   success: json['success'] as String?,
   count: (json['count'] as num?)?.toInt(),
-  venues: json['venues'] == null
-      ? null
-      : Venue.fromJson(json['venues'] as Map<String, dynamic>),
+  venues: (json['venues'] as List<dynamic>?)
+      ?.map((e) => Venue.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$$VenueBookingResponseImplToJson(

@@ -19,28 +19,41 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VenueBookingEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function() fetchVenues,
+    required TResult Function(
+      String? roomId,
+      DateTime? startTime,
+      DateTime? endTime,
+    )
+    bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function()? fetchVenues,
+    TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function()? fetchVenues,
+    TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    bookVenue,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(_FetchVenues value) fetchVenues,
+    required TResult Function(_BookVenue value) bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(_FetchVenues value)? fetchVenues,
+    TResult? Function(_BookVenue value)? bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(_FetchVenues value)? fetchVenues,
+    TResult Function(_BookVenue value)? bookVenue,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -68,20 +81,20 @@ class _$VenueBookingEventCopyWithImpl<$Res, $Val extends VenueBookingEvent>
 }
 
 /// @nodoc
-abstract class _$$StartedImplCopyWith<$Res> {
-  factory _$$StartedImplCopyWith(
-    _$StartedImpl value,
-    $Res Function(_$StartedImpl) then,
-  ) = __$$StartedImplCopyWithImpl<$Res>;
+abstract class _$$FetchVenuesImplCopyWith<$Res> {
+  factory _$$FetchVenuesImplCopyWith(
+    _$FetchVenuesImpl value,
+    $Res Function(_$FetchVenuesImpl) then,
+  ) = __$$FetchVenuesImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$StartedImplCopyWithImpl<$Res>
-    extends _$VenueBookingEventCopyWithImpl<$Res, _$StartedImpl>
-    implements _$$StartedImplCopyWith<$Res> {
-  __$$StartedImplCopyWithImpl(
-    _$StartedImpl _value,
-    $Res Function(_$StartedImpl) _then,
+class __$$FetchVenuesImplCopyWithImpl<$Res>
+    extends _$VenueBookingEventCopyWithImpl<$Res, _$FetchVenuesImpl>
+    implements _$$FetchVenuesImplCopyWith<$Res> {
+  __$$FetchVenuesImplCopyWithImpl(
+    _$FetchVenuesImpl _value,
+    $Res Function(_$FetchVenuesImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of VenueBookingEvent
@@ -90,18 +103,18 @@ class __$$StartedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartedImpl implements _Started {
-  const _$StartedImpl();
+class _$FetchVenuesImpl implements _FetchVenues {
+  const _$FetchVenuesImpl();
 
   @override
   String toString() {
-    return 'VenueBookingEvent.started()';
+    return 'VenueBookingEvent.fetchVenues()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StartedImpl);
+        (other.runtimeType == runtimeType && other is _$FetchVenuesImpl);
   }
 
   @override
@@ -109,24 +122,38 @@ class _$StartedImpl implements _Started {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({required TResult Function() started}) {
-    return started();
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchVenues,
+    required TResult Function(
+      String? roomId,
+      DateTime? startTime,
+      DateTime? endTime,
+    )
+    bookVenue,
+  }) {
+    return fetchVenues();
   }
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({TResult? Function()? started}) {
-    return started?.call();
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchVenues,
+    TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    bookVenue,
+  }) {
+    return fetchVenues?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function()? fetchVenues,
+    TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    bookVenue,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started();
+    if (fetchVenues != null) {
+      return fetchVenues();
     }
     return orElse();
   }
@@ -134,34 +161,215 @@ class _$StartedImpl implements _Started {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(_FetchVenues value) fetchVenues,
+    required TResult Function(_BookVenue value) bookVenue,
   }) {
-    return started(this);
+    return fetchVenues(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(_FetchVenues value)? fetchVenues,
+    TResult? Function(_BookVenue value)? bookVenue,
   }) {
-    return started?.call(this);
+    return fetchVenues?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(_FetchVenues value)? fetchVenues,
+    TResult Function(_BookVenue value)? bookVenue,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started(this);
+    if (fetchVenues != null) {
+      return fetchVenues(this);
     }
     return orElse();
   }
 }
 
-abstract class _Started implements VenueBookingEvent {
-  const factory _Started() = _$StartedImpl;
+abstract class _FetchVenues implements VenueBookingEvent {
+  const factory _FetchVenues() = _$FetchVenuesImpl;
+}
+
+/// @nodoc
+abstract class _$$BookVenueImplCopyWith<$Res> {
+  factory _$$BookVenueImplCopyWith(
+    _$BookVenueImpl value,
+    $Res Function(_$BookVenueImpl) then,
+  ) = __$$BookVenueImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? roomId, DateTime? startTime, DateTime? endTime});
+}
+
+/// @nodoc
+class __$$BookVenueImplCopyWithImpl<$Res>
+    extends _$VenueBookingEventCopyWithImpl<$Res, _$BookVenueImpl>
+    implements _$$BookVenueImplCopyWith<$Res> {
+  __$$BookVenueImplCopyWithImpl(
+    _$BookVenueImpl _value,
+    $Res Function(_$BookVenueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? roomId = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+  }) {
+    return _then(
+      _$BookVenueImpl(
+        roomId: freezed == roomId
+            ? _value.roomId
+            : roomId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        startTime: freezed == startTime
+            ? _value.startTime
+            : startTime // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        endTime: freezed == endTime
+            ? _value.endTime
+            : endTime // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$BookVenueImpl implements _BookVenue {
+  const _$BookVenueImpl({
+    required this.roomId,
+    required this.startTime,
+    required this.endTime,
+  });
+
+  @override
+  final String? roomId;
+  @override
+  final DateTime? startTime;
+  @override
+  final DateTime? endTime;
+
+  @override
+  String toString() {
+    return 'VenueBookingEvent.bookVenue(roomId: $roomId, startTime: $startTime, endTime: $endTime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BookVenueImpl &&
+            (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, roomId, startTime, endTime);
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BookVenueImplCopyWith<_$BookVenueImpl> get copyWith =>
+      __$$BookVenueImplCopyWithImpl<_$BookVenueImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchVenues,
+    required TResult Function(
+      String? roomId,
+      DateTime? startTime,
+      DateTime? endTime,
+    )
+    bookVenue,
+  }) {
+    return bookVenue(roomId, startTime, endTime);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchVenues,
+    TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    bookVenue,
+  }) {
+    return bookVenue?.call(roomId, startTime, endTime);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchVenues,
+    TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    bookVenue,
+    required TResult orElse(),
+  }) {
+    if (bookVenue != null) {
+      return bookVenue(roomId, startTime, endTime);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchVenues value) fetchVenues,
+    required TResult Function(_BookVenue value) bookVenue,
+  }) {
+    return bookVenue(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchVenues value)? fetchVenues,
+    TResult? Function(_BookVenue value)? bookVenue,
+  }) {
+    return bookVenue?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchVenues value)? fetchVenues,
+    TResult Function(_BookVenue value)? bookVenue,
+    required TResult orElse(),
+  }) {
+    if (bookVenue != null) {
+      return bookVenue(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BookVenue implements VenueBookingEvent {
+  const factory _BookVenue({
+    required final String? roomId,
+    required final DateTime? startTime,
+    required final DateTime? endTime,
+  }) = _$BookVenueImpl;
+
+  String? get roomId;
+  DateTime? get startTime;
+  DateTime? get endTime;
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BookVenueImplCopyWith<_$BookVenueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

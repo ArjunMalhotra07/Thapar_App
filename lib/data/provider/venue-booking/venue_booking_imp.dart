@@ -1,7 +1,7 @@
 import 'package:thaparapp/data/model/api_models/venue_booking_response/venue_booking_response.dart';
 import 'package:thaparapp/data/provider/venue-booking/venue_booking_abs.dart';
 
-class VenueBookingImp extends VenueBookingAbs {
+class VenueBookingImp extends VenueBookingProvider {
   @override
   Future<VenueBookingResponse> bookVenue() {
     // TODO: implement bookVenue

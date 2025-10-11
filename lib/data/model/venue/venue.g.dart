@@ -25,7 +25,12 @@ _$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
   id: json['id'] as String?,
   name: json['name'] as String?,
   capacity: json['capacity'] as String?,
-  isBooked: json['isBooked'] as bool?,
+  startTime: json['start_time'] == null
+      ? null
+      : DateTime.parse(json['start_time'] as String),
+  endTime: json['end_time'] == null
+      ? null
+      : DateTime.parse(json['end_time'] as String),
 );
 
 Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
@@ -33,5 +38,6 @@ Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'capacity': instance.capacity,
-      'isBooked': instance.isBooked,
+      'start_time': instance.startTime?.toIso8601String(),
+      'end_time': instance.endTime?.toIso8601String(),
     };

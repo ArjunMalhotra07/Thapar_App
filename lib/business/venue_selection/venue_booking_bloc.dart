@@ -7,8 +7,10 @@ part 'venue_booking_bloc.freezed.dart';
 
 class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   VenueBookingBloc() : super(_Initial()) {
-    on<VenueBookingEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<_FetchVenues>(fetchVenues);
+    on<_BookVenue>(bookVenue);
   }
+
+  void fetchVenues(event, emit) {}
+  void bookVenue(event, emit) {}
 }

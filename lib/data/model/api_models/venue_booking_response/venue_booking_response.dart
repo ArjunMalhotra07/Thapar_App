@@ -8,7 +8,7 @@ abstract class VenueBookingResponse with _$VenueBookingResponse {
   const factory VenueBookingResponse({
     required String? success,
     required final int? count,
-    required Venue? venues,
+    required List<Venue>? venues,
   }) = _VenueBookingResponse;
   factory VenueBookingResponse.fromJson(Map<String, dynamic> json) =>
       _$VenueBookingResponseFromJson(json);
