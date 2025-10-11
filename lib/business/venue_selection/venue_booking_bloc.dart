@@ -29,7 +29,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
     try {
       emit(const VenueBookingState.loading());
       Map<String, dynamic> body = {
-        "room_id": "xyz",
+        "room_id": event.roomId,
         "start_time": event.startTime,
         "end_time": event.endTime,
       };
