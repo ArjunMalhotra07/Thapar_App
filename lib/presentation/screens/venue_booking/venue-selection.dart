@@ -190,7 +190,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
         children: [
           Expanded(
             child: Container(
-              margin: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(top: 24),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),

@@ -16,7 +16,7 @@ import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
 import 'package:thaparapp/presentation/screens/splash/splash.dart';
 import 'package:thaparapp/presentation/screens/splash/start_up.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
-import 'package:thaparapp/presentation/screens/venue_booking/time-slot.dart';
+import 'package:thaparapp/presentation/screens/venue_booking/venue-selection.dart';
 
 class Routing {
   const Routing._();
@@ -76,12 +76,7 @@ class Routing {
         path: AppRoute.venueBooking,
         builder: (context, state) => BlocProvider.value(
           value: locator<VenueBookingBloc>(),
-          child: TimeSlotSelectionScreen(
-            venueName: '',
-            roomName: '',
-            venueId: '',
-            roomId: '',
-          ),
+          child: VenueSelectionScreen(),
         ),
       ),
     ],

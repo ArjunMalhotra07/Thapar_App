@@ -32,42 +32,12 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
       'endTime': 11,
       'status': true, // true = available, false = booked
     },
-    {
-      'label': '11AM - 12PM',
-      'startTime': 11,
-      'endTime': 12,
-      'status': true,
-    },
-    {
-      'label': '12PM - 01PM',
-      'startTime': 12,
-      'endTime': 13,
-      'status': false,
-    },
-    {
-      'label': '01PM - 02PM',
-      'startTime': 13,
-      'endTime': 14,
-      'status': true,
-    },
-    {
-      'label': '02PM - 03PM',
-      'startTime': 14,
-      'endTime': 15,
-      'status': false,
-    },
-    {
-      'label': '03PM - 04PM',
-      'startTime': 15,
-      'endTime': 16,
-      'status': true,
-    },
-    {
-      'label': '04PM - 05PM',
-      'startTime': 16,
-      'endTime': 17,
-      'status': true,
-    },
+    {'label': '11AM - 12PM', 'startTime': 11, 'endTime': 12, 'status': true},
+    {'label': '12PM - 01PM', 'startTime': 12, 'endTime': 13, 'status': false},
+    {'label': '01PM - 02PM', 'startTime': 13, 'endTime': 14, 'status': true},
+    {'label': '02PM - 03PM', 'startTime': 14, 'endTime': 15, 'status': false},
+    {'label': '03PM - 04PM', 'startTime': 15, 'endTime': 16, 'status': true},
+    {'label': '04PM - 05PM', 'startTime': 16, 'endTime': 17, 'status': true},
   ];
 
   bool isSlotExpired(int endTime) {
@@ -139,7 +109,7 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
       'September',
       'October',
       'November',
-      'December'
+      'December',
     ];
     return '${now.day}${_getDaySuffix(now.day)} ${months[now.month - 1]}, ${now.year}';
   }
@@ -160,7 +130,9 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
 
   String get formattedTime {
     final now = DateTime.now();
-    final hour = now.hour > 12 ? now.hour - 12 : (now.hour == 0 ? 12 : now.hour);
+    final hour = now.hour > 12
+        ? now.hour - 12
+        : (now.hour == 0 ? 12 : now.hour);
     final minute = now.minute.toString().padLeft(2, '0');
     final period = now.hour >= 12 ? 'PM' : 'AM';
     return '$hour:$minute $period';
@@ -211,7 +183,7 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
         children: [
           Expanded(
             child: Container(
-              margin: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(top: 24),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -296,15 +268,18 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                             runSpacing: 12,
                             children: timeSlots.map((slot) {
                               final slotState = getSlotState(slot);
-                              final isSelected = selectedTimeSlot == slot['label'];
-                              final canSelect = slotState == SlotState.available;
+                              final isSelected =
+                                  selectedTimeSlot == slot['label'];
+                              final canSelect =
+                                  slotState == SlotState.available;
 
                               return GestureDetector(
                                 onTap: canSelect
                                     ? () {
                                         setState(() {
                                           selectedTimeSlot = slot['label'];
-                                          selectedTimeRange = '${slot['startTime'].toString().padLeft(2, '0')}:00 - ${slot['endTime'].toString().padLeft(2, '0')}:00 ${slot['endTime'] >= 12 ? 'PM' : 'AM'}';
+                                          selectedTimeRange =
+                                              '${slot['startTime'].toString().padLeft(2, '0')}:00 - ${slot['endTime'].toString().padLeft(2, '0')}:00 ${slot['endTime'] >= 12 ? 'PM' : 'AM'}';
                                         });
                                       }
                                     : null,
@@ -326,7 +301,10 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
-                                      color: getSlotTextColor(slotState, isSelected),
+                                      color: getSlotTextColor(
+                                        slotState,
+                                        isSelected,
+                                      ),
                                       fontFamily: AppFonts.gilroy,
                                     ),
                                   ),
@@ -396,7 +374,9 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                         ElevatedButton(
                           onPressed: selectedTimeSlot != null
                               ? () {
-                                  print('Booking slot: ${widget.roomName} at $selectedTimeSlot');
+                                  print(
+                                    'Booking slot: ${widget.roomName} at $selectedTimeSlot',
+                                  );
                                 }
                               : null,
                           style: ElevatedButton.styleFrom(
@@ -460,8 +440,4 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
   }
 }
 
-enum SlotState {
-  available,
-  booked,
-  expired,
-}
+enum SlotState { available, booked, expired }
