@@ -257,65 +257,11 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                     fontFamily: AppFonts.gilroy,
                                   ),
                                 ),
-                                BlocBuilder<
-                                  VenueBookingBloc,
-                                  VenueBookingState
-                                >(
-                                  builder: (context, state) {
-                                    return state.maybeWhen(
-                                      venuesFetched:
-                                          (
-                                            venues,
-                                            rooms,
-                                            venueID,
-                                            roomID,
-                                            timeSlotID,
-                                          ) {
-                                            if (timeSlotID != null) {
-                                              final bloc = context
-                                                  .read<VenueBookingBloc>();
-                                              final selectedSlot = bloc
-                                                  .timeSlots
-                                                  .firstWhere(
-                                                    (slot) =>
-                                                        slot['id'] ==
-                                                        timeSlotID,
-                                                    orElse: () => {},
-                                                  );
-                                              if (selectedSlot.isNotEmpty) {
-                                                return Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const SizedBox(height: 4),
-                                                    Text(
-                                                      selectedSlot['label'] ??
-                                                          '',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: const Color(
-                                                          0xFF4CAF50,
-                                                        ),
-                                                        fontFamily:
-                                                            AppFonts.gilroy,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              }
-                                            }
-                                            return const SizedBox.shrink();
-                                          },
-                                      orElse: () => const SizedBox.shrink(),
-                                    );
-                                  },
-                                ),
                               ],
                             ),
                           ),
                           const SizedBox(width: 16),
+                          //! book your slot button
                           BlocBuilder<VenueBookingBloc, VenueBookingState>(
                             builder: (context, state) {
                               final isLoading = state.maybeWhen(
