@@ -140,7 +140,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         "end_time": event.endTime,
         "date": event.date,
       };
-
+      await Future.delayed(Duration(seconds: 10));
       final res = await venueBookingRepo.bookVenue(body);
 
       // Update the bookings for the selected room
@@ -155,7 +155,10 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
                 startTime: event.startTime,
                 endTime: event.endTime,
               );
-              final updatedBookings = <Booking>[...(room.bookings ?? []), newBooking];
+              final updatedBookings = <Booking>[
+                ...(room.bookings ?? []),
+                newBooking,
+              ];
               return room.copyWith(bookings: updatedBookings);
             }
             return room;
@@ -176,7 +179,10 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
                 startTime: event.startTime,
                 endTime: event.endTime,
               );
-              final updatedBookings = <Booking>[...(room.bookings ?? []), newBooking];
+              final updatedBookings = <Booking>[
+                ...(room.bookings ?? []),
+                newBooking,
+              ];
               return room.copyWith(bookings: updatedBookings);
             }
             return room;
@@ -206,7 +212,10 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
                 startTime: event.startTime,
                 endTime: event.endTime,
               );
-              final updatedBookings = <Booking>[...(room.bookings ?? []), newBooking];
+              final updatedBookings = <Booking>[
+                ...(room.bookings ?? []),
+                newBooking,
+              ];
               return room.copyWith(bookings: updatedBookings);
             }
             return room;
