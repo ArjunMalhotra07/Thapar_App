@@ -70,7 +70,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
           currentSearchQuery,
         );
 
-        return nameMatch || descriptionMatch || features! || category;
+        return nameMatch || descriptionMatch || features || category;
       }).toList();
     }
 

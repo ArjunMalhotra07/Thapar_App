@@ -18,7 +18,7 @@ class TimeSlotSelector extends StatelessWidget {
       child: BlocBuilder<VenueBookingBloc, VenueBookingState>(
         builder: (context, state) {
           final isBookingInProgress = state.maybeWhen(
-            bookingInProgress: () => true,
+            bookingInProgress: (venues, rooms, venueID, roomID, timeSlotID) => true,
             orElse: () => false,
           );
 

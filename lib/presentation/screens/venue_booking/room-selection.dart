@@ -6,6 +6,7 @@ import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/booking_status_sheet.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/date_time_widget.dart';
 
 class RoomSelectionScreen extends StatelessWidget {
@@ -300,6 +301,8 @@ class RoomSelectionScreen extends StatelessWidget {
               ),
             ),
           ),
+          //! Booking status sheet
+          const BookingStatusSheet(),
         ],
       ),
     );

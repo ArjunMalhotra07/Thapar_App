@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
@@ -32,6 +33,166 @@ class TimeSlotSelectionScreen extends StatefulWidget {
 }
 
 class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
+  Text formatText(String txt, bool bold) {
+    return Text(
+      txt,
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: bold ? FontWeight.w800 : FontWeight.w400,
+        color: const Color(0xFF333333),
+        fontFamily: AppFonts.gilroy,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  void showCustomSnackbar(String message, ContentType contentType) {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: contentType == ContentType.success
+            ? 'Success!'
+            : contentType == ContentType.warning
+            ? 'Warning!'
+            : 'Error!',
+        message: message,
+        contentType: contentType,
+      ),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
+  void _showBookingConfirmationDialog() {
+    final state = context.read<VenueBookingBloc>().state;
+    state.maybeWhen(
+      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
+        if (timeSlotID != null) {
+          final bloc = context.read<VenueBookingBloc>();
+          final selectedSlot = bloc.timeSlots.firstWhere(
+            (slot) => slot['id'] == timeSlotID,
+            orElse: () => {},
+          );
+
+          if (selectedSlot.isNotEmpty) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  contentPadding: const EdgeInsets.all(24),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      formatText('You are booking time slot for', false),
+                      formatText(selectedSlot['label'], true),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'for Room ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF333333),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            TextSpan(
+                              text: widget.roomName,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: const Color(0xFF333333),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      formatText(widget.venueName, true),
+                      formatText(
+                        'on ${DateTimeUtils.getFormattedDate()}',
+                        false,
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(
+                              color: Color(0xFF4F6BF5),
+                              width: 1.5,
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF4F6BF5),
+                              fontFamily: AppFonts.gilroy,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            _handleBooking();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4F6BF5),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: Text(
+                              'Confirm Booking',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        }
+      },
+      orElse: () {},
+    );
+  }
+
   void _handleBooking() {
     final state = context.read<VenueBookingBloc>().state;
     state.maybeWhen(
@@ -118,42 +279,21 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
         listener: (context, state) {
           state.maybeWhen(
             bookingSuccess: (message) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    message ?? 'Booking confirmed!',
-                    style: TextStyle(fontFamily: AppFonts.gilroy),
-                  ),
-                  backgroundColor: Colors.green,
-                  duration: const Duration(seconds: 3),
-                ),
+              showCustomSnackbar(
+                message ?? 'Booking confirmed successfully!',
+                ContentType.success,
               );
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              // Pop back to venue selection after short delay
+              Future.delayed(Duration(milliseconds: 500), () {
+                Navigator.of(context).pop(); // Go back to room selection
+                Navigator.of(context).pop(); // Go back to venue selection
+              });
             },
             failure: (message) {
               final errorMessage = VenueBookingUtils.extractErrorMessage(
                 message,
               );
-
-              ScaffoldMessenger.of(context)
-                ..clearSnackBars() // Clear any existing snackbars
-                ..showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      errorMessage,
-                      style: TextStyle(fontFamily: AppFonts.gilroy),
-                    ),
-                    backgroundColor: Colors.red,
-                    duration: const Duration(seconds: 4),
-                    action: SnackBarAction(
-                      label: 'Dismiss',
-                      textColor: Colors.white,
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      },
-                    ),
-                  ),
-                );
+              showCustomSnackbar(errorMessage, ContentType.failure);
             },
             orElse: () {},
           );
@@ -240,17 +380,56 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                           BlocBuilder<VenueBookingBloc, VenueBookingState>(
                             builder: (context, state) {
                               final isLoading = state.maybeWhen(
-                                bookingInProgress: () => true,
+                                bookingInProgress: (venues, rooms, venueID, roomID, timeSlotID) => true,
                                 orElse: () => false,
                               );
                               final hasSelectedTimeSlot = state.maybeWhen(
                                 venuesFetched: (_, __, ___, ____, timeSlotID) =>
                                     timeSlotID != null,
+                                bookingInProgress: (_, __, ___, ____, timeSlotID) =>
+                                    timeSlotID != null,
                                 orElse: () => false,
                               );
+                              
+                              if (isLoading) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 16,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4F6BF5),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                        height: 16,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                        'Booking...',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              
                               return ElevatedButton(
-                                onPressed: hasSelectedTimeSlot && !isLoading
-                                    ? _handleBooking
+                                onPressed: hasSelectedTimeSlot
+                                    ? _showBookingConfirmationDialog
                                     : null,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF4F6BF5),
@@ -267,7 +446,7 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                   elevation: 0,
                                 ),
                                 child: Text(
-                                  isLoading ? 'Booking...' : 'Book Your Slot',
+                                  'Book Your Slot',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,

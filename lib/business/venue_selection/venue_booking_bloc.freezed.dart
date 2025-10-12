@@ -1095,7 +1095,14 @@ mixin _$VenueBookingState {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
@@ -1111,7 +1118,14 @@ mixin _$VenueBookingState {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
@@ -1127,7 +1141,14 @@ mixin _$VenueBookingState {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
@@ -1237,7 +1258,14 @@ class _$InitialImpl implements _Initial {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
@@ -1257,7 +1285,14 @@ class _$InitialImpl implements _Initial {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
@@ -1277,7 +1312,14 @@ class _$InitialImpl implements _Initial {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
@@ -1483,7 +1525,14 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
@@ -1503,7 +1552,14 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
@@ -1523,7 +1579,14 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
@@ -1607,6 +1670,14 @@ abstract class _$$BookingInProgressImplCopyWith<$Res> {
     _$BookingInProgressImpl value,
     $Res Function(_$BookingInProgressImpl) then,
   ) = __$$BookingInProgressImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({
+    List<Venue> venues,
+    List<Room> rooms,
+    String? venueID,
+    String? roomID,
+    String? timeSlotID,
+  });
 }
 
 /// @nodoc
@@ -1620,26 +1691,115 @@ class __$$BookingInProgressImplCopyWithImpl<$Res>
 
   /// Create a copy of VenueBookingState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? venues = null,
+    Object? rooms = null,
+    Object? venueID = freezed,
+    Object? roomID = freezed,
+    Object? timeSlotID = freezed,
+  }) {
+    return _then(
+      _$BookingInProgressImpl(
+        venues: null == venues
+            ? _value._venues
+            : venues // ignore: cast_nullable_to_non_nullable
+                  as List<Venue>,
+        rooms: null == rooms
+            ? _value._rooms
+            : rooms // ignore: cast_nullable_to_non_nullable
+                  as List<Room>,
+        venueID: freezed == venueID
+            ? _value.venueID
+            : venueID // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        roomID: freezed == roomID
+            ? _value.roomID
+            : roomID // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        timeSlotID: freezed == timeSlotID
+            ? _value.timeSlotID
+            : timeSlotID // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
 class _$BookingInProgressImpl implements _BookingInProgress {
-  const _$BookingInProgressImpl();
+  const _$BookingInProgressImpl({
+    required final List<Venue> venues,
+    required final List<Room> rooms,
+    required this.venueID,
+    required this.roomID,
+    required this.timeSlotID,
+  }) : _venues = venues,
+       _rooms = rooms;
+
+  final List<Venue> _venues;
+  @override
+  List<Venue> get venues {
+    if (_venues is EqualUnmodifiableListView) return _venues;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_venues);
+  }
+
+  final List<Room> _rooms;
+  @override
+  List<Room> get rooms {
+    if (_rooms is EqualUnmodifiableListView) return _rooms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rooms);
+  }
+
+  @override
+  final String? venueID;
+  @override
+  final String? roomID;
+  @override
+  final String? timeSlotID;
 
   @override
   String toString() {
-    return 'VenueBookingState.bookingInProgress()';
+    return 'VenueBookingState.bookingInProgress(venues: $venues, rooms: $rooms, venueID: $venueID, roomID: $roomID, timeSlotID: $timeSlotID)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$BookingInProgressImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$BookingInProgressImpl &&
+            const DeepCollectionEquality().equals(other._venues, _venues) &&
+            const DeepCollectionEquality().equals(other._rooms, _rooms) &&
+            (identical(other.venueID, venueID) || other.venueID == venueID) &&
+            (identical(other.roomID, roomID) || other.roomID == roomID) &&
+            (identical(other.timeSlotID, timeSlotID) ||
+                other.timeSlotID == timeSlotID));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_venues),
+    const DeepCollectionEquality().hash(_rooms),
+    venueID,
+    roomID,
+    timeSlotID,
+  );
+
+  /// Create a copy of VenueBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BookingInProgressImplCopyWith<_$BookingInProgressImpl> get copyWith =>
+      __$$BookingInProgressImplCopyWithImpl<_$BookingInProgressImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -1653,12 +1813,19 @@ class _$BookingInProgressImpl implements _BookingInProgress {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) {
-    return bookingInProgress();
+    return bookingInProgress(venues, rooms, venueID, roomID, timeSlotID);
   }
 
   @override
@@ -1673,12 +1840,19 @@ class _$BookingInProgressImpl implements _BookingInProgress {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) {
-    return bookingInProgress?.call();
+    return bookingInProgress?.call(venues, rooms, venueID, roomID, timeSlotID);
   }
 
   @override
@@ -1693,14 +1867,21 @@ class _$BookingInProgressImpl implements _BookingInProgress {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (bookingInProgress != null) {
-      return bookingInProgress();
+      return bookingInProgress(venues, rooms, venueID, roomID, timeSlotID);
     }
     return orElse();
   }
@@ -1750,7 +1931,25 @@ class _$BookingInProgressImpl implements _BookingInProgress {
 }
 
 abstract class _BookingInProgress implements VenueBookingState {
-  const factory _BookingInProgress() = _$BookingInProgressImpl;
+  const factory _BookingInProgress({
+    required final List<Venue> venues,
+    required final List<Room> rooms,
+    required final String? venueID,
+    required final String? roomID,
+    required final String? timeSlotID,
+  }) = _$BookingInProgressImpl;
+
+  List<Venue> get venues;
+  List<Room> get rooms;
+  String? get venueID;
+  String? get roomID;
+  String? get timeSlotID;
+
+  /// Create a copy of VenueBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BookingInProgressImplCopyWith<_$BookingInProgressImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1835,7 +2034,14 @@ class _$BookingSuccessImpl implements _BookingSuccess {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
@@ -1855,7 +2061,14 @@ class _$BookingSuccessImpl implements _BookingSuccess {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
@@ -1875,7 +2088,14 @@ class _$BookingSuccessImpl implements _BookingSuccess {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
@@ -2023,7 +2243,14 @@ class _$FailureImpl implements _Failure {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
@@ -2043,7 +2270,14 @@ class _$FailureImpl implements _Failure {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
@@ -2063,7 +2297,14 @@ class _$FailureImpl implements _Failure {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
@@ -2183,7 +2424,14 @@ class _$LoadingImpl implements _Loading {
       String? timeSlotID,
     )
     venuesFetched,
-    required TResult Function() bookingInProgress,
+    required TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )
+    bookingInProgress,
     required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
@@ -2203,7 +2451,14 @@ class _$LoadingImpl implements _Loading {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult? Function()? bookingInProgress,
+    TResult? Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
@@ -2223,7 +2478,14 @@ class _$LoadingImpl implements _Loading {
       String? timeSlotID,
     )?
     venuesFetched,
-    TResult Function()? bookingInProgress,
+    TResult Function(
+      List<Venue> venues,
+      List<Room> rooms,
+      String? venueID,
+      String? roomID,
+      String? timeSlotID,
+    )?
+    bookingInProgress,
     TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,

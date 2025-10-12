@@ -6,6 +6,7 @@ import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/booking_status_sheet.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/date_time_widget.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/venue_room_selector.dart';
 import 'package:thaparapp/utils/date_time_utils.dart';
@@ -113,6 +114,8 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
               ),
             ),
           ),
+          //! Booking status sheet
+          const BookingStatusSheet(),
         ],
       ),
     );

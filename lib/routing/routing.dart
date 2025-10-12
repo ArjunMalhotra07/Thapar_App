@@ -85,16 +85,26 @@ class Routing {
       //! venue booking
       GoRoute(
         path: AppRoute.venueBooking,
-        builder: (context, state) => BlocProvider.value(
-          value: locator<VenueBookingBloc>(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<VenueBookingBloc>.value(
+              value: locator<VenueBookingBloc>(),
+            ),
+            BlocProvider<AuthBloc>.value(value: locator<AuthBloc>()),
+          ],
           child: VenueSelectionScreen(),
         ),
       ),
       //! Room booking
       GoRoute(
         path: AppRoute.roomSeletion,
-        builder: (context, state) => BlocProvider.value(
-          value: locator<VenueBookingBloc>(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<VenueBookingBloc>.value(
+              value: locator<VenueBookingBloc>(),
+            ),
+            BlocProvider<AuthBloc>.value(value: locator<AuthBloc>()),
+          ],
           child: RoomSelectionScreen(),
         ),
       ),
@@ -103,8 +113,13 @@ class Routing {
         path: AppRoute.timeSlot,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
-          return BlocProvider.value(
-            value: locator<VenueBookingBloc>(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<VenueBookingBloc>.value(
+                value: locator<VenueBookingBloc>(),
+              ),
+              BlocProvider<AuthBloc>.value(value: locator<AuthBloc>()),
+            ],
             child: TimeSlotSelectionScreen(
               venueName: args['venueName'],
               roomName: args['roomName'],
