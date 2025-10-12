@@ -38,6 +38,8 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
     context.read<VenueBookingBloc>().add(
       VenueBookingEvent.selectedVenue(venueID: venue.venueId!),
     );
+    // Navigate to room selection
+    context.push('/room-selection');
   }
 
   void _onRoomSelected(Room room) {
@@ -102,122 +104,10 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                   CurrentDateTime(),
                   //! divider
                   AppDivider(),
-                  //! Select your venue and room grid
+                  //! Select your venue grid
                   VenueRoomSelector(
                     onVenueSelected: _onVenueSelected,
                     onRoomSelected: _onRoomSelected,
-                  ),
-                  //! select time slot row
-                  BlocBuilder<VenueBookingBloc, VenueBookingState>(
-                    builder: (context, state) {
-                      return state.maybeWhen(
-                        venuesFetched:
-                            (venues, rooms, venueID, roomID, timeSlotID) {
-                              final selectedVenue = venues.firstWhere(
-                                (venue) => venue.venueId == venueID,
-                                orElse: () => const Venue(
-                                  venueId: null,
-                                  name: null,
-                                  rooms: [],
-                                ),
-                              );
-                              final selectedRoom = rooms.firstWhere(
-                                (room) => room.roomId == roomID,
-                                orElse: () => const Room(
-                                  roomId: null,
-                                  name: null,
-                                  capacity: null,
-                                  bookings: [],
-                                ),
-                              );
-
-                              return Container(
-                                padding: const EdgeInsets.all(24),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            selectedRoom.name ?? '',
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColor.venueBookingTheme,
-                                              fontFamily: AppFonts.gilroy,
-                                            ),
-                                          ),
-                                          Text(
-                                            selectedVenue.name ?? '',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: const Color(0xFF666666),
-                                              fontFamily: AppFonts.gilroy,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    ElevatedButton(
-                                      onPressed:
-                                          venueID != null && roomID != null
-                                          ? () {
-                                              context.push(
-                                                AppRoute.timeSlot,
-                                                extra: {
-                                                  'venueName':
-                                                      selectedVenue.name!,
-                                                  'roomName':
-                                                      selectedRoom.name!,
-                                                  'venueId':
-                                                      selectedVenue.venueId!,
-                                                  'roomId':
-                                                      selectedRoom.roomId!,
-                                                  'bookings':
-                                                      selectedRoom.bookings ??
-                                                      [],
-                                                },
-                                              );
-                                            }
-                                          : null,
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color(
-                                          0xFF4F6BF5,
-                                        ),
-                                        disabledBackgroundColor: Colors.grey,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 24,
-                                          vertical: 16,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                        elevation: 0,
-                                      ),
-                                      child: Text(
-                                        'Select Time Slot',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                          fontFamily: AppFonts.gilroy,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                        orElse: () => Container(),
-                      );
-                    },
                   ),
                 ],
               ),

@@ -16,6 +16,7 @@ import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
 import 'package:thaparapp/presentation/screens/splash/splash.dart';
 import 'package:thaparapp/presentation/screens/splash/start_up.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:thaparapp/presentation/screens/venue_booking/room-selection.dart';
 import 'package:thaparapp/presentation/screens/venue_booking/time-slot.dart';
 import 'package:thaparapp/presentation/screens/venue_booking/venue-selection.dart';
 
@@ -31,6 +32,7 @@ class Routing {
       return Scaffold(body: Center(child: Text('Error: ${state.error}')));
     },
     routes: [
+      //! startup
       GoRoute(
         path: AppRoute.startUp,
         builder: (context, state) => BlocProvider.value(
@@ -38,10 +40,12 @@ class Routing {
           child: const StartUpScreen(),
         ),
       ),
+      //! Splash
       GoRoute(
         path: AppRoute.splash,
         builder: (context, state) => const SplashScreen(),
       ),
+      //! login
       GoRoute(
         path: AppRoute.login,
         builder: (context, state) => BlocProvider.value(
@@ -49,16 +53,20 @@ class Routing {
           child: LoginScreen(),
         ),
       ),
+      //! home
       GoRoute(
         path: AppRoute.home,
         builder: (context, state) =>
             BlocProvider.value(value: locator<AuthBloc>(), child: HomeScreen()),
       ),
+      //! onboarding
       GoRoute(
         path: AppRoute.onboarding,
         builder: (context, state) => OnboardingScreen(),
       ),
+      //! chat
       GoRoute(path: AppRoute.chat, builder: (context, state) => ChatScreen()),
+      //! locations
       GoRoute(
         path: AppRoute.locations,
         builder: (context, state) => BlocProvider.value(
@@ -66,6 +74,7 @@ class Routing {
           child: LocationsScreen(),
         ),
       ),
+      //! lost and found
       GoRoute(
         path: AppRoute.lostAndFound,
         builder: (context, state) => BlocProvider.value(
@@ -73,6 +82,7 @@ class Routing {
           child: LostFoundScreen(),
         ),
       ),
+      //! venue booking
       GoRoute(
         path: AppRoute.venueBooking,
         builder: (context, state) => BlocProvider.value(
@@ -80,6 +90,15 @@ class Routing {
           child: VenueSelectionScreen(),
         ),
       ),
+      //! Room booking
+      GoRoute(
+        path: AppRoute.roomSeletion,
+        builder: (context, state) => BlocProvider.value(
+          value: locator<VenueBookingBloc>(),
+          child: RoomSelectionScreen(),
+        ),
+      ),
+      //! timeslot
       GoRoute(
         path: AppRoute.timeSlot,
         builder: (context, state) {

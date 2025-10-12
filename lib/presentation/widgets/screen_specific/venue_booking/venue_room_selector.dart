@@ -37,7 +37,7 @@ class VenueRoomSelector extends StatelessWidget {
                 );
               }
 
-              return SingleChildScrollView(
+              return Padding(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,69 +52,25 @@ class VenueRoomSelector extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Wrap(
-                      spacing: 12,
-                      runSpacing: 12,
-                      children: state.venues.map((venue) {
-                        final isSelected = state.venueID == venue.venueId;
-                        return GestureDetector(
-                          onTap: () => onVenueSelected(venue),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
+                    Expanded(
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 2.5,
                             ),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? const Color(0xFF4F6BF5)
-                                  : Colors.white,
-                              border: Border.all(
-                                color: isSelected
-                                    ? const Color(0xFF4F6BF5)
-                                    : const Color(0xFFE0E0E0),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              venue.name ?? '',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: isSelected
-                                    ? Colors.white
-                                    : AppColor.venueBookingTheme,
-                                fontFamily: AppFonts.gilroy,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-
-                    if (state.rooms.isNotEmpty) ...[
-                      const SizedBox(height: 32),
-                      Text(
-                        'Select Room Number',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.venueBookingTheme,
-                          fontFamily: AppFonts.gilroy,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Wrap(
-                        spacing: 12,
-                        runSpacing: 12,
-                        children: state.rooms.map((room) {
-                          final isSelected = state.roomID == room.roomId;
+                        itemCount: state.venues.length,
+                        itemBuilder: (context, index) {
+                          final venue = state.venues[index];
+                          final isSelected = state.venueID == venue.venueId;
                           return GestureDetector(
-                            onTap: () => onRoomSelected(room),
+                            onTap: () => onVenueSelected(venue),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 12,
+                                horizontal: 12,
+                                vertical: 8,
                               ),
                               decoration: BoxDecoration(
                                 color: isSelected
@@ -128,39 +84,27 @@ class VenueRoomSelector extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    room.name ?? '',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: isSelected
-                                          ? Colors.white
-                                          : AppColor.venueBookingTheme,
-                                      fontFamily: AppFonts.gilroy,
-                                    ),
+                              child: Center(
+                                child: Text(
+                                  venue.name ?? '',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : AppColor.venueBookingTheme,
+                                    fontFamily: AppFonts.gilroy,
                                   ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'Capacity: ${room.capacity}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: isSelected
-                                          ? Colors.white70
-                                          : const Color(0xFF666666),
-                                      fontFamily: AppFonts.gilroy,
-                                    ),
-                                  ),
-                                ],
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
                               ),
                             ),
                           );
-                        }).toList(),
+                        },
                       ),
-                    ],
+                    ),
                   ],
                 ),
               );

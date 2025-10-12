@@ -171,10 +171,10 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                   children: [
                     //! Date
                     CurrentDateTime(),
-                    //! divider
+                    //! Divider
                     AppDivider(),
                     const SizedBox(height: 20),
-                    //! change venue or room
+                    //! Button : change venue or room
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: GestureDetector(
@@ -201,7 +201,7 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    //! Time selector grid
+                    //! Grid : Time selector
                     TimeSlotSelector(bookings: widget.bookings),
                     //! Bottommost line
                     Container(

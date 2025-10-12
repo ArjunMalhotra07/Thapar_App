@@ -9,5 +9,6 @@ class AppRoute {
   static const String locations = '/locations';
   static const String lostAndFound = '/lost-and-found';
   static const String venueBooking = '/venue-booking';
+  static const String roomSeletion = '/room-selection';
   static const String timeSlot = '/time-slot';
 }
