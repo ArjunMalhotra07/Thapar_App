@@ -4,17 +4,20 @@ import 'package:thaparapp/business/locations/locations_bloc.dart';
 import 'package:thaparapp/business/lost_and_found/lost_and_found_bloc.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
+import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/provider/auth/auth_imp.dart';
 import 'package:thaparapp/data/provider/chat/chat_imp.dart';
 import 'package:thaparapp/data/provider/locations/locations_imp.dart';
 import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_imp.dart';
 import 'package:thaparapp/data/provider/lost_and_found/lost_and_found_local.dart';
 import 'package:thaparapp/data/provider/startup/startup_imp.dart';
+import 'package:thaparapp/data/provider/venue-booking/venue_booking_imp.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
 import 'package:thaparapp/data/repo/chat_repo.dart';
 import 'package:thaparapp/data/repo/locations_repo.dart';
 import 'package:thaparapp/data/repo/lost_and_found_repo.dart';
 import 'package:thaparapp/data/repo/startup_repo.dart';
+import 'package:thaparapp/data/repo/venue_booking_repo.dart';
 import 'package:thaparapp/network/base_api_service.dart';
 import 'package:thaparapp/network/network_api_service.dart';
 
@@ -76,6 +79,16 @@ void init() {
       lostAndFoundRepo: LostAndFoundRepo(
         // lostAndFoundProvider: LostAndFoundLocalProvider(),
         lostAndFoundProvider: LostAndFoundApiProvider(
+          service: locator<BaseApiService>(),
+        ),
+      ),
+    ),
+  );
+  //! Venue Booking
+  locator.registerLazySingleton<VenueBookingBloc>(
+    () => VenueBookingBloc(
+      venueBookingRepo: VenueBookingRepo(
+        venueBookingProvider: VenueBookingImp(
           service: locator<BaseApiService>(),
         ),
       ),

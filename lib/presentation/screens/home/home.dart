@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSpacing: 16,
                   childAspectRatio: 0.85,
                 ),
-                itemCount: 3, // Only showing first 3 cards
+                itemCount: 4, // Only showing first 3 cards
                 itemBuilder: (context, index) {
                   switch (index) {
                     case 0:
@@ -156,9 +156,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Lost & Found',
                         subtitle:
                             'Helping you reconnect\n    with lost things.',
-                        backgroundColor: const Color(0xFFFFBE34),
+                        backgroundColor: AppColor.lostAndFoundTheme,
                         onTap: () {
                           GoRouter.of(context).push(AppRoute.lostAndFound);
+                        },
+                      );
+                    case 3:
+                      return FeatureCard(
+                        iconPath: AppIcons.venue,
+                        title: 'Venue Booking',
+                        subtitle: '  Set time and\nsecure your spot.',
+                        backgroundColor: const Color(0xFF737373),
+                        onTap: () {
+                          GoRouter.of(context).push(AppRoute.venueBooking);
                         },
                       );
                     default:
@@ -204,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSpacing: 16,
                   childAspectRatio: 0.85,
                 ),
-                itemCount: 2, // MediShare and Venue Booking
+                itemCount: 1, // MediShare and Venue Booking
                 itemBuilder: (context, index) {
                   switch (index) {
                     case 0:
@@ -215,16 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         backgroundColor: const Color(0xFF56C167),
                         onTap: () {
                           // TODO: Navigate to MediShare screen (coming soon)
-                        },
-                      );
-                    case 1:
-                      return FeatureCard(
-                        iconPath: AppIcons.venue,
-                        title: 'Venue Booking',
-                        subtitle: '  Set time and\nsecure your spot.',
-                        backgroundColor: const Color(0xFF737373),
-                        onTap: () {
-                          // TODO: Navigate to Venue Booking screen (coming soon)
                         },
                       );
                     default:
