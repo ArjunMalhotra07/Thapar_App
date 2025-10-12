@@ -30,9 +30,24 @@ class TimeSlotSelectionScreen extends StatefulWidget {
 
 class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
   bool isSlotBooked(String startTime, String endTime) {
+    // Convert slot times (HH:00 format) to hours for comparison
+    final slotStartHour = int.parse(startTime.split(':')[0]);
+    
     for (final booking in widget.bookings) {
-      if (booking.startTime == startTime && booking.endTime == endTime) {
-        return true;
+      if (booking.startTime != null) {
+        try {
+          // Parse the ISO timestamp from booking
+          final bookingStart = DateTime.parse(booking.startTime!.replaceAll('Z', ''));
+          final bookingStartHour = bookingStart.hour;
+          
+          // Check if this booking's hour matches our slot's hour
+          if (bookingStartHour == slotStartHour) {
+            return true;
+          }
+        } catch (e) {
+          // If parsing fails, continue to next booking
+          continue;
+        }
       }
     }
     return false;
@@ -500,13 +515,29 @@ class TimeSlotSelector extends StatelessWidget {
 
   bool isSlotExpired(int hour) {
     final now = DateTime.now();
+    // Slot is expired if it's in the past or current hour
     return hour <= now.hour;
   }
 
   bool isSlotBooked(String startTime, String endTime, List<Booking> bookings) {
+    // Convert slot times (HH:00 format) to hours for comparison
+    final slotStartHour = int.parse(startTime.split(':')[0]);
+    
     for (final booking in bookings) {
-      if (booking.startTime == startTime && booking.endTime == endTime) {
-        return true;
+      if (booking.startTime != null) {
+        try {
+          // Parse the ISO timestamp from booking
+          final bookingStart = DateTime.parse(booking.startTime!.replaceAll('Z', ''));
+          final bookingStartHour = bookingStart.hour;
+          
+          // Check if this booking's hour matches our slot's hour
+          if (bookingStartHour == slotStartHour) {
+            return true;
+          }
+        } catch (e) {
+          // If parsing fails, continue to next booking
+          continue;
+        }
       }
     }
     return false;
