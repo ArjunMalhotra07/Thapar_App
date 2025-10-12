@@ -6,6 +6,7 @@ import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/date_time_widget.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/venue_room_selector.dart';
 import 'package:thaparapp/utils/date_time_utils.dart';
 
@@ -17,7 +18,6 @@ class VenueSelectionScreen extends StatefulWidget {
 }
 
 class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,9 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
       venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {},
       orElse: () {
         context.read<VenueBookingBloc>().add(
-          VenueBookingEvent.fetchVenues(date: DateTimeUtils.getApiFormattedDate()),
+          VenueBookingEvent.fetchVenues(
+            date: DateTimeUtils.getApiFormattedDate(),
+          ),
         );
       },
     );
@@ -96,38 +98,10 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
               ),
               child: Column(
                 children: [
-                  //! Date and time
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      children: [
-                        Text(
-                          DateTimeUtils.getFormattedDate(),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.venueBookingTheme,
-                            fontFamily: AppFonts.gilroy,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          DateTimeUtils.getFormattedTime(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF666666),
-                            fontFamily: AppFonts.gilroy,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //! Divider
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: const Divider(height: 1),
-                  ),
+                  //! Date
+                  CurrentDateTime(),
+                  //! divider
+                  AppDivider(),
                   //! Select your venue and room grid
                   VenueRoomSelector(
                     onVenueSelected: _onVenueSelected,
@@ -137,33 +111,34 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                   BlocBuilder<VenueBookingBloc, VenueBookingState>(
                     builder: (context, state) {
                       return state.maybeWhen(
-                        venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
-                          final selectedVenue = venues.firstWhere(
-                            (venue) => venue.venueId == venueID,
-                            orElse: () => const Venue(
-                              venueId: null,
-                              name: null,
-                              rooms: [],
-                            ),
-                          );
-                          final selectedRoom = rooms.firstWhere(
-                            (room) => room.roomId == roomID,
-                            orElse: () => const Room(
-                              roomId: null,
-                              name: null,
-                              capacity: null,
-                              bookings: [],
-                            ),
-                          );
+                        venuesFetched:
+                            (venues, rooms, venueID, roomID, timeSlotID) {
+                              final selectedVenue = venues.firstWhere(
+                                (venue) => venue.venueId == venueID,
+                                orElse: () => const Venue(
+                                  venueId: null,
+                                  name: null,
+                                  rooms: [],
+                                ),
+                              );
+                              final selectedRoom = rooms.firstWhere(
+                                (room) => room.roomId == roomID,
+                                orElse: () => const Room(
+                                  roomId: null,
+                                  name: null,
+                                  capacity: null,
+                                  bookings: [],
+                                ),
+                              );
 
-                          return Container(
+                              return Container(
                                 padding: const EdgeInsets.all(24),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
@@ -189,30 +164,40 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                                     ),
                                     const SizedBox(width: 16),
                                     ElevatedButton(
-                                  onPressed: venueID != null && roomID != null
+                                      onPressed:
+                                          venueID != null && roomID != null
                                           ? () {
                                               context.push(
                                                 AppRoute.timeSlot,
                                                 extra: {
-                                                  'venueName': selectedVenue.name!,
-                                                  'roomName': selectedRoom.name!,
-                                                  'venueId': selectedVenue.venueId!,
-                                                  'roomId': selectedRoom.roomId!,
-                                              'bookings':
-                                                  selectedRoom.bookings ?? [],
+                                                  'venueName':
+                                                      selectedVenue.name!,
+                                                  'roomName':
+                                                      selectedRoom.name!,
+                                                  'venueId':
+                                                      selectedVenue.venueId!,
+                                                  'roomId':
+                                                      selectedRoom.roomId!,
+                                                  'bookings':
+                                                      selectedRoom.bookings ??
+                                                      [],
                                                 },
                                               );
                                             }
                                           : null,
                                       style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF4F6BF5),
+                                        backgroundColor: const Color(
+                                          0xFF4F6BF5,
+                                        ),
                                         disabledBackgroundColor: Colors.grey,
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 24,
                                           vertical: 16,
                                         ),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
                                         ),
                                         elevation: 0,
                                       ),
@@ -228,8 +213,8 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                                     ),
                                   ],
                                 ),
-                          );
-                        },
+                              );
+                            },
                         orElse: () => Container(),
                       );
                     },

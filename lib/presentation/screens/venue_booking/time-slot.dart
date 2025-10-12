@@ -5,6 +5,7 @@ import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
+import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/date_time_widget.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/time_slot_selector.dart';
 import 'package:thaparapp/utils/date_time_utils.dart';
 import 'package:thaparapp/utils/venue_booking_utils.dart';
@@ -169,37 +170,9 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                 child: Column(
                   children: [
                     //! Date
-                    Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        children: [
-                          Text(
-                            DateTimeUtils.getFormattedDate(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.venueBookingTheme,
-                              fontFamily: AppFonts.gilroy,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            DateTimeUtils.getFormattedTime(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF666666),
-                              fontFamily: AppFonts.gilroy,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    CurrentDateTime(),
                     //! divider
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: const Divider(height: 1),
-                    ),
+                    AppDivider(),
                     const SizedBox(height: 20),
                     //! change venue or room
                     Padding(
@@ -230,10 +203,12 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                     const SizedBox(height: 20),
                     //! Time selector grid
                     TimeSlotSelector(bookings: widget.bookings),
+                    //! Bottommost line
                     Container(
                       padding: const EdgeInsets.all(24),
                       child: Row(
                         children: [
+                          //! Venue/Room name
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
