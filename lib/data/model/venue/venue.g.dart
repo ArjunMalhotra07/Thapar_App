@@ -40,14 +40,14 @@ Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
 
 _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
     _$BookingImpl(
-      userId: json['user_id'] as String?,
+      userId: json['userId'] as String?,
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
     );
 
 Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
     <String, dynamic>{
-      'user_id': instance.userId,
+      'userId': instance.userId,
       'start_time': instance.startTime,
       'end_time': instance.endTime,
     };

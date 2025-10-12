@@ -26,9 +26,10 @@ abstract class Room with _$Room {
 @freezed
 abstract class Booking with _$Booking {
   const factory Booking({
-    @JsonKey(name: "user_id") required String? userId,
+    required String? userId,
     @JsonKey(name: "start_time") required String? startTime,
     @JsonKey(name: "end_time") required String? endTime,
   }) = _Booking;
-  factory Booking.fromJson(Map<String, dynamic> json) => _$BookingFromJson(json);
+  factory Booking.fromJson(Map<String, dynamic> json) =>
+      _$BookingFromJson(json);
 }

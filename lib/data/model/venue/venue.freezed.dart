@@ -467,7 +467,6 @@ Booking _$BookingFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Booking {
-  @JsonKey(name: "user_id")
   String? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: "start_time")
   String? get startTime => throw _privateConstructorUsedError;
@@ -489,7 +488,7 @@ abstract class $BookingCopyWith<$Res> {
       _$BookingCopyWithImpl<$Res, Booking>;
   @useResult
   $Res call({
-    @JsonKey(name: "user_id") String? userId,
+    String? userId,
     @JsonKey(name: "start_time") String? startTime,
     @JsonKey(name: "end_time") String? endTime,
   });
@@ -543,7 +542,7 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    @JsonKey(name: "user_id") String? userId,
+    String? userId,
     @JsonKey(name: "start_time") String? startTime,
     @JsonKey(name: "end_time") String? endTime,
   });
@@ -590,7 +589,7 @@ class __$$BookingImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BookingImpl implements _Booking {
   const _$BookingImpl({
-    @JsonKey(name: "user_id") required this.userId,
+    required this.userId,
     @JsonKey(name: "start_time") required this.startTime,
     @JsonKey(name: "end_time") required this.endTime,
   });
@@ -599,7 +598,6 @@ class _$BookingImpl implements _Booking {
       _$$BookingImplFromJson(json);
 
   @override
-  @JsonKey(name: "user_id")
   final String? userId;
   @override
   @JsonKey(name: "start_time")
@@ -644,7 +642,7 @@ class _$BookingImpl implements _Booking {
 
 abstract class _Booking implements Booking {
   const factory _Booking({
-    @JsonKey(name: "user_id") required final String? userId,
+    required final String? userId,
     @JsonKey(name: "start_time") required final String? startTime,
     @JsonKey(name: "end_time") required final String? endTime,
   }) = _$BookingImpl;
@@ -652,7 +650,6 @@ abstract class _Booking implements Booking {
   factory _Booking.fromJson(Map<String, dynamic> json) = _$BookingImpl.fromJson;
 
   @override
-  @JsonKey(name: "user_id")
   String? get userId;
   @override
   @JsonKey(name: "start_time")

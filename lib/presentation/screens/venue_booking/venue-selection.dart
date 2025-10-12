@@ -90,32 +90,35 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(top: 24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  //! Date
-                  CurrentDateTime(),
-                  //! divider
-                  AppDivider(),
-                  //! Select your venue grid
-                  VenueRoomSelector(
-                    onVenueSelected: _onVenueSelected,
-                    onRoomSelected: _onRoomSelected,
-                  ),
-                ],
-              ),
+          Container(
+            margin: const EdgeInsets.only(top: 24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                //! Date
+                CurrentDateTime(),
+                //! divider
+                AppDivider(),
+                //! Select your venue grid
+                VenueRoomSelector(
+                  onVenueSelected: _onVenueSelected,
+                  onRoomSelected: _onRoomSelected,
+                ),
+              ],
             ),
           ),
-          //! Booking status sheet
-          const BookingStatusSheet(),
+          Positioned(
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: //! Booking status sheet
+                const BookingStatusSheet(),
+          ),
         ],
       ),
     );

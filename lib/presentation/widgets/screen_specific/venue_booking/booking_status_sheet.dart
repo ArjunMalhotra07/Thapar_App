@@ -91,6 +91,7 @@ class BookingStatusSheet extends StatelessWidget {
                 ?.where((booking) => booking.userId == currentUserId)
                 .toList() ??
             [];
+
         if (userBookings.isNotEmpty) {
           final now = DateTime.now();
           final todayBookings = userBookings.where((booking) {
@@ -107,6 +108,7 @@ class BookingStatusSheet extends StatelessWidget {
               return false;
             }
           }).toList();
+
           if (todayBookings.isNotEmpty) return true;
         }
       }
@@ -139,7 +141,6 @@ class BookingStatusSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("here");
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         final currentUser = context.read<AuthBloc>().user;
@@ -292,7 +293,7 @@ class BookingStatusSheet extends StatelessWidget {
                             Text(
                               'Your Upcoming Booking',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                                 fontFamily: AppFonts.gilroy,
@@ -300,11 +301,11 @@ class BookingStatusSheet extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '${userRoom.name ?? ''} • ${userVenue.name ?? ''} • ${_formatBookingTime(upcomingBooking.startTime, upcomingBooking.endTime)}',
+                              '${userRoom.name ?? ''}\n${userVenue.name ?? ''}\n${_formatBookingTime(upcomingBooking.startTime, upcomingBooking.endTime)}',
                               style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white70,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
                                 fontFamily: AppFonts.gilroy,
                               ),
                             ),
@@ -312,7 +313,7 @@ class BookingStatusSheet extends StatelessWidget {
                             Text(
                               _getTimeRemaining(upcomingBooking.startTime),
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                                 fontFamily: AppFonts.gilroy,
@@ -333,7 +334,7 @@ class BookingStatusSheet extends StatelessWidget {
                         child: Text(
                           'Confirmed',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                             fontFamily: AppFonts.gilroy,
