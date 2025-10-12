@@ -12,7 +12,11 @@ class AuthLocal implements AuthProvider {
       user: User(
         id: "userID",
         name: "Arjun",
-        email: "arjun03.malhotra@gmail.com", userId: '', gender: '', category: '',
+        email: "arjun03.malhotra@gmail.com",
+        userId: '',
+        gender: '',
+        category: '',
+        clubId: '',
       ),
     );
     try {

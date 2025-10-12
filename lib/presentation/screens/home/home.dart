@@ -118,62 +118,78 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 32),
 
               // Feature Cards Grid
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.85,
-                ),
-                itemCount: 4, // Only showing first 3 cards
-                itemBuilder: (context, index) {
-                  switch (index) {
-                    case 0:
-                      return FeatureCard(
-                        iconPath: AppIcons.locateUs,
-                        title: 'Locate Us',
-                        subtitle: 'Explore every corner\n   of your campus.',
-                        backgroundColor: AppColor.locateUsTheme,
-                        onTap: () {
-                          GoRouter.of(context).push(AppRoute.locations);
-                        },
-                      );
-                    case 1:
-                      return FeatureCard(
-                        iconPath: AppIcons.chatbot,
-                        title: 'AI ChatBot',
-                        subtitle: 'Got questions..?\nI\'ve got answers.',
-                        backgroundColor: AppColor.aiChatBotTheme,
-                        onTap: () {
-                          GoRouter.of(context).push(AppRoute.chat);
-                        },
-                      );
-                    case 2:
-                      return FeatureCard(
-                        iconPath: AppIcons.lostandfound,
-                        title: 'Lost & Found',
-                        subtitle:
-                            'Helping you reconnect\n    with lost things.',
-                        backgroundColor: AppColor.lostAndFoundTheme,
-                        onTap: () {
-                          GoRouter.of(context).push(AppRoute.lostAndFound);
-                        },
-                      );
-                    case 3:
-                      return FeatureCard(
-                        iconPath: AppIcons.venue,
-                        title: 'Venue Booking',
-                        subtitle: '  Set time and\nsecure your spot.',
-                        backgroundColor: const Color(0xFF737373),
-                        onTap: () {
-                          GoRouter.of(context).push(AppRoute.venueBooking);
-                        },
-                      );
-                    default:
-                      return const SizedBox.shrink();
-                  }
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  final isClubMember = state.maybeWhen(
+                    success: (user, msg) {
+                      return user?.clubId;
+                    },
+                    orElse: () => null,
+                  );
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 0.85,
+                        ),
+                    itemCount: 4, // Only showing first 3 cards
+                    itemBuilder: (context, index) {
+                      switch (index) {
+                        case 0:
+                          return FeatureCard(
+                            iconPath: AppIcons.locateUs,
+                            title: 'Locate Us',
+                            subtitle:
+                                'Explore every corner\n   of your campus.',
+                            backgroundColor: AppColor.locateUsTheme,
+                            onTap: () {
+                              GoRouter.of(context).push(AppRoute.locations);
+                            },
+                          );
+                        case 1:
+                          return FeatureCard(
+                            iconPath: AppIcons.chatbot,
+                            title: 'AI ChatBot',
+                            subtitle: 'Got questions..?\nI\'ve got answers.',
+                            backgroundColor: AppColor.aiChatBotTheme,
+                            onTap: () {
+                              GoRouter.of(context).push(AppRoute.chat);
+                            },
+                          );
+                        case 2:
+                          return FeatureCard(
+                            iconPath: AppIcons.lostandfound,
+                            title: 'Lost & Found',
+                            subtitle:
+                                'Helping you reconnect\n    with lost things.',
+                            backgroundColor: AppColor.lostAndFoundTheme,
+                            onTap: () {
+                              GoRouter.of(context).push(AppRoute.lostAndFound);
+                            },
+                          );
+                        case 3:
+                          return isClubMember != null
+                              ? FeatureCard(
+                                  iconPath: AppIcons.venue,
+                                  title: 'Venue Booking',
+                                  subtitle: '  Set time and\nsecure your spot.',
+                                  backgroundColor: const Color(0xFF737373),
+                                  onTap: () {
+                                    GoRouter.of(
+                                      context,
+                                    ).push(AppRoute.venueBooking);
+                                  },
+                                )
+                              : const SizedBox.shrink();
+                        default:
+                          return const SizedBox.shrink();
+                      }
+                    },
+                  );
                 },
               ),
 
