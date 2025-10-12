@@ -116,6 +116,41 @@ class BookingStatusSheet extends StatelessWidget {
     return false;
   }
 
+  // Check if user has ANY booking today (past or future)
+  static bool hasUserBookingToday(List<Venue> venues, String? currentUserId) {
+    if (currentUserId == null) return false;
+
+    for (final venue in venues) {
+      for (final room in venue.rooms ?? []) {
+        final userBookings =
+            room.bookings
+                ?.where((booking) => booking.userId == currentUserId)
+                .toList() ??
+            [];
+
+        if (userBookings.isNotEmpty) {
+          final now = DateTime.now();
+          final todayBookings = userBookings.where((booking) {
+            if (booking.startTime == null) return false;
+            try {
+              final bookingDate = DateTime.parse(
+                booking.startTime!.replaceAll('Z', ''),
+              );
+              return bookingDate.year == now.year &&
+                  bookingDate.month == now.month &&
+                  bookingDate.day == now.day;
+            } catch (e) {
+              return false;
+            }
+          }).toList();
+
+          if (todayBookings.isNotEmpty) return true;
+        }
+      }
+    }
+    return false;
+  }
+
   String _formatBookingTime(String? startTime, String? endTime) {
     if (startTime == null || endTime == null) return '';
 
