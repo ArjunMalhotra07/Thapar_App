@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:thaparapp/utils/date_time_utils.dart';
 
 class VenueSelectionScreen extends StatefulWidget {
   const VenueSelectionScreen({super.key});
@@ -16,52 +16,6 @@ class VenueSelectionScreen extends StatefulWidget {
 }
 
 class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
-  String get formattedDate {
-    final now = DateTime.now();
-    final months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return '${now.day}${_getDaySuffix(now.day)} ${months[now.month - 1]}, ${now.year}';
-  }
-
-  String _getDaySuffix(int day) {
-    if (day >= 11 && day <= 13) return 'th';
-    switch (day % 10) {
-      case 1:
-        return 'st';
-      case 2:
-        return 'nd';
-      case 3:
-        return 'rd';
-      default:
-        return 'th';
-    }
-  }
-
-  String get formattedTime {
-    final now = DateTime.now();
-    final hour = now.hour > 12
-        ? now.hour - 12
-        : (now.hour == 0 ? 12 : now.hour);
-    final minute = now.minute.toString().padLeft(2, '0');
-    final period = now.hour >= 12 ? 'PM' : 'AM';
-    return '$hour:$minute $period';
-  }
-
-  String getFormattedDate(DateTime now) {
-    return DateFormat('yyyy-MM-dd').format(now);
-  }
 
   @override
   void initState() {
@@ -71,7 +25,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
       venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {},
       orElse: () {
         context.read<VenueBookingBloc>().add(
-          VenueBookingEvent.fetchVenues(date: getFormattedDate(DateTime.now())),
+          VenueBookingEvent.fetchVenues(date: DateTimeUtils.getApiFormattedDate()),
         );
       },
     );
@@ -147,7 +101,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                     child: Column(
                       children: [
                         Text(
-                          formattedDate,
+                          DateTimeUtils.getFormattedDate(),
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -157,7 +111,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          formattedTime,
+                          DateTimeUtils.getFormattedTime(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -299,9 +253,6 @@ class VenueRoomSelector extends StatelessWidget {
     required this.onRoomSelected,
   });
 
-  String getFormattedDate(DateTime now) {
-    return DateFormat('yyyy-MM-dd').format(now);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -479,7 +430,7 @@ class VenueRoomSelector extends StatelessWidget {
                     onPressed: () {
                       context.read<VenueBookingBloc>().add(
                         VenueBookingEvent.fetchVenues(
-                          date: getFormattedDate(DateTime.now()),
+                          date: DateTimeUtils.getApiFormattedDate(),
                         ),
                       );
                     },
