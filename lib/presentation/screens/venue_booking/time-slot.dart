@@ -29,7 +29,6 @@ class TimeSlotSelectionScreen extends StatefulWidget {
 }
 
 class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
-
   bool isSlotBooked(String startTime, String endTime) {
     for (final booking in widget.bookings) {
       if (booking.startTime == startTime && booking.endTime == endTime) {
@@ -135,22 +134,36 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
             (slot) => slot['id'] == timeSlotID,
             orElse: () => {},
           );
-          
+
           if (selectedSlot.isNotEmpty) {
             final now = DateTime.now();
-            final startHour = int.parse(selectedSlot['startTime'].split(':')[0]);
+            final startHour = int.parse(
+              selectedSlot['startTime'].split(':')[0],
+            );
             final endHour = int.parse(selectedSlot['endTime'].split(':')[0]);
-            
-            final startDateTime = DateTime(now.year, now.month, now.day, startHour, 0);
-            final endDateTime = DateTime(now.year, now.month, now.day, endHour, 0);
-            
+
+            final startDateTime = DateTime(
+              now.year,
+              now.month,
+              now.day,
+              startHour,
+              0,
+            );
+            final endDateTime = DateTime(
+              now.year,
+              now.month,
+              now.day,
+              endHour,
+              0,
+            );
+
             final startTimeFormatted = startDateTime.toIso8601String() + 'Z';
             final endTimeFormatted = endDateTime.toIso8601String() + 'Z';
-            
+
             print('RoomID: ${widget.roomId}');
             print('Start Time: $startTimeFormatted');
             print('End Time: $endTimeFormatted');
-            
+
             context.read<VenueBookingBloc>().add(
               VenueBookingEvent.bookVenue(
                 venueId: widget.venueId,
@@ -242,6 +255,7 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                 ),
                 child: Column(
                   children: [
+                    //! Date
                     Padding(
                       padding: const EdgeInsets.all(24),
                       child: Column(
@@ -268,13 +282,14 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                         ],
                       ),
                     ),
+                    //! divider
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: const Divider(height: 1),
                     ),
-
+                    const SizedBox(height: 20),
                     Padding(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: GestureDetector(
                         onTap: () => GoRouter.of(context).pop(),
                         child: Container(
@@ -298,7 +313,8 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                         ),
                       ),
                     ),
-
+                    const SizedBox(height: 20),
+                    TimeSlotSelector(bookings: widget.bookings),
                     Container(
                       padding: const EdgeInsets.all(24),
                       child: Row(
@@ -326,36 +342,57 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                     fontFamily: AppFonts.gilroy,
                                   ),
                                 ),
-                                BlocBuilder<VenueBookingBloc, VenueBookingState>(
+                                BlocBuilder<
+                                  VenueBookingBloc,
+                                  VenueBookingState
+                                >(
                                   builder: (context, state) {
                                     return state.maybeWhen(
-                                      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
-                                        if (timeSlotID != null) {
-                                          final bloc = context.read<VenueBookingBloc>();
-                                          final selectedSlot = bloc.timeSlots.firstWhere(
-                                            (slot) => slot['id'] == timeSlotID,
-                                            orElse: () => {},
-                                          );
-                                          if (selectedSlot.isNotEmpty) {
-                                            return Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  selectedSlot['label'] ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: const Color(0xFF4CAF50),
-                                                    fontFamily: AppFonts.gilroy,
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          }
-                                        }
-                                        return const SizedBox.shrink();
-                                      },
+                                      venuesFetched:
+                                          (
+                                            venues,
+                                            rooms,
+                                            venueID,
+                                            roomID,
+                                            timeSlotID,
+                                          ) {
+                                            if (timeSlotID != null) {
+                                              final bloc = context
+                                                  .read<VenueBookingBloc>();
+                                              final selectedSlot = bloc
+                                                  .timeSlots
+                                                  .firstWhere(
+                                                    (slot) =>
+                                                        slot['id'] ==
+                                                        timeSlotID,
+                                                    orElse: () => {},
+                                                  );
+                                              if (selectedSlot.isNotEmpty) {
+                                                return Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 4),
+                                                    Text(
+                                                      selectedSlot['label'] ??
+                                                          '',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: const Color(
+                                                          0xFF4CAF50,
+                                                        ),
+                                                        fontFamily:
+                                                            AppFonts.gilroy,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              }
+                                            }
+                                            return const SizedBox.shrink();
+                                          },
                                       orElse: () => const SizedBox.shrink(),
                                     );
                                   },
@@ -371,7 +408,8 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                 orElse: () => false,
                               );
                               final hasSelectedTimeSlot = state.maybeWhen(
-                                venuesFetched: (_, __, ___, ____, timeSlotID) => timeSlotID != null,
+                                venuesFetched: (_, __, ___, ____, timeSlotID) =>
+                                    timeSlotID != null,
                                 orElse: () => false,
                               );
                               return ElevatedButton(
@@ -407,7 +445,6 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                         ],
                       ),
                     ),
-                    TimeSlotSelector(bookings: widget.bookings),
                   ],
                 ),
               ),
@@ -423,7 +460,7 @@ enum SlotState { available, booked, expired }
 
 class TimeSlotSelector extends StatelessWidget {
   final List<Booking> bookings;
-  
+
   const TimeSlotSelector({super.key, required this.bookings});
 
   SlotState getSlotState(Map<String, dynamic> slot, List<Booking> bookings) {
@@ -440,7 +477,7 @@ class TimeSlotSelector extends StatelessWidget {
     final now = DateTime.now();
     return hour <= now.hour;
   }
-  
+
   bool isSlotBooked(String startTime, String endTime, List<Booking> bookings) {
     for (final booking in bookings) {
       if (booking.startTime == startTime && booking.endTime == endTime) {
@@ -449,7 +486,7 @@ class TimeSlotSelector extends StatelessWidget {
     }
     return false;
   }
-  
+
   Color getSlotColor(SlotState state, bool isSelected) {
     if (isSelected) {
       switch (state) {
@@ -498,7 +535,7 @@ class TimeSlotSelector extends StatelessWidget {
             bookingInProgress: () => true,
             orElse: () => false,
           );
-          
+
           if (isBookingInProgress) {
             return Center(
               child: Column(
@@ -535,7 +572,7 @@ class TimeSlotSelector extends StatelessWidget {
             venuesFetched: (_, __, ___, ____, timeSlotID) => timeSlotID,
             orElse: () => null,
           );
-          
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -622,12 +659,12 @@ class TimeSlotSelector extends StatelessWidget {
                           color: const Color(0xFFF44336),
                           label: 'Booked Slot',
                         ),
+                        const SizedBox(width: 24),
+                        _buildLegendItem(
+                          color: const Color(0xFFBDBDBD),
+                          label: 'Expired Slot',
+                        ),
                       ],
-                    ),
-                    const SizedBox(height: 12),
-                    _buildLegendItem(
-                      color: const Color(0xFFBDBDBD),
-                      label: 'Expired Slot',
                     ),
                   ],
                 ),
