@@ -9,7 +9,6 @@ class VenueBookingImp extends VenueBookingProvider {
   @override
   Future<VenueBookingResponse> fetchVenues(String date) async {
     try {
-      print("here");
       final res = await _service.getAPI(
         url: AppURL.venue,
         bearerToken: '',

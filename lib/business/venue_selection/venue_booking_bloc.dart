@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:thaparapp/data/model/api_models/venue_booking_response/venue_booking_response.dart';
+import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/data/repo/venue_booking_repo.dart';
 
 part 'venue_booking_event.dart';
@@ -12,16 +12,57 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   VenueBookingBloc({required this.venueBookingRepo}) : super(_Initial()) {
     on<_FetchVenues>(fetchVenues);
     on<_BookVenue>(bookVenue);
+    on<_SelectedVenue>(selectVenue);
+    on<_SelectedRoom>(selectRoom);
   }
 
   void fetchVenues(event, emit) async {
     try {
       emit(const VenueBookingState.loading());
-      await Future.delayed(Duration(milliseconds: 1400));
       final venues = await venueBookingRepo.fetchVenues(event.date);
-      emit(VenueBookingState.venuesFetched(response: venues));
+      emit(
+        VenueBookingState.venuesFetched(
+          venues: venues.venues ?? [],
+          rooms: [],
+          venueID: null,
+          roomID: null,
+        ),
+      );
     } catch (e) {
       emit(VenueBookingState.failure(message: e.toString()));
+    }
+  }
+
+  void selectVenue(event, emit) {
+    final currentState = state.mapOrNull(venuesFetched: (value) => value);
+    if (currentState != null) {
+      final selectedVenue = currentState.venues.firstWhere(
+        (venue) => venue.venueId == event.venueID,
+        orElse: () => const Venue(venueId: null, name: null, rooms: []),
+      );
+      
+      emit(
+        currentState.copyWith(
+          venues: currentState.venues,
+          rooms: selectedVenue.rooms ?? [],
+          venueID: event.venueID,
+          roomID: null, // Reset room selection when venue changes
+        ),
+      );
+    }
+  }
+
+  void selectRoom(event, emit) {
+    final currentState = state.mapOrNull(venuesFetched: (value) => value);
+    if (currentState != null) {
+      emit(
+        currentState.copyWith(
+          venues: currentState.venues,
+          rooms: currentState.rooms,
+          venueID: currentState.venueID,
+          roomID: event.roomID,
+        ),
+      );
     }
   }
 
@@ -35,11 +76,13 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         "end_time": event.endTime,
         "date": event.date,
       };
-      
       await Future.delayed(Duration(seconds: 10));
-      
       final res = await venueBookingRepo.bookVenue(body);
-      emit(VenueBookingState.bookingSuccess(message: "Booking confirmed successfully!"));
+      emit(
+        VenueBookingState.bookingSuccess(
+          message: "Booking confirmed successfully!",
+        ),
+      );
     } catch (e) {
       emit(VenueBookingState.failure(message: e.toString()));
     }

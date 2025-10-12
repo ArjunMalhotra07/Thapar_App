@@ -4,6 +4,10 @@ part of 'venue_booking_bloc.dart';
 class VenueBookingEvent with _$VenueBookingEvent {
   const factory VenueBookingEvent.fetchVenues({required String date}) =
       _FetchVenues;
+  const factory VenueBookingEvent.selectedVenue({required String venueID}) =
+      _SelectedVenue;
+  const factory VenueBookingEvent.selectedRoom({required String roomID}) =
+      _SelectedRoom;
   const factory VenueBookingEvent.bookVenue({
     required String? venueId,
     required String? roomId,

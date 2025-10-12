@@ -4,14 +4,15 @@ part of 'venue_booking_bloc.dart';
 class VenueBookingState with _$VenueBookingState {
   const factory VenueBookingState.initial() = _Initial;
   const factory VenueBookingState.venuesFetched({
-    required VenueBookingResponse? response,
+    required List<Venue> venues,
+    required List<Room> rooms,
+    required String? venueID,
+    required String? roomID,
   }) = _VenuesFetched;
   const factory VenueBookingState.bookingInProgress() = _BookingInProgress;
-  const factory VenueBookingState.bookingSuccess({
-    required String? message,
-  }) = _BookingSuccess;
+  const factory VenueBookingState.bookingSuccess({required String? message}) =
+      _BookingSuccess;
   const factory VenueBookingState.failure({required String? message}) =
       _Failure;
-  const factory VenueBookingState.loading() =
-      _Loading;
+  const factory VenueBookingState.loading() = _Loading;
 }

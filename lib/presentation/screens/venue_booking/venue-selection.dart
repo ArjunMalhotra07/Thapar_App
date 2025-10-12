@@ -16,9 +16,6 @@ class VenueSelectionScreen extends StatefulWidget {
 }
 
 class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
-  Venue? selectedVenue;
-  Room? selectedRoom;
-
   String get formattedDate {
     final now = DateTime.now();
     final months = [
@@ -69,22 +66,27 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<VenueBookingBloc>().add(
-      VenueBookingEvent.fetchVenues(date: getFormattedDate(DateTime.now())),
+    final currentState = context.read<VenueBookingBloc>().state;
+    currentState.maybeWhen(
+      venuesFetched: (venues, rooms, venueID, roomID) {},
+      orElse: () {
+        context.read<VenueBookingBloc>().add(
+          VenueBookingEvent.fetchVenues(date: getFormattedDate(DateTime.now())),
+        );
+      },
     );
   }
 
   void _onVenueSelected(Venue venue) {
-    setState(() {
-      selectedVenue = venue;
-      selectedRoom = null; // Reset room selection when venue changes
-    });
+    context.read<VenueBookingBloc>().add(
+      VenueBookingEvent.selectedVenue(venueID: venue.venueId!),
+    );
   }
 
   void _onRoomSelected(Room room) {
-    setState(() {
-      selectedRoom = room;
-    });
+    context.read<VenueBookingBloc>().add(
+      VenueBookingEvent.selectedRoom(roomID: room.roomId!),
+    );
   }
 
   @override
@@ -173,82 +175,113 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                   ),
                   //! Select your venue and room grid
                   VenueRoomSelector(
-                    selectedVenue: selectedVenue,
-                    selectedRoom: selectedRoom,
                     onVenueSelected: _onVenueSelected,
                     onRoomSelected: _onRoomSelected,
                   ),
                   //! select time slot row
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                selectedRoom?.name ?? '',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColor.venueBookingTheme,
-                                  fontFamily: AppFonts.gilroy,
+                  BlocBuilder<VenueBookingBloc, VenueBookingState>(
+                    builder: (context, state) {
+                      return state.maybeWhen(
+                        venuesFetched: (venues, rooms, venueID, roomID) {
+                          final selectedVenue = venues.firstWhere(
+                            (venue) => venue.venueId == venueID,
+                            orElse: () => const Venue(
+                              venueId: null,
+                              name: null,
+                              rooms: [],
+                            ),
+                          );
+                          final selectedRoom = rooms.firstWhere(
+                            (room) => room.roomId == roomID,
+                            orElse: () => const Room(
+                              roomId: null,
+                              name: null,
+                              capacity: null,
+                              bookings: [],
+                            ),
+                          );
+
+                          return Container(
+                            padding: const EdgeInsets.all(24),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        selectedRoom.name ?? '',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColor.venueBookingTheme,
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                      Text(
+                                        selectedVenue.name ??
+                                            'No Venue Selected',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(0xFF666666),
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                selectedVenue?.name ?? 'No Venue Selected',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF666666),
-                                  fontFamily: AppFonts.gilroy,
+                                const SizedBox(width: 16),
+                                ElevatedButton(
+                                  onPressed: venueID != null && roomID != null
+                                      ? () {
+                                          context.push(
+                                            AppRoute.timeSlot,
+                                            extra: {
+                                              'venueName': selectedVenue.name!,
+                                              'roomName': selectedRoom.name!,
+                                              'venueId': selectedVenue.venueId!,
+                                              'roomId': selectedRoom.roomId!,
+                                              'bookings':
+                                                  selectedRoom.bookings ?? [],
+                                            },
+                                          );
+                                        }
+                                      : null,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF4F6BF5),
+                                    disabledBackgroundColor: Colors.grey,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 16,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    elevation: 0,
+                                  ),
+                                  child: Text(
+                                    'Select Time Slot',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontFamily: AppFonts.gilroy,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
+                          );
+                        },
+                        orElse: () => Container(
+                          padding: const EdgeInsets.all(24),
+                          child: const Text('Loading...'),
                         ),
-                        const SizedBox(width: 16),
-                        ElevatedButton(
-                          onPressed: selectedVenue != null && selectedRoom != null
-                              ? () {
-                                  context.push(
-                                    AppRoute.timeSlot,
-                                    extra: {
-                                      'venueName': selectedVenue!.name!,
-                                      'roomName': selectedRoom!.name!,
-                                      'venueId': selectedVenue!.venueId!,
-                                      'roomId': selectedRoom!.roomId!,
-                                      'bookings': selectedRoom!.bookings ?? [],
-                                    },
-                                  );
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4F6BF5),
-                            disabledBackgroundColor: Colors.grey,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 16,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: Text(
-                            'Select Time Slot',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontFamily: AppFonts.gilroy,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -261,15 +294,11 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
 }
 
 class VenueRoomSelector extends StatelessWidget {
-  final Venue? selectedVenue;
-  final Room? selectedRoom;
   final Function(Venue) onVenueSelected;
   final Function(Room) onRoomSelected;
 
   const VenueRoomSelector({
     super.key,
-    required this.selectedVenue,
-    required this.selectedRoom,
     required this.onVenueSelected,
     required this.onRoomSelected,
   });
@@ -300,11 +329,19 @@ class VenueRoomSelector extends StatelessWidget {
         },
         builder: (context, state) {
           return state.when(
-            initial: () => const Center(child: Text('Loading venues...')),
+            initial: () => Center(
+              child: Text(
+                'Loading venues...',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.venueBookingTheme,
+                  fontFamily: AppFonts.gilroy,
+                ),
+              ),
+            ),
             loading: () => const Center(child: CircularProgressIndicator()),
-            venuesFetched: (response) {
-              final venues = response?.venues ?? [];
-              
+            venuesFetched: (venues, rooms, venueID, roomID) {
               if (venues.isEmpty) {
                 return const Center(child: Text('No venues available'));
               }
@@ -328,7 +365,7 @@ class VenueRoomSelector extends StatelessWidget {
                       spacing: 12,
                       runSpacing: 12,
                       children: venues.map((venue) {
-                        final isSelected = selectedVenue?.venueId == venue.venueId;
+                        final isSelected = venueID == venue.venueId;
                         return GestureDetector(
                           onTap: () => onVenueSelected(venue),
                           child: Container(
@@ -364,9 +401,7 @@ class VenueRoomSelector extends StatelessWidget {
                       }).toList(),
                     ),
 
-                    if (selectedVenue != null &&
-                        selectedVenue!.rooms != null &&
-                        selectedVenue!.rooms!.isNotEmpty) ...[
+                    if (rooms.isNotEmpty) ...[
                       const SizedBox(height: 32),
                       Text(
                         'Select Room Number',
@@ -381,8 +416,8 @@ class VenueRoomSelector extends StatelessWidget {
                       Wrap(
                         spacing: 12,
                         runSpacing: 12,
-                        children: selectedVenue!.rooms!.map((room) {
-                          final isSelected = selectedRoom?.roomId == room.roomId;
+                        children: rooms.map((room) {
+                          final isSelected = roomID == room.roomId;
                           return GestureDetector(
                             onTap: () => onRoomSelected(room),
                             child: Container(
