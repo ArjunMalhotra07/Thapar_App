@@ -7,37 +7,47 @@ part of 'venue.dart';
 // **************************************************************************
 
 _$VenueImpl _$$VenueImplFromJson(Map<String, dynamic> json) => _$VenueImpl(
-  id: json['id'] as String?,
+  venueId: json['venue_id'] as String?,
   name: json['name'] as String?,
-  rooms: json['rooms'] == null
-      ? null
-      : Room.fromJson(json['rooms'] as Map<String, dynamic>),
+  rooms: (json['rooms'] as List<dynamic>?)
+      ?.map((e) => Room.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$$VenueImplToJson(_$VenueImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'venue_id': instance.venueId,
       'name': instance.name,
       'rooms': instance.rooms,
     };
 
 _$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
-  id: json['id'] as String?,
+  roomId: json['room_id'] as String?,
   name: json['name'] as String?,
-  capacity: json['capacity'] as String?,
-  startTime: json['start_time'] == null
-      ? null
-      : DateTime.parse(json['start_time'] as String),
-  endTime: json['end_time'] == null
-      ? null
-      : DateTime.parse(json['end_time'] as String),
+  capacity: (json['capacity'] as num?)?.toInt(),
+  bookings: (json['bookings'] as List<dynamic>?)
+      ?.map((e) => Booking.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'room_id': instance.roomId,
       'name': instance.name,
       'capacity': instance.capacity,
-      'start_time': instance.startTime?.toIso8601String(),
-      'end_time': instance.endTime?.toIso8601String(),
+      'bookings': instance.bookings,
+    };
+
+_$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
+    _$BookingImpl(
+      userId: json['user_id'] as String?,
+      startTime: json['start_time'] as String?,
+      endTime: json['end_time'] as String?,
+    );
+
+Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
+    <String, dynamic>{
+      'user_id': instance.userId,
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
     };

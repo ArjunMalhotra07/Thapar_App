@@ -5,8 +5,10 @@ class VenueBookingEvent with _$VenueBookingEvent {
   const factory VenueBookingEvent.fetchVenues({required String date}) =
       _FetchVenues;
   const factory VenueBookingEvent.bookVenue({
+    required String? venueId,
     required String? roomId,
-    required DateTime? startTime,
-    required DateTime? endTime,
+    required String? startTime,
+    required String? endTime,
+    required String? date,
   }) = _BookVenue;
 }

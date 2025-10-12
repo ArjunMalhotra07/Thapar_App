@@ -19,7 +19,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
       emit(const VenueBookingState.loading());
       await Future.delayed(Duration(milliseconds: 1400));
       final venues = await venueBookingRepo.fetchVenues(event.date);
-      emit(VenueBookingState.success(response: venues));
+      emit(VenueBookingState.venuesFetched(response: venues));
     } catch (e) {
       emit(VenueBookingState.failure(message: e.toString()));
     }
@@ -27,14 +27,19 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
 
   void bookVenue(event, emit) async {
     try {
-      emit(const VenueBookingState.loading());
+      emit(const VenueBookingState.bookingInProgress());
       Map<String, dynamic> body = {
+        "venue_id": event.venueId,
         "room_id": event.roomId,
         "start_time": event.startTime,
         "end_time": event.endTime,
+        "date": event.date,
       };
+      
+      await Future.delayed(Duration(seconds: 10));
+      
       final res = await venueBookingRepo.bookVenue(body);
-      emit(VenueBookingState.success(response: res));
+      emit(VenueBookingState.bookingSuccess(message: "Booking confirmed successfully!"));
     } catch (e) {
       emit(VenueBookingState.failure(message: e.toString()));
     }

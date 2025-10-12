@@ -21,7 +21,7 @@ VenueBookingResponse _$VenueBookingResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VenueBookingResponse {
-  String? get success => throw _privateConstructorUsedError;
+  bool? get success => throw _privateConstructorUsedError;
   int? get count => throw _privateConstructorUsedError;
   List<Venue>? get venues => throw _privateConstructorUsedError;
 
@@ -42,7 +42,7 @@ abstract class $VenueBookingResponseCopyWith<$Res> {
     $Res Function(VenueBookingResponse) then,
   ) = _$VenueBookingResponseCopyWithImpl<$Res, VenueBookingResponse>;
   @useResult
-  $Res call({String? success, int? count, List<Venue>? venues});
+  $Res call({bool? success, int? count, List<Venue>? venues});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$VenueBookingResponseCopyWithImpl<
             success: freezed == success
                 ? _value.success
                 : success // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as bool?,
             count: freezed == count
                 ? _value.count
                 : count // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$VenueBookingResponseImplCopyWith<$Res>
   ) = __$$VenueBookingResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? success, int? count, List<Venue>? venues});
+  $Res call({bool? success, int? count, List<Venue>? venues});
 }
 
 /// @nodoc
@@ -122,7 +122,7 @@ class __$$VenueBookingResponseImplCopyWithImpl<$Res>
         success: freezed == success
             ? _value.success
             : success // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as bool?,
         count: freezed == count
             ? _value.count
             : count // ignore: cast_nullable_to_non_nullable
@@ -149,7 +149,7 @@ class _$VenueBookingResponseImpl implements _VenueBookingResponse {
       _$$VenueBookingResponseImplFromJson(json);
 
   @override
-  final String? success;
+  final bool? success;
   @override
   final int? count;
   final List<Venue>? _venues;
@@ -206,7 +206,7 @@ class _$VenueBookingResponseImpl implements _VenueBookingResponse {
 
 abstract class _VenueBookingResponse implements VenueBookingResponse {
   const factory _VenueBookingResponse({
-    required final String? success,
+    required final bool? success,
     required final int? count,
     required final List<Venue>? venues,
   }) = _$VenueBookingResponseImpl;
@@ -215,7 +215,7 @@ abstract class _VenueBookingResponse implements VenueBookingResponse {
       _$VenueBookingResponseImpl.fromJson;
 
   @override
-  String? get success;
+  bool? get success;
   @override
   int? get count;
   @override

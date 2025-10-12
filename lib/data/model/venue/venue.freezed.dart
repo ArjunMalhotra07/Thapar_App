@@ -21,10 +21,10 @@ Venue _$VenueFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Venue {
-  @JsonKey(name: "id")
-  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "venue_id")
+  String? get venueId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  Room? get rooms => throw _privateConstructorUsedError;
+  List<Room>? get rooms => throw _privateConstructorUsedError;
 
   /// Serializes this Venue to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,9 +40,11 @@ abstract class $VenueCopyWith<$Res> {
   factory $VenueCopyWith(Venue value, $Res Function(Venue) then) =
       _$VenueCopyWithImpl<$Res, Venue>;
   @useResult
-  $Res call({@JsonKey(name: "id") String? id, String? name, Room? rooms});
-
-  $RoomCopyWith<$Res>? get rooms;
+  $Res call({
+    @JsonKey(name: "venue_id") String? venueId,
+    String? name,
+    List<Room>? rooms,
+  });
 }
 
 /// @nodoc
@@ -60,15 +62,15 @@ class _$VenueCopyWithImpl<$Res, $Val extends Venue>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? venueId = freezed,
     Object? name = freezed,
     Object? rooms = freezed,
   }) {
     return _then(
       _value.copyWith(
-            id: freezed == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
+            venueId: freezed == venueId
+                ? _value.venueId
+                : venueId // ignore: cast_nullable_to_non_nullable
                       as String?,
             name: freezed == name
                 ? _value.name
@@ -77,24 +79,10 @@ class _$VenueCopyWithImpl<$Res, $Val extends Venue>
             rooms: freezed == rooms
                 ? _value.rooms
                 : rooms // ignore: cast_nullable_to_non_nullable
-                      as Room?,
+                      as List<Room>?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of Venue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $RoomCopyWith<$Res>? get rooms {
-    if (_value.rooms == null) {
-      return null;
-    }
-
-    return $RoomCopyWith<$Res>(_value.rooms!, (value) {
-      return _then(_value.copyWith(rooms: value) as $Val);
-    });
   }
 }
 
@@ -106,10 +94,11 @@ abstract class _$$VenueImplCopyWith<$Res> implements $VenueCopyWith<$Res> {
   ) = __$$VenueImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: "id") String? id, String? name, Room? rooms});
-
-  @override
-  $RoomCopyWith<$Res>? get rooms;
+  $Res call({
+    @JsonKey(name: "venue_id") String? venueId,
+    String? name,
+    List<Room>? rooms,
+  });
 }
 
 /// @nodoc
@@ -126,24 +115,24 @@ class __$$VenueImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? venueId = freezed,
     Object? name = freezed,
     Object? rooms = freezed,
   }) {
     return _then(
       _$VenueImpl(
-        id: freezed == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
+        venueId: freezed == venueId
+            ? _value.venueId
+            : venueId // ignore: cast_nullable_to_non_nullable
                   as String?,
         name: freezed == name
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String?,
         rooms: freezed == rooms
-            ? _value.rooms
+            ? _value._rooms
             : rooms // ignore: cast_nullable_to_non_nullable
-                  as Room?,
+                  as List<Room>?,
       ),
     );
   }
@@ -153,25 +142,32 @@ class __$$VenueImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$VenueImpl implements _Venue {
   const _$VenueImpl({
-    @JsonKey(name: "id") required this.id,
+    @JsonKey(name: "venue_id") required this.venueId,
     required this.name,
-    required this.rooms,
-  });
+    required final List<Room>? rooms,
+  }) : _rooms = rooms;
 
   factory _$VenueImpl.fromJson(Map<String, dynamic> json) =>
       _$$VenueImplFromJson(json);
 
   @override
-  @JsonKey(name: "id")
-  final String? id;
+  @JsonKey(name: "venue_id")
+  final String? venueId;
   @override
   final String? name;
+  final List<Room>? _rooms;
   @override
-  final Room? rooms;
+  List<Room>? get rooms {
+    final value = _rooms;
+    if (value == null) return null;
+    if (_rooms is EqualUnmodifiableListView) return _rooms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Venue(id: $id, name: $name, rooms: $rooms)';
+    return 'Venue(venueId: $venueId, name: $name, rooms: $rooms)';
   }
 
   @override
@@ -179,14 +175,19 @@ class _$VenueImpl implements _Venue {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VenueImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.venueId, venueId) || other.venueId == venueId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.rooms, rooms) || other.rooms == rooms));
+            const DeepCollectionEquality().equals(other._rooms, _rooms));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, rooms);
+  int get hashCode => Object.hash(
+    runtimeType,
+    venueId,
+    name,
+    const DeepCollectionEquality().hash(_rooms),
+  );
 
   /// Create a copy of Venue
   /// with the given fields replaced by the non-null parameter values.
@@ -204,20 +205,20 @@ class _$VenueImpl implements _Venue {
 
 abstract class _Venue implements Venue {
   const factory _Venue({
-    @JsonKey(name: "id") required final String? id,
+    @JsonKey(name: "venue_id") required final String? venueId,
     required final String? name,
-    required final Room? rooms,
+    required final List<Room>? rooms,
   }) = _$VenueImpl;
 
   factory _Venue.fromJson(Map<String, dynamic> json) = _$VenueImpl.fromJson;
 
   @override
-  @JsonKey(name: "id")
-  String? get id;
+  @JsonKey(name: "venue_id")
+  String? get venueId;
   @override
   String? get name;
   @override
-  Room? get rooms;
+  List<Room>? get rooms;
 
   /// Create a copy of Venue
   /// with the given fields replaced by the non-null parameter values.
@@ -233,14 +234,11 @@ Room _$RoomFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Room {
-  @JsonKey(name: "id")
-  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "room_id")
+  String? get roomId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get capacity => throw _privateConstructorUsedError;
-  @JsonKey(name: "start_time")
-  DateTime? get startTime => throw _privateConstructorUsedError;
-  @JsonKey(name: "end_time")
-  DateTime? get endTime => throw _privateConstructorUsedError;
+  int? get capacity => throw _privateConstructorUsedError;
+  List<Booking>? get bookings => throw _privateConstructorUsedError;
 
   /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -257,11 +255,10 @@ abstract class $RoomCopyWith<$Res> {
       _$RoomCopyWithImpl<$Res, Room>;
   @useResult
   $Res call({
-    @JsonKey(name: "id") String? id,
+    @JsonKey(name: "room_id") String? roomId,
     String? name,
-    String? capacity,
-    @JsonKey(name: "start_time") DateTime? startTime,
-    @JsonKey(name: "end_time") DateTime? endTime,
+    int? capacity,
+    List<Booking>? bookings,
   });
 }
 
@@ -280,17 +277,16 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? roomId = freezed,
     Object? name = freezed,
     Object? capacity = freezed,
-    Object? startTime = freezed,
-    Object? endTime = freezed,
+    Object? bookings = freezed,
   }) {
     return _then(
       _value.copyWith(
-            id: freezed == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
+            roomId: freezed == roomId
+                ? _value.roomId
+                : roomId // ignore: cast_nullable_to_non_nullable
                       as String?,
             name: freezed == name
                 ? _value.name
@@ -299,15 +295,11 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
             capacity: freezed == capacity
                 ? _value.capacity
                 : capacity // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            startTime: freezed == startTime
-                ? _value.startTime
-                : startTime // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            endTime: freezed == endTime
-                ? _value.endTime
-                : endTime // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
+                      as int?,
+            bookings: freezed == bookings
+                ? _value.bookings
+                : bookings // ignore: cast_nullable_to_non_nullable
+                      as List<Booking>?,
           )
           as $Val,
     );
@@ -323,11 +315,10 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    @JsonKey(name: "id") String? id,
+    @JsonKey(name: "room_id") String? roomId,
     String? name,
-    String? capacity,
-    @JsonKey(name: "start_time") DateTime? startTime,
-    @JsonKey(name: "end_time") DateTime? endTime,
+    int? capacity,
+    List<Booking>? bookings,
   });
 }
 
@@ -343,17 +334,16 @@ class __$$RoomImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? roomId = freezed,
     Object? name = freezed,
     Object? capacity = freezed,
-    Object? startTime = freezed,
-    Object? endTime = freezed,
+    Object? bookings = freezed,
   }) {
     return _then(
       _$RoomImpl(
-        id: freezed == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
+        roomId: freezed == roomId
+            ? _value.roomId
+            : roomId // ignore: cast_nullable_to_non_nullable
                   as String?,
         name: freezed == name
             ? _value.name
@@ -362,15 +352,11 @@ class __$$RoomImplCopyWithImpl<$Res>
         capacity: freezed == capacity
             ? _value.capacity
             : capacity // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        startTime: freezed == startTime
-            ? _value.startTime
-            : startTime // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        endTime: freezed == endTime
-            ? _value.endTime
-            : endTime // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
+                  as int?,
+        bookings: freezed == bookings
+            ? _value._bookings
+            : bookings // ignore: cast_nullable_to_non_nullable
+                  as List<Booking>?,
       ),
     );
   }
@@ -380,33 +366,35 @@ class __$$RoomImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RoomImpl implements _Room {
   const _$RoomImpl({
-    @JsonKey(name: "id") required this.id,
+    @JsonKey(name: "room_id") required this.roomId,
     required this.name,
     required this.capacity,
-    @JsonKey(name: "start_time") required this.startTime,
-    @JsonKey(name: "end_time") required this.endTime,
-  });
+    required final List<Booking>? bookings,
+  }) : _bookings = bookings;
 
   factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoomImplFromJson(json);
 
   @override
-  @JsonKey(name: "id")
-  final String? id;
+  @JsonKey(name: "room_id")
+  final String? roomId;
   @override
   final String? name;
   @override
-  final String? capacity;
+  final int? capacity;
+  final List<Booking>? _bookings;
   @override
-  @JsonKey(name: "start_time")
-  final DateTime? startTime;
-  @override
-  @JsonKey(name: "end_time")
-  final DateTime? endTime;
+  List<Booking>? get bookings {
+    final value = _bookings;
+    if (value == null) return null;
+    if (_bookings is EqualUnmodifiableListView) return _bookings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Room(id: $id, name: $name, capacity: $capacity, startTime: $startTime, endTime: $endTime)';
+    return 'Room(roomId: $roomId, name: $name, capacity: $capacity, bookings: $bookings)';
   }
 
   @override
@@ -414,19 +402,22 @@ class _$RoomImpl implements _Room {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RoomImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.roomId, roomId) || other.roomId == roomId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.capacity, capacity) ||
                 other.capacity == capacity) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime));
+            const DeepCollectionEquality().equals(other._bookings, _bookings));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, capacity, startTime, endTime);
+  int get hashCode => Object.hash(
+    runtimeType,
+    roomId,
+    name,
+    capacity,
+    const DeepCollectionEquality().hash(_bookings),
+  );
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -444,33 +435,236 @@ class _$RoomImpl implements _Room {
 
 abstract class _Room implements Room {
   const factory _Room({
-    @JsonKey(name: "id") required final String? id,
+    @JsonKey(name: "room_id") required final String? roomId,
     required final String? name,
-    required final String? capacity,
-    @JsonKey(name: "start_time") required final DateTime? startTime,
-    @JsonKey(name: "end_time") required final DateTime? endTime,
+    required final int? capacity,
+    required final List<Booking>? bookings,
   }) = _$RoomImpl;
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
 
   @override
-  @JsonKey(name: "id")
-  String? get id;
+  @JsonKey(name: "room_id")
+  String? get roomId;
   @override
   String? get name;
   @override
-  String? get capacity;
+  int? get capacity;
   @override
-  @JsonKey(name: "start_time")
-  DateTime? get startTime;
-  @override
-  @JsonKey(name: "end_time")
-  DateTime? get endTime;
+  List<Booking>? get bookings;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RoomImplCopyWith<_$RoomImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Booking _$BookingFromJson(Map<String, dynamic> json) {
+  return _Booking.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Booking {
+  @JsonKey(name: "user_id")
+  String? get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: "start_time")
+  String? get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "end_time")
+  String? get endTime => throw _privateConstructorUsedError;
+
+  /// Serializes this Booking to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Booking
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BookingCopyWith<Booking> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BookingCopyWith<$Res> {
+  factory $BookingCopyWith(Booking value, $Res Function(Booking) then) =
+      _$BookingCopyWithImpl<$Res, Booking>;
+  @useResult
+  $Res call({
+    @JsonKey(name: "user_id") String? userId,
+    @JsonKey(name: "start_time") String? startTime,
+    @JsonKey(name: "end_time") String? endTime,
+  });
+}
+
+/// @nodoc
+class _$BookingCopyWithImpl<$Res, $Val extends Booking>
+    implements $BookingCopyWith<$Res> {
+  _$BookingCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Booking
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            startTime: freezed == startTime
+                ? _value.startTime
+                : startTime // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            endTime: freezed == endTime
+                ? _value.endTime
+                : endTime // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
+  factory _$$BookingImplCopyWith(
+    _$BookingImpl value,
+    $Res Function(_$BookingImpl) then,
+  ) = __$$BookingImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: "user_id") String? userId,
+    @JsonKey(name: "start_time") String? startTime,
+    @JsonKey(name: "end_time") String? endTime,
+  });
+}
+
+/// @nodoc
+class __$$BookingImplCopyWithImpl<$Res>
+    extends _$BookingCopyWithImpl<$Res, _$BookingImpl>
+    implements _$$BookingImplCopyWith<$Res> {
+  __$$BookingImplCopyWithImpl(
+    _$BookingImpl _value,
+    $Res Function(_$BookingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Booking
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+  }) {
+    return _then(
+      _$BookingImpl(
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        startTime: freezed == startTime
+            ? _value.startTime
+            : startTime // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        endTime: freezed == endTime
+            ? _value.endTime
+            : endTime // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BookingImpl implements _Booking {
+  const _$BookingImpl({
+    @JsonKey(name: "user_id") required this.userId,
+    @JsonKey(name: "start_time") required this.startTime,
+    @JsonKey(name: "end_time") required this.endTime,
+  });
+
+  factory _$BookingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BookingImplFromJson(json);
+
+  @override
+  @JsonKey(name: "user_id")
+  final String? userId;
+  @override
+  @JsonKey(name: "start_time")
+  final String? startTime;
+  @override
+  @JsonKey(name: "end_time")
+  final String? endTime;
+
+  @override
+  String toString() {
+    return 'Booking(userId: $userId, startTime: $startTime, endTime: $endTime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BookingImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId, startTime, endTime);
+
+  /// Create a copy of Booking
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BookingImplCopyWith<_$BookingImpl> get copyWith =>
+      __$$BookingImplCopyWithImpl<_$BookingImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BookingImplToJson(this);
+  }
+}
+
+abstract class _Booking implements Booking {
+  const factory _Booking({
+    @JsonKey(name: "user_id") required final String? userId,
+    @JsonKey(name: "start_time") required final String? startTime,
+    @JsonKey(name: "end_time") required final String? endTime,
+  }) = _$BookingImpl;
+
+  factory _Booking.fromJson(Map<String, dynamic> json) = _$BookingImpl.fromJson;
+
+  @override
+  @JsonKey(name: "user_id")
+  String? get userId;
+  @override
+  @JsonKey(name: "start_time")
+  String? get startTime;
+  @override
+  @JsonKey(name: "end_time")
+  String? get endTime;
+
+  /// Create a copy of Booking
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BookingImplCopyWith<_$BookingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

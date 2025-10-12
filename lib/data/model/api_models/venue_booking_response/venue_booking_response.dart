@@ -6,8 +6,8 @@ part 'venue_booking_response.g.dart';
 @freezed
 abstract class VenueBookingResponse with _$VenueBookingResponse {
   const factory VenueBookingResponse({
-    required String? success,
-    required final int? count,
+    required bool? success,
+    required int? count,
     required List<Venue>? venues,
   }) = _VenueBookingResponse;
   factory VenueBookingResponse.fromJson(Map<String, dynamic> json) =>

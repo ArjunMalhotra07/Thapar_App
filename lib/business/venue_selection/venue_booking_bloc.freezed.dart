@@ -17,26 +17,41 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$VenueBookingEvent {
+  String? get date => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String date) fetchVenues,
     required TResult Function(
+      String? venueId,
       String? roomId,
-      DateTime? startTime,
-      DateTime? endTime,
+      String? startTime,
+      String? endTime,
+      String? date,
     )
     bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String date)? fetchVenues,
-    TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    TResult? Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
     bookVenue,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String date)? fetchVenues,
-    TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
     bookVenue,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -56,6 +71,12 @@ mixin _$VenueBookingEvent {
     TResult Function(_BookVenue value)? bookVenue,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VenueBookingEventCopyWith<VenueBookingEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -64,6 +85,8 @@ abstract class $VenueBookingEventCopyWith<$Res> {
     VenueBookingEvent value,
     $Res Function(VenueBookingEvent) then,
   ) = _$VenueBookingEventCopyWithImpl<$Res, VenueBookingEvent>;
+  @useResult
+  $Res call({String date});
 }
 
 /// @nodoc
@@ -78,14 +101,29 @@ class _$VenueBookingEventCopyWithImpl<$Res, $Val extends VenueBookingEvent>
 
   /// Create a copy of VenueBookingEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? date = null}) {
+    return _then(
+      _value.copyWith(
+            date: null == date
+                ? _value.date!
+                : date // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$FetchVenuesImplCopyWith<$Res> {
+abstract class _$$FetchVenuesImplCopyWith<$Res>
+    implements $VenueBookingEventCopyWith<$Res> {
   factory _$$FetchVenuesImplCopyWith(
     _$FetchVenuesImpl value,
     $Res Function(_$FetchVenuesImpl) then,
   ) = __$$FetchVenuesImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({String date});
 }
@@ -152,9 +190,11 @@ class _$FetchVenuesImpl implements _FetchVenues {
   TResult when<TResult extends Object?>({
     required TResult Function(String date) fetchVenues,
     required TResult Function(
+      String? venueId,
       String? roomId,
-      DateTime? startTime,
-      DateTime? endTime,
+      String? startTime,
+      String? endTime,
+      String? date,
     )
     bookVenue,
   }) {
@@ -165,7 +205,13 @@ class _$FetchVenuesImpl implements _FetchVenues {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String date)? fetchVenues,
-    TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    TResult? Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
     bookVenue,
   }) {
     return fetchVenues?.call(date);
@@ -175,7 +221,13 @@ class _$FetchVenuesImpl implements _FetchVenues {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String date)? fetchVenues,
-    TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
     bookVenue,
     required TResult orElse(),
   }) {
@@ -220,23 +272,33 @@ class _$FetchVenuesImpl implements _FetchVenues {
 abstract class _FetchVenues implements VenueBookingEvent {
   const factory _FetchVenues({required final String date}) = _$FetchVenuesImpl;
 
+  @override
   String get date;
 
   /// Create a copy of VenueBookingEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FetchVenuesImplCopyWith<_$FetchVenuesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$BookVenueImplCopyWith<$Res> {
+abstract class _$$BookVenueImplCopyWith<$Res>
+    implements $VenueBookingEventCopyWith<$Res> {
   factory _$$BookVenueImplCopyWith(
     _$BookVenueImpl value,
     $Res Function(_$BookVenueImpl) then,
   ) = __$$BookVenueImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String? roomId, DateTime? startTime, DateTime? endTime});
+  $Res call({
+    String? venueId,
+    String? roomId,
+    String? startTime,
+    String? endTime,
+    String? date,
+  });
 }
 
 /// @nodoc
@@ -253,12 +315,18 @@ class __$$BookVenueImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? venueId = freezed,
     Object? roomId = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
+    Object? date = freezed,
   }) {
     return _then(
       _$BookVenueImpl(
+        venueId: freezed == venueId
+            ? _value.venueId
+            : venueId // ignore: cast_nullable_to_non_nullable
+                  as String?,
         roomId: freezed == roomId
             ? _value.roomId
             : roomId // ignore: cast_nullable_to_non_nullable
@@ -266,11 +334,15 @@ class __$$BookVenueImplCopyWithImpl<$Res>
         startTime: freezed == startTime
             ? _value.startTime
             : startTime // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
+                  as String?,
         endTime: freezed == endTime
             ? _value.endTime
             : endTime // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
+                  as String?,
+        date: freezed == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -280,21 +352,27 @@ class __$$BookVenueImplCopyWithImpl<$Res>
 
 class _$BookVenueImpl implements _BookVenue {
   const _$BookVenueImpl({
+    required this.venueId,
     required this.roomId,
     required this.startTime,
     required this.endTime,
+    required this.date,
   });
 
   @override
+  final String? venueId;
+  @override
   final String? roomId;
   @override
-  final DateTime? startTime;
+  final String? startTime;
   @override
-  final DateTime? endTime;
+  final String? endTime;
+  @override
+  final String? date;
 
   @override
   String toString() {
-    return 'VenueBookingEvent.bookVenue(roomId: $roomId, startTime: $startTime, endTime: $endTime)';
+    return 'VenueBookingEvent.bookVenue(venueId: $venueId, roomId: $roomId, startTime: $startTime, endTime: $endTime, date: $date)';
   }
 
   @override
@@ -302,14 +380,17 @@ class _$BookVenueImpl implements _BookVenue {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookVenueImpl &&
+            (identical(other.venueId, venueId) || other.venueId == venueId) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime));
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, startTime, endTime);
+  int get hashCode =>
+      Object.hash(runtimeType, venueId, roomId, startTime, endTime, date);
 
   /// Create a copy of VenueBookingEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -324,35 +405,49 @@ class _$BookVenueImpl implements _BookVenue {
   TResult when<TResult extends Object?>({
     required TResult Function(String date) fetchVenues,
     required TResult Function(
+      String? venueId,
       String? roomId,
-      DateTime? startTime,
-      DateTime? endTime,
+      String? startTime,
+      String? endTime,
+      String? date,
     )
     bookVenue,
   }) {
-    return bookVenue(roomId, startTime, endTime);
+    return bookVenue(venueId, roomId, startTime, endTime, date);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String date)? fetchVenues,
-    TResult? Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    TResult? Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
     bookVenue,
   }) {
-    return bookVenue?.call(roomId, startTime, endTime);
+    return bookVenue?.call(venueId, roomId, startTime, endTime, date);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String date)? fetchVenues,
-    TResult Function(String? roomId, DateTime? startTime, DateTime? endTime)?
+    TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
     bookVenue,
     required TResult orElse(),
   }) {
     if (bookVenue != null) {
-      return bookVenue(roomId, startTime, endTime);
+      return bookVenue(venueId, roomId, startTime, endTime, date);
     }
     return orElse();
   }
@@ -391,17 +486,23 @@ class _$BookVenueImpl implements _BookVenue {
 
 abstract class _BookVenue implements VenueBookingEvent {
   const factory _BookVenue({
+    required final String? venueId,
     required final String? roomId,
-    required final DateTime? startTime,
-    required final DateTime? endTime,
+    required final String? startTime,
+    required final String? endTime,
+    required final String? date,
   }) = _$BookVenueImpl;
 
+  String? get venueId;
   String? get roomId;
-  DateTime? get startTime;
-  DateTime? get endTime;
+  String? get startTime;
+  String? get endTime;
+  @override
+  String? get date;
 
   /// Create a copy of VenueBookingEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BookVenueImplCopyWith<_$BookVenueImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -412,21 +513,27 @@ mixin _$VenueBookingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(VenueBookingResponse? response) success,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VenueBookingResponse? response)? success,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VenueBookingResponse? response)? success,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
     required TResult orElse(),
@@ -434,21 +541,27 @@ mixin _$VenueBookingState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Success value) success,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Success value)? success,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     required TResult orElse(),
@@ -521,7 +634,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(VenueBookingResponse? response) success,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) {
@@ -532,7 +647,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VenueBookingResponse? response)? success,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) {
@@ -543,7 +660,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VenueBookingResponse? response)? success,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
     required TResult orElse(),
@@ -558,7 +677,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Success value) success,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
   }) {
@@ -569,7 +690,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
   }) {
@@ -580,7 +703,9 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Success value)? success,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     required TResult orElse(),
@@ -597,11 +722,11 @@ abstract class _Initial implements VenueBookingState {
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-    _$SuccessImpl value,
-    $Res Function(_$SuccessImpl) then,
-  ) = __$$SuccessImplCopyWithImpl<$Res>;
+abstract class _$$VenuesFetchedImplCopyWith<$Res> {
+  factory _$$VenuesFetchedImplCopyWith(
+    _$VenuesFetchedImpl value,
+    $Res Function(_$VenuesFetchedImpl) then,
+  ) = __$$VenuesFetchedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({VenueBookingResponse? response});
 
@@ -609,12 +734,12 @@ abstract class _$$SuccessImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$VenueBookingStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-    _$SuccessImpl _value,
-    $Res Function(_$SuccessImpl) _then,
+class __$$VenuesFetchedImplCopyWithImpl<$Res>
+    extends _$VenueBookingStateCopyWithImpl<$Res, _$VenuesFetchedImpl>
+    implements _$$VenuesFetchedImplCopyWith<$Res> {
+  __$$VenuesFetchedImplCopyWithImpl(
+    _$VenuesFetchedImpl _value,
+    $Res Function(_$VenuesFetchedImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of VenueBookingState
@@ -623,7 +748,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @override
   $Res call({Object? response = freezed}) {
     return _then(
-      _$SuccessImpl(
+      _$VenuesFetchedImpl(
         response: freezed == response
             ? _value.response
             : response // ignore: cast_nullable_to_non_nullable
@@ -649,22 +774,22 @@ class __$$SuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl({required this.response});
+class _$VenuesFetchedImpl implements _VenuesFetched {
+  const _$VenuesFetchedImpl({required this.response});
 
   @override
   final VenueBookingResponse? response;
 
   @override
   String toString() {
-    return 'VenueBookingState.success(response: $response)';
+    return 'VenueBookingState.venuesFetched(response: $response)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
+            other is _$VenuesFetchedImpl &&
             (identical(other.response, response) ||
                 other.response == response));
   }
@@ -677,42 +802,48 @@ class _$SuccessImpl implements _Success {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$VenuesFetchedImplCopyWith<_$VenuesFetchedImpl> get copyWith =>
+      __$$VenuesFetchedImplCopyWithImpl<_$VenuesFetchedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(VenueBookingResponse? response) success,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) {
-    return success(response);
+    return venuesFetched(response);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VenueBookingResponse? response)? success,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) {
-    return success?.call(response);
+    return venuesFetched?.call(response);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VenueBookingResponse? response)? success,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(response);
+    if (venuesFetched != null) {
+      return venuesFetched(response);
     }
     return orElse();
   }
@@ -721,50 +852,358 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Success value) success,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
   }) {
-    return success(this);
+    return venuesFetched(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
   }) {
-    return success?.call(this);
+    return venuesFetched?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Success value)? success,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (venuesFetched != null) {
+      return venuesFetched(this);
     }
     return orElse();
   }
 }
 
-abstract class _Success implements VenueBookingState {
-  const factory _Success({required final VenueBookingResponse? response}) =
-      _$SuccessImpl;
+abstract class _VenuesFetched implements VenueBookingState {
+  const factory _VenuesFetched({
+    required final VenueBookingResponse? response,
+  }) = _$VenuesFetchedImpl;
 
   VenueBookingResponse? get response;
 
   /// Create a copy of VenueBookingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+  _$$VenuesFetchedImplCopyWith<_$VenuesFetchedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BookingInProgressImplCopyWith<$Res> {
+  factory _$$BookingInProgressImplCopyWith(
+    _$BookingInProgressImpl value,
+    $Res Function(_$BookingInProgressImpl) then,
+  ) = __$$BookingInProgressImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$BookingInProgressImplCopyWithImpl<$Res>
+    extends _$VenueBookingStateCopyWithImpl<$Res, _$BookingInProgressImpl>
+    implements _$$BookingInProgressImplCopyWith<$Res> {
+  __$$BookingInProgressImplCopyWithImpl(
+    _$BookingInProgressImpl _value,
+    $Res Function(_$BookingInProgressImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of VenueBookingState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$BookingInProgressImpl implements _BookingInProgress {
+  const _$BookingInProgressImpl();
+
+  @override
+  String toString() {
+    return 'VenueBookingState.bookingInProgress()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$BookingInProgressImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
+    required TResult Function(String? message) failure,
+    required TResult Function() loading,
+  }) {
+    return bookingInProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
+    TResult? Function(String? message)? failure,
+    TResult? Function()? loading,
+  }) {
+    return bookingInProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
+    TResult Function(String? message)? failure,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (bookingInProgress != null) {
+      return bookingInProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
+    required TResult Function(_Failure value) failure,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return bookingInProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
+    TResult? Function(_Failure value)? failure,
+    TResult? Function(_Loading value)? loading,
+  }) {
+    return bookingInProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
+    TResult Function(_Failure value)? failure,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (bookingInProgress != null) {
+      return bookingInProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BookingInProgress implements VenueBookingState {
+  const factory _BookingInProgress() = _$BookingInProgressImpl;
+}
+
+/// @nodoc
+abstract class _$$BookingSuccessImplCopyWith<$Res> {
+  factory _$$BookingSuccessImplCopyWith(
+    _$BookingSuccessImpl value,
+    $Res Function(_$BookingSuccessImpl) then,
+  ) = __$$BookingSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? message});
+}
+
+/// @nodoc
+class __$$BookingSuccessImplCopyWithImpl<$Res>
+    extends _$VenueBookingStateCopyWithImpl<$Res, _$BookingSuccessImpl>
+    implements _$$BookingSuccessImplCopyWith<$Res> {
+  __$$BookingSuccessImplCopyWithImpl(
+    _$BookingSuccessImpl _value,
+    $Res Function(_$BookingSuccessImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of VenueBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? message = freezed}) {
+    return _then(
+      _$BookingSuccessImpl(
+        message: freezed == message
+            ? _value.message
+            : message // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$BookingSuccessImpl implements _BookingSuccess {
+  const _$BookingSuccessImpl({required this.message});
+
+  @override
+  final String? message;
+
+  @override
+  String toString() {
+    return 'VenueBookingState.bookingSuccess(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BookingSuccessImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of VenueBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BookingSuccessImplCopyWith<_$BookingSuccessImpl> get copyWith =>
+      __$$BookingSuccessImplCopyWithImpl<_$BookingSuccessImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
+    required TResult Function(String? message) failure,
+    required TResult Function() loading,
+  }) {
+    return bookingSuccess(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
+    TResult? Function(String? message)? failure,
+    TResult? Function()? loading,
+  }) {
+    return bookingSuccess?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
+    TResult Function(String? message)? failure,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (bookingSuccess != null) {
+      return bookingSuccess(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
+    required TResult Function(_Failure value) failure,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return bookingSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
+    TResult? Function(_Failure value)? failure,
+    TResult? Function(_Loading value)? loading,
+  }) {
+    return bookingSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
+    TResult Function(_Failure value)? failure,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (bookingSuccess != null) {
+      return bookingSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BookingSuccess implements VenueBookingState {
+  const factory _BookingSuccess({required final String? message}) =
+      _$BookingSuccessImpl;
+
+  String? get message;
+
+  /// Create a copy of VenueBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BookingSuccessImplCopyWith<_$BookingSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -839,7 +1278,9 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(VenueBookingResponse? response) success,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) {
@@ -850,7 +1291,9 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VenueBookingResponse? response)? success,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) {
@@ -861,7 +1304,9 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VenueBookingResponse? response)? success,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
     required TResult orElse(),
@@ -876,7 +1321,9 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Success value) success,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
   }) {
@@ -887,7 +1334,9 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
   }) {
@@ -898,7 +1347,9 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Success value)? success,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     required TResult orElse(),
@@ -966,7 +1417,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(VenueBookingResponse? response) success,
+    required TResult Function(VenueBookingResponse? response) venuesFetched,
+    required TResult Function() bookingInProgress,
+    required TResult Function(String? message) bookingSuccess,
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) {
@@ -977,7 +1430,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(VenueBookingResponse? response)? success,
+    TResult? Function(VenueBookingResponse? response)? venuesFetched,
+    TResult? Function()? bookingInProgress,
+    TResult? Function(String? message)? bookingSuccess,
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) {
@@ -988,7 +1443,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(VenueBookingResponse? response)? success,
+    TResult Function(VenueBookingResponse? response)? venuesFetched,
+    TResult Function()? bookingInProgress,
+    TResult Function(String? message)? bookingSuccess,
     TResult Function(String? message)? failure,
     TResult Function()? loading,
     required TResult orElse(),
@@ -1003,7 +1460,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Success value) success,
+    required TResult Function(_VenuesFetched value) venuesFetched,
+    required TResult Function(_BookingInProgress value) bookingInProgress,
+    required TResult Function(_BookingSuccess value) bookingSuccess,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
   }) {
@@ -1014,7 +1473,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_VenuesFetched value)? venuesFetched,
+    TResult? Function(_BookingInProgress value)? bookingInProgress,
+    TResult? Function(_BookingSuccess value)? bookingSuccess,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
   }) {
@@ -1025,7 +1486,9 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Success value)? success,
+    TResult Function(_VenuesFetched value)? venuesFetched,
+    TResult Function(_BookingInProgress value)? bookingInProgress,
+    TResult Function(_BookingSuccess value)? bookingSuccess,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     required TResult orElse(),

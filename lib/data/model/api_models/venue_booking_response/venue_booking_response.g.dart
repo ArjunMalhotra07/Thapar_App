@@ -9,7 +9,7 @@ part of 'venue_booking_response.dart';
 _$VenueBookingResponseImpl _$$VenueBookingResponseImplFromJson(
   Map<String, dynamic> json,
 ) => _$VenueBookingResponseImpl(
-  success: json['success'] as String?,
+  success: json['success'] as bool?,
   count: (json['count'] as num?)?.toInt(),
   venues: (json['venues'] as List<dynamic>?)
       ?.map((e) => Venue.fromJson(e as Map<String, dynamic>))

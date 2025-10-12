@@ -16,6 +16,7 @@ import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
 import 'package:thaparapp/presentation/screens/splash/splash.dart';
 import 'package:thaparapp/presentation/screens/splash/start_up.dart';
 import 'package:thaparapp/presentation/constants/routes.dart';
+import 'package:thaparapp/presentation/screens/venue_booking/time-slot.dart';
 import 'package:thaparapp/presentation/screens/venue_booking/venue-selection.dart';
 
 class Routing {
@@ -78,6 +79,22 @@ class Routing {
           value: locator<VenueBookingBloc>(),
           child: VenueSelectionScreen(),
         ),
+      ),
+      GoRoute(
+        path: AppRoute.timeSlot,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>;
+          return BlocProvider.value(
+            value: locator<VenueBookingBloc>(),
+            child: TimeSlotSelectionScreen(
+              venueName: args['venueName'],
+              roomName: args['roomName'],
+              venueId: args['venueId'],
+              roomId: args['roomId'],
+              bookings: args['bookings'],
+            ),
+          );
+        },
       ),
     ],
   );
