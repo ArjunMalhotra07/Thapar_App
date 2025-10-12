@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
+import 'package:thaparapp/utils/date_time_utils.dart';
 
 enum SlotState { available, booked, expired }
 
@@ -97,5 +98,111 @@ class VenueBookingUtils {
       return message;
     }
     return 'Booking failed';
+  }
+
+  /// Gets upcoming booking for a specific user and room
+  static Booking? getUpcomingBooking(
+    List<Room> rooms,
+    String? roomID,
+    String? currentUserId,
+  ) {
+    if (roomID == null || currentUserId == null) return null;
+
+    try {
+      final room = rooms.firstWhere(
+        (r) => r.roomId == roomID,
+        orElse: () =>
+            const Room(roomId: null, name: null, capacity: null, bookings: []),
+      );
+
+      final userTodayBookings = room.bookings?.where((booking) {
+        if (booking.startTime == null || booking.userId != currentUserId) {
+          return false;
+        }
+        return DateTimeUtils.isTodayAndFuture(booking.startTime);
+      }).toList() ?? [];
+
+      if (userTodayBookings.isEmpty) return null;
+
+      // Sort by start time and get the earliest upcoming booking
+      userTodayBookings.sort((a, b) {
+        final aTime = DateTimeUtils.parseDateTime(a.startTime);
+        final bTime = DateTimeUtils.parseDateTime(b.startTime);
+        if (aTime == null || bTime == null) return 0;
+        return aTime.compareTo(bTime);
+      });
+
+      return userTodayBookings.first;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Checks if user has any upcoming bookings today across all venues
+  static bool hasAnyUserUpcomingBooking(List<Venue> venues, String? currentUserId) {
+    if (currentUserId == null) return false;
+
+    for (final venue in venues) {
+      for (final room in venue.rooms ?? []) {
+        final userBookings = room.bookings
+                ?.where((booking) => booking.userId == currentUserId)
+                .toList() ??
+            [];
+
+        if (userBookings.isNotEmpty) {
+          final todayBookings = userBookings.where((booking) {
+            return DateTimeUtils.isTodayAndFuture(booking.startTime);
+          }).toList();
+
+          if (todayBookings.isNotEmpty) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Checks if user has ANY booking today (past or future)
+  static bool hasUserBookingToday(List<Venue> venues, String? currentUserId) {
+    if (currentUserId == null) return false;
+
+    for (final venue in venues) {
+      for (final room in venue.rooms ?? []) {
+        final userBookings = room.bookings
+                ?.where((booking) => booking.userId == currentUserId)
+                .toList() ??
+            [];
+
+        if (userBookings.isNotEmpty) {
+          final todayBookings = userBookings.where((booking) {
+            return DateTimeUtils.isToday(booking.startTime);
+          }).toList();
+
+          if (todayBookings.isNotEmpty) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Finds the venue and room with user's upcoming booking
+  static Map<String, dynamic>? findUserUpcomingBooking(
+    List<Venue> venues,
+    String? currentUserId,
+  ) {
+    if (currentUserId == null) return null;
+
+    for (final venue in venues) {
+      for (final room in venue.rooms ?? []) {
+        final booking = getUpcomingBooking([room], room.roomId, currentUserId);
+        if (booking != null) {
+          return {
+            'venue': venue,
+            'room': room,
+            'booking': booking,
+          };
+        }
+      }
+    }
+    return null;
   }
 }

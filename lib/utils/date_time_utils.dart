@@ -54,6 +54,100 @@ class DateTimeUtils {
     return '${dateTime.toIso8601String()}Z';
   }
 
+  /// Calculates time remaining until a booking starts
+  static String getTimeRemaining(String? startTime) {
+    if (startTime == null) return '';
+
+    try {
+      final now = DateTime.now();
+      final bookingStart = DateTime.parse(startTime.replaceAll('Z', ''));
+      final difference = bookingStart.difference(now);
+
+      if (difference.isNegative) {
+        return 'In progress';
+      }
+
+      final hours = difference.inHours;
+      final minutes = difference.inMinutes % 60;
+
+      if (hours > 0) {
+        return 'Starts in ${hours}h ${minutes}min';
+      } else {
+        return 'Starts in ${minutes}min';
+      }
+    } catch (e) {
+      return '';
+    }
+  }
+
+  /// Formats booking time range (e.g., "9AM - 10AM")
+  static String formatBookingTime(String? startTime, String? endTime) {
+    if (startTime == null || endTime == null) return '';
+
+    try {
+      final start = DateTime.parse(startTime.replaceAll('Z', ''));
+      final end = DateTime.parse(endTime.replaceAll('Z', ''));
+
+      final startHour = start.hour;
+      final endHour = end.hour;
+
+      String formatHour(int hour) {
+        if (hour == 0) return '12AM';
+        if (hour < 12) return '${hour}AM';
+        if (hour == 12) return '12PM';
+        return '${hour - 12}PM';
+      }
+
+      return '${formatHour(startHour)} - ${formatHour(endHour)}';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  /// Checks if a given date string is today
+  static bool isToday(String? dateTimeString) {
+    if (dateTimeString == null) return false;
+    
+    try {
+      final date = DateTime.parse(dateTimeString.replaceAll('Z', ''));
+      final now = DateTime.now();
+      
+      return date.year == now.year &&
+          date.month == now.month &&
+          date.day == now.day;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Checks if a given date string is today and in the future
+  static bool isTodayAndFuture(String? dateTimeString) {
+    if (dateTimeString == null) return false;
+    
+    try {
+      final date = DateTime.parse(dateTimeString.replaceAll('Z', ''));
+      final now = DateTime.now();
+      
+      return date.year == now.year &&
+          date.month == now.month &&
+          date.day == now.day &&
+          date.isAfter(now);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Safely parses a date time string and returns DateTime or null
+  static DateTime? parseDateTime(String? dateTimeString) {
+    if (dateTimeString == null) return null;
+    
+    try {
+      return DateTime.parse(dateTimeString.replaceAll('Z', ''));
+    } catch (e) {
+      return null;
+    }
+  }
+
   /// Gets day suffix (st, nd, rd, th)
   static String _getDaySuffix(int day) {
     if (day >= 11 && day <= 13) return 'th';
