@@ -15,4 +15,7 @@ class VenueBookingEvent with _$VenueBookingEvent {
     required String? endTime,
     required String? date,
   }) = _BookVenue;
+
+  const factory VenueBookingEvent.selectedTimeSlot({required String timeSlotID}) =
+      _SelectedTimeSlot;
 }

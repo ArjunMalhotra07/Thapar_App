@@ -9,11 +9,40 @@ part 'venue_booking_bloc.freezed.dart';
 
 class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   final VenueBookingRepo venueBookingRepo;
+  final List<Map<String, dynamic>> timeSlots = List.generate(24, (index) {
+    final hour = index;
+    final nextHour = (index + 1) % 24;
+    final startTime = '${hour.toString().padLeft(2, '0')}:00';
+    final endTime = '${nextHour.toString().padLeft(2, '0')}:00';
+    
+    String label;
+    if (hour == 0) {
+      label = '12AM - 01AM';
+    } else if (hour < 12) {
+      label = '${hour.toString().padLeft(2, '0')}AM - ${(hour + 1).toString().padLeft(2, '0')}${hour + 1 == 12 ? 'PM' : 'AM'}';
+    } else if (hour == 12) {
+      label = '12PM - 01PM';
+    } else {
+      final displayHour = hour - 12;
+      final nextDisplayHour = hour + 1 == 24 ? 12 : (hour + 1) - 12;
+      label = '${displayHour.toString().padLeft(2, '0')}PM - ${nextDisplayHour.toString().padLeft(2, '0')}${hour + 1 == 24 ? 'AM' : 'PM'}';
+    }
+    
+    return {
+      'id': hour.toString(),
+      'label': label,
+      'startTime': startTime,
+      'endTime': endTime,
+      'hour': hour,
+    };
+  });
+
   VenueBookingBloc({required this.venueBookingRepo}) : super(_Initial()) {
     on<_FetchVenues>(fetchVenues);
     on<_BookVenue>(bookVenue);
     on<_SelectedVenue>(selectVenue);
     on<_SelectedRoom>(selectRoom);
+    on<_SelectedTimeSlot>(selectTimeSlot);
   }
 
   void fetchVenues(event, emit) async {
@@ -26,6 +55,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
           rooms: [],
           venueID: null,
           roomID: null,
+          timeSlotID: null,
         ),
       );
     } catch (e) {
@@ -40,13 +70,14 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         (venue) => venue.venueId == event.venueID,
         orElse: () => const Venue(venueId: null, name: null, rooms: []),
       );
-      
+
       emit(
         currentState.copyWith(
           venues: currentState.venues,
           rooms: selectedVenue.rooms ?? [],
           venueID: event.venueID,
           roomID: null, // Reset room selection when venue changes
+          timeSlotID: null,
         ),
       );
     }
@@ -61,6 +92,22 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
           rooms: currentState.rooms,
           venueID: currentState.venueID,
           roomID: event.roomID,
+          timeSlotID: null,
+        ),
+      );
+    }
+  }
+
+  void selectTimeSlot(event, emit) {
+    final currentState = state.mapOrNull(venuesFetched: (value) => value);
+    if (currentState != null) {
+      emit(
+        currentState.copyWith(
+          venues: currentState.venues,
+          rooms: currentState.rooms,
+          venueID: currentState.venueID,
+          roomID: currentState.roomID,
+          timeSlotID: event.timeSlotID,
         ),
       );
     }

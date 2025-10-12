@@ -68,7 +68,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
     super.initState();
     final currentState = context.read<VenueBookingBloc>().state;
     currentState.maybeWhen(
-      venuesFetched: (venues, rooms, venueID, roomID) {},
+      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {},
       orElse: () {
         context.read<VenueBookingBloc>().add(
           VenueBookingEvent.fetchVenues(date: getFormattedDate(DateTime.now())),
@@ -182,7 +182,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                   BlocBuilder<VenueBookingBloc, VenueBookingState>(
                     builder: (context, state) {
                       return state.maybeWhen(
-                        venuesFetched: (venues, rooms, venueID, roomID) {
+                        venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
                           final selectedVenue = venues.firstWhere(
                             (venue) => venue.venueId == venueID,
                             orElse: () => const Venue(
@@ -221,8 +221,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                                         ),
                                       ),
                                       Text(
-                                        selectedVenue.name ??
-                                            'No Venue Selected',
+                                        selectedVenue.name ?? '',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -276,10 +275,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                             ),
                           );
                         },
-                        orElse: () => Container(
-                          padding: const EdgeInsets.all(24),
-                          child: const Text('Loading...'),
-                        ),
+                        orElse: () => Container(),
                       );
                     },
                   ),
@@ -328,22 +324,20 @@ class VenueRoomSelector extends StatelessWidget {
           );
         },
         builder: (context, state) {
-          return state.when(
-            initial: () => Center(
-              child: Text(
-                'Loading venues...',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.venueBookingTheme,
-                  fontFamily: AppFonts.gilroy,
-                ),
-              ),
-            ),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            venuesFetched: (venues, rooms, venueID, roomID) {
-              if (venues.isEmpty) {
-                return const Center(child: Text('No venues available'));
+          return state.maybeMap(
+            orElse: () {
+              return Container();
+            },
+            loading: (state) =>
+                const Center(child: CircularProgressIndicator()),
+            venuesFetched: (state) {
+              if (state.venues.isEmpty) {
+                return Center(
+                  child: Text(
+                    'No venues available',
+                    style: TextStyle(fontFamily: AppFonts.gilroy),
+                  ),
+                );
               }
 
               return SingleChildScrollView(
@@ -364,8 +358,8 @@ class VenueRoomSelector extends StatelessWidget {
                     Wrap(
                       spacing: 12,
                       runSpacing: 12,
-                      children: venues.map((venue) {
-                        final isSelected = venueID == venue.venueId;
+                      children: state.venues.map((venue) {
+                        final isSelected = state.venueID == venue.venueId;
                         return GestureDetector(
                           onTap: () => onVenueSelected(venue),
                           child: Container(
@@ -401,7 +395,7 @@ class VenueRoomSelector extends StatelessWidget {
                       }).toList(),
                     ),
 
-                    if (rooms.isNotEmpty) ...[
+                    if (state.rooms.isNotEmpty) ...[
                       const SizedBox(height: 32),
                       Text(
                         'Select Room Number',
@@ -416,8 +410,8 @@ class VenueRoomSelector extends StatelessWidget {
                       Wrap(
                         spacing: 12,
                         runSpacing: 12,
-                        children: rooms.map((room) {
-                          final isSelected = roomID == room.roomId;
+                        children: state.rooms.map((room) {
+                          final isSelected = state.roomID == room.roomId;
                           return GestureDetector(
                             onTap: () => onRoomSelected(room),
                             child: Container(
@@ -513,10 +507,14 @@ class VenueRoomSelector extends StatelessWidget {
                 ],
               ),
             ),
-            bookingInProgress: () =>
+            bookingInProgress: (state) =>
                 const Center(child: CircularProgressIndicator()),
-            bookingSuccess: (message) =>
-                Center(child: Text(message ?? 'Booking successful')),
+            bookingSuccess: (state) => Center(
+              child: Text(
+                state.message ?? "Booking done successfully",
+                style: TextStyle(fontFamily: AppFonts.gilroy),
+              ),
+            ),
           );
         },
       ),

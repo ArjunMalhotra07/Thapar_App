@@ -30,6 +30,7 @@ mixin _$VenueBookingEvent {
       String? date,
     )
     bookVenue,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -44,6 +45,7 @@ mixin _$VenueBookingEvent {
       String? date,
     )?
     bookVenue,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -58,6 +60,7 @@ mixin _$VenueBookingEvent {
       String? date,
     )?
     bookVenue,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,6 +69,7 @@ mixin _$VenueBookingEvent {
     required TResult Function(_SelectedVenue value) selectedVenue,
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -73,6 +77,7 @@ mixin _$VenueBookingEvent {
     TResult? Function(_SelectedVenue value)? selectedVenue,
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -80,6 +85,7 @@ mixin _$VenueBookingEvent {
     TResult Function(_SelectedVenue value)? selectedVenue,
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -187,6 +193,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
       String? date,
     )
     bookVenue,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
   }) {
     return fetchVenues(date);
   }
@@ -205,6 +212,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
       String? date,
     )?
     bookVenue,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
   }) {
     return fetchVenues?.call(date);
   }
@@ -223,6 +231,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
       String? date,
     )?
     bookVenue,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (fetchVenues != null) {
@@ -238,6 +247,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
     required TResult Function(_SelectedVenue value) selectedVenue,
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
   }) {
     return fetchVenues(this);
   }
@@ -249,6 +259,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
     TResult? Function(_SelectedVenue value)? selectedVenue,
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
   }) {
     return fetchVenues?.call(this);
   }
@@ -260,6 +271,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
     TResult Function(_SelectedVenue value)? selectedVenue,
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (fetchVenues != null) {
@@ -362,6 +374,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
       String? date,
     )
     bookVenue,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
   }) {
     return selectedVenue(venueID);
   }
@@ -380,6 +393,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
       String? date,
     )?
     bookVenue,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
   }) {
     return selectedVenue?.call(venueID);
   }
@@ -398,6 +412,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
       String? date,
     )?
     bookVenue,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (selectedVenue != null) {
@@ -413,6 +428,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
     required TResult Function(_SelectedVenue value) selectedVenue,
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
   }) {
     return selectedVenue(this);
   }
@@ -424,6 +440,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
     TResult? Function(_SelectedVenue value)? selectedVenue,
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
   }) {
     return selectedVenue?.call(this);
   }
@@ -435,6 +452,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
     TResult Function(_SelectedVenue value)? selectedVenue,
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (selectedVenue != null) {
@@ -538,6 +556,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
       String? date,
     )
     bookVenue,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
   }) {
     return selectedRoom(roomID);
   }
@@ -556,6 +575,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
       String? date,
     )?
     bookVenue,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
   }) {
     return selectedRoom?.call(roomID);
   }
@@ -574,6 +594,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
       String? date,
     )?
     bookVenue,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (selectedRoom != null) {
@@ -589,6 +610,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
     required TResult Function(_SelectedVenue value) selectedVenue,
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
   }) {
     return selectedRoom(this);
   }
@@ -600,6 +622,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
     TResult? Function(_SelectedVenue value)? selectedVenue,
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
   }) {
     return selectedRoom?.call(this);
   }
@@ -611,6 +634,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
     TResult Function(_SelectedVenue value)? selectedVenue,
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (selectedRoom != null) {
@@ -762,6 +786,7 @@ class _$BookVenueImpl implements _BookVenue {
       String? date,
     )
     bookVenue,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
   }) {
     return bookVenue(venueId, roomId, startTime, endTime, date);
   }
@@ -780,6 +805,7 @@ class _$BookVenueImpl implements _BookVenue {
       String? date,
     )?
     bookVenue,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
   }) {
     return bookVenue?.call(venueId, roomId, startTime, endTime, date);
   }
@@ -798,6 +824,7 @@ class _$BookVenueImpl implements _BookVenue {
       String? date,
     )?
     bookVenue,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (bookVenue != null) {
@@ -813,6 +840,7 @@ class _$BookVenueImpl implements _BookVenue {
     required TResult Function(_SelectedVenue value) selectedVenue,
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
   }) {
     return bookVenue(this);
   }
@@ -824,6 +852,7 @@ class _$BookVenueImpl implements _BookVenue {
     TResult? Function(_SelectedVenue value)? selectedVenue,
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
   }) {
     return bookVenue?.call(this);
   }
@@ -835,6 +864,7 @@ class _$BookVenueImpl implements _BookVenue {
     TResult Function(_SelectedVenue value)? selectedVenue,
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     required TResult orElse(),
   }) {
     if (bookVenue != null) {
@@ -867,6 +897,192 @@ abstract class _BookVenue implements VenueBookingEvent {
 }
 
 /// @nodoc
+abstract class _$$SelectedTimeSlotImplCopyWith<$Res> {
+  factory _$$SelectedTimeSlotImplCopyWith(
+    _$SelectedTimeSlotImpl value,
+    $Res Function(_$SelectedTimeSlotImpl) then,
+  ) = __$$SelectedTimeSlotImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String timeSlotID});
+}
+
+/// @nodoc
+class __$$SelectedTimeSlotImplCopyWithImpl<$Res>
+    extends _$VenueBookingEventCopyWithImpl<$Res, _$SelectedTimeSlotImpl>
+    implements _$$SelectedTimeSlotImplCopyWith<$Res> {
+  __$$SelectedTimeSlotImplCopyWithImpl(
+    _$SelectedTimeSlotImpl _value,
+    $Res Function(_$SelectedTimeSlotImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? timeSlotID = null}) {
+    return _then(
+      _$SelectedTimeSlotImpl(
+        timeSlotID: null == timeSlotID
+            ? _value.timeSlotID
+            : timeSlotID // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
+  const _$SelectedTimeSlotImpl({required this.timeSlotID});
+
+  @override
+  final String timeSlotID;
+
+  @override
+  String toString() {
+    return 'VenueBookingEvent.selectedTimeSlot(timeSlotID: $timeSlotID)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SelectedTimeSlotImpl &&
+            (identical(other.timeSlotID, timeSlotID) ||
+                other.timeSlotID == timeSlotID));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, timeSlotID);
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SelectedTimeSlotImplCopyWith<_$SelectedTimeSlotImpl> get copyWith =>
+      __$$SelectedTimeSlotImplCopyWithImpl<_$SelectedTimeSlotImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String date) fetchVenues,
+    required TResult Function(String venueID) selectedVenue,
+    required TResult Function(String roomID) selectedRoom,
+    required TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )
+    bookVenue,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
+  }) {
+    return selectedTimeSlot(timeSlotID);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String date)? fetchVenues,
+    TResult? Function(String venueID)? selectedVenue,
+    TResult? Function(String roomID)? selectedRoom,
+    TResult? Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
+    bookVenue,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
+  }) {
+    return selectedTimeSlot?.call(timeSlotID);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String date)? fetchVenues,
+    TResult Function(String venueID)? selectedVenue,
+    TResult Function(String roomID)? selectedRoom,
+    TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
+    bookVenue,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
+    required TResult orElse(),
+  }) {
+    if (selectedTimeSlot != null) {
+      return selectedTimeSlot(timeSlotID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchVenues value) fetchVenues,
+    required TResult Function(_SelectedVenue value) selectedVenue,
+    required TResult Function(_SelectedRoom value) selectedRoom,
+    required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
+  }) {
+    return selectedTimeSlot(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchVenues value)? fetchVenues,
+    TResult? Function(_SelectedVenue value)? selectedVenue,
+    TResult? Function(_SelectedRoom value)? selectedRoom,
+    TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
+  }) {
+    return selectedTimeSlot?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchVenues value)? fetchVenues,
+    TResult Function(_SelectedVenue value)? selectedVenue,
+    TResult Function(_SelectedRoom value)? selectedRoom,
+    TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
+    required TResult orElse(),
+  }) {
+    if (selectedTimeSlot != null) {
+      return selectedTimeSlot(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SelectedTimeSlot implements VenueBookingEvent {
+  const factory _SelectedTimeSlot({required final String timeSlotID}) =
+      _$SelectedTimeSlotImpl;
+
+  String get timeSlotID;
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SelectedTimeSlotImplCopyWith<_$SelectedTimeSlotImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$VenueBookingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -876,6 +1092,7 @@ mixin _$VenueBookingState {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -891,6 +1108,7 @@ mixin _$VenueBookingState {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -906,6 +1124,7 @@ mixin _$VenueBookingState {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,
@@ -1015,6 +1234,7 @@ class _$InitialImpl implements _Initial {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -1034,6 +1254,7 @@ class _$InitialImpl implements _Initial {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -1053,6 +1274,7 @@ class _$InitialImpl implements _Initial {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,
@@ -1127,6 +1349,7 @@ abstract class _$$VenuesFetchedImplCopyWith<$Res> {
     List<Room> rooms,
     String? venueID,
     String? roomID,
+    String? timeSlotID,
   });
 }
 
@@ -1148,6 +1371,7 @@ class __$$VenuesFetchedImplCopyWithImpl<$Res>
     Object? rooms = null,
     Object? venueID = freezed,
     Object? roomID = freezed,
+    Object? timeSlotID = freezed,
   }) {
     return _then(
       _$VenuesFetchedImpl(
@@ -1167,6 +1391,10 @@ class __$$VenuesFetchedImplCopyWithImpl<$Res>
             ? _value.roomID
             : roomID // ignore: cast_nullable_to_non_nullable
                   as String?,
+        timeSlotID: freezed == timeSlotID
+            ? _value.timeSlotID
+            : timeSlotID // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -1180,6 +1408,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
     required final List<Room> rooms,
     required this.venueID,
     required this.roomID,
+    required this.timeSlotID,
   }) : _venues = venues,
        _rooms = rooms;
 
@@ -1203,10 +1432,12 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
   final String? venueID;
   @override
   final String? roomID;
+  @override
+  final String? timeSlotID;
 
   @override
   String toString() {
-    return 'VenueBookingState.venuesFetched(venues: $venues, rooms: $rooms, venueID: $venueID, roomID: $roomID)';
+    return 'VenueBookingState.venuesFetched(venues: $venues, rooms: $rooms, venueID: $venueID, roomID: $roomID, timeSlotID: $timeSlotID)';
   }
 
   @override
@@ -1217,7 +1448,9 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
             const DeepCollectionEquality().equals(other._venues, _venues) &&
             const DeepCollectionEquality().equals(other._rooms, _rooms) &&
             (identical(other.venueID, venueID) || other.venueID == venueID) &&
-            (identical(other.roomID, roomID) || other.roomID == roomID));
+            (identical(other.roomID, roomID) || other.roomID == roomID) &&
+            (identical(other.timeSlotID, timeSlotID) ||
+                other.timeSlotID == timeSlotID));
   }
 
   @override
@@ -1227,6 +1460,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
     const DeepCollectionEquality().hash(_rooms),
     venueID,
     roomID,
+    timeSlotID,
   );
 
   /// Create a copy of VenueBookingState
@@ -1246,6 +1480,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -1253,7 +1488,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
     required TResult Function(String? message) failure,
     required TResult Function() loading,
   }) {
-    return venuesFetched(venues, rooms, venueID, roomID);
+    return venuesFetched(venues, rooms, venueID, roomID, timeSlotID);
   }
 
   @override
@@ -1265,6 +1500,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -1272,7 +1508,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
     TResult? Function(String? message)? failure,
     TResult? Function()? loading,
   }) {
-    return venuesFetched?.call(venues, rooms, venueID, roomID);
+    return venuesFetched?.call(venues, rooms, venueID, roomID, timeSlotID);
   }
 
   @override
@@ -1284,6 +1520,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,
@@ -1293,7 +1530,7 @@ class _$VenuesFetchedImpl implements _VenuesFetched {
     required TResult orElse(),
   }) {
     if (venuesFetched != null) {
-      return venuesFetched(venues, rooms, venueID, roomID);
+      return venuesFetched(venues, rooms, venueID, roomID, timeSlotID);
     }
     return orElse();
   }
@@ -1348,12 +1585,14 @@ abstract class _VenuesFetched implements VenueBookingState {
     required final List<Room> rooms,
     required final String? venueID,
     required final String? roomID,
+    required final String? timeSlotID,
   }) = _$VenuesFetchedImpl;
 
   List<Venue> get venues;
   List<Room> get rooms;
   String? get venueID;
   String? get roomID;
+  String? get timeSlotID;
 
   /// Create a copy of VenueBookingState
   /// with the given fields replaced by the non-null parameter values.
@@ -1411,6 +1650,7 @@ class _$BookingInProgressImpl implements _BookingInProgress {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -1430,6 +1670,7 @@ class _$BookingInProgressImpl implements _BookingInProgress {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -1449,6 +1690,7 @@ class _$BookingInProgressImpl implements _BookingInProgress {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,
@@ -1590,6 +1832,7 @@ class _$BookingSuccessImpl implements _BookingSuccess {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -1609,6 +1852,7 @@ class _$BookingSuccessImpl implements _BookingSuccess {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -1628,6 +1872,7 @@ class _$BookingSuccessImpl implements _BookingSuccess {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,
@@ -1775,6 +2020,7 @@ class _$FailureImpl implements _Failure {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -1794,6 +2040,7 @@ class _$FailureImpl implements _Failure {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -1813,6 +2060,7 @@ class _$FailureImpl implements _Failure {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,
@@ -1932,6 +2180,7 @@ class _$LoadingImpl implements _Loading {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )
     venuesFetched,
     required TResult Function() bookingInProgress,
@@ -1951,6 +2200,7 @@ class _$LoadingImpl implements _Loading {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult? Function()? bookingInProgress,
@@ -1970,6 +2220,7 @@ class _$LoadingImpl implements _Loading {
       List<Room> rooms,
       String? venueID,
       String? roomID,
+      String? timeSlotID,
     )?
     venuesFetched,
     TResult Function()? bookingInProgress,

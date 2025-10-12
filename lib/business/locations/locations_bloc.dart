@@ -63,7 +63,7 @@ class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
         final descriptionMatch =
             location.description?.toLowerCase().contains(currentSearchQuery) ??
             false;
-        final features = location.features?.any(
+        final features = location.features.any(
           (cat) => cat.toLowerCase().contains(currentSearchQuery),
         );
         final category = location.category.toLowerCase().contains(
