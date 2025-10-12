@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/screens/venue_booking/time-slot.dart';
 
@@ -148,9 +149,9 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF2C2C2C),
+      backgroundColor: AppColor.venueBookingTheme,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2C2C2C),
+        backgroundColor: AppColor.venueBookingTheme,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -207,7 +208,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: const Color(0xFF2C2C2C),
+                            color: AppColor.venueBookingTheme,
                             fontFamily: AppFonts.gilroy,
                           ),
                         ),
@@ -224,7 +225,10 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                       ],
                     ),
                   ),
-                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: const Divider(height: 1),
+                  ),
 
                   // Venue Selection
                   Expanded(
@@ -238,7 +242,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: const Color(0xFF2C2C2C),
+                              color: AppColor.venueBookingTheme,
                               fontFamily: AppFonts.gilroy,
                             ),
                           ),
@@ -282,7 +286,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                                       fontWeight: FontWeight.w500,
                                       color: isSelected
                                           ? Colors.white
-                                          : const Color(0xFF2C2C2C),
+                                          : AppColor.venueBookingTheme,
                                       fontFamily: AppFonts.gilroy,
                                     ),
                                   ),
@@ -299,7 +303,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: const Color(0xFF2C2C2C),
+                                color: AppColor.venueBookingTheme,
                                 fontFamily: AppFonts.gilroy,
                               ),
                             ),
@@ -341,7 +345,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                                         fontWeight: FontWeight.w500,
                                         color: isSelected
                                             ? Colors.white
-                                            : const Color(0xFF2C2C2C),
+                                            : AppColor.venueBookingTheme,
                                         fontFamily: AppFonts.gilroy,
                                       ),
                                     ),
@@ -366,11 +370,11 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                selectedRoomName ?? 'No Room Selected',
+                                selectedRoomName ?? '',
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
-                                  color: const Color(0xFF2C2C2C),
+                                  color: AppColor.venueBookingTheme,
                                   fontFamily: AppFonts.gilroy,
                                 ),
                               ),
@@ -407,7 +411,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                               : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4F6BF5),
-                            disabledBackgroundColor: const Color(0xFFE0E0E0),
+                            disabledBackgroundColor: Colors.grey,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 24,
                               vertical: 16,

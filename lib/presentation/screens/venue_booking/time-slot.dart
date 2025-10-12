@@ -217,7 +217,10 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                       ],
                     ),
                   ),
-                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: const Divider(height: 1),
+                  ),
 
                   // Change Venue Button
                   Padding(
