@@ -16,12 +16,8 @@ class VenueSelectionScreen extends StatefulWidget {
 }
 
 class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
-  String? selectedVenueId;
-  String? selectedVenueName;
-  String? selectedRoomId;
-  String? selectedRoomName;
-  List<Venue> venues = [];
-  List<Room> selectedVenueRooms = [];
+  Venue? selectedVenue;
+  Room? selectedRoom;
 
   String get formattedDate {
     final now = DateTime.now();
@@ -78,16 +74,17 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
     );
   }
 
-  void _updateSelectedVenueRooms() {
-    if (selectedVenueId == null || venues.isEmpty) {
-      selectedVenueRooms = [];
-      return;
-    }
-    final venue = venues.firstWhere(
-      (v) => v.venueId == selectedVenueId,
-      orElse: () => Venue(venueId: null, name: null, rooms: []),
-    );
-    selectedVenueRooms = venue.rooms ?? [];
+  void _onVenueSelected(Venue venue) {
+    setState(() {
+      selectedVenue = venue;
+      selectedRoom = null; // Reset room selection when venue changes
+    });
+  }
+
+  void _onRoomSelected(Room room) {
+    setState(() {
+      selectedRoom = room;
+    });
   }
 
   @override
@@ -142,6 +139,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
               ),
               child: Column(
                 children: [
+                  //! Date and time
                   Padding(
                     padding: const EdgeInsets.all(24),
                     child: Column(
@@ -168,252 +166,19 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                       ],
                     ),
                   ),
+                  //! Divider
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: const Divider(height: 1),
                   ),
-
-                  Expanded(
-                    child: BlocConsumer<VenueBookingBloc, VenueBookingState>(
-                      listener: (context, state) {
-                        state.maybeWhen(
-                          failure: (message) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  message ?? 'An error occurred',
-                                  style: TextStyle(fontFamily: AppFonts.gilroy),
-                                ),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          },
-                          orElse: () {},
-                        );
-                      },
-                      builder: (context, state) {
-                        return state.when(
-                          initial: () =>
-                              const Center(child: Text('Loading venues...')),
-                          loading: () =>
-                              const Center(child: CircularProgressIndicator()),
-                          venuesFetched: (response) {
-                            if (response?.venues != null) {
-                              venues = response!.venues!;
-                              _updateSelectedVenueRooms();
-                            }
-
-                            if (venues.isEmpty) {
-                              return const Center(
-                                child: Text('No venues available'),
-                              );
-                            }
-
-                            return SingleChildScrollView(
-                              padding: const EdgeInsets.all(24),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Select Venue',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.venueBookingTheme,
-                                      fontFamily: AppFonts.gilroy,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Wrap(
-                                    spacing: 12,
-                                    runSpacing: 12,
-                                    children: venues.map((venue) {
-                                      final isSelected =
-                                          selectedVenueId == venue.venueId;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedVenueId = venue.venueId;
-                                            selectedVenueName = venue.name;
-                                            selectedRoomId = null;
-                                            selectedRoomName = null;
-                                            _updateSelectedVenueRooms();
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                            vertical: 12,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: isSelected
-                                                ? const Color(0xFF4F6BF5)
-                                                : Colors.white,
-                                            border: Border.all(
-                                              color: isSelected
-                                                  ? const Color(0xFF4F6BF5)
-                                                  : const Color(0xFFE0E0E0),
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              8,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            venue.name ?? '',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: isSelected
-                                                  ? Colors.white
-                                                  : AppColor.venueBookingTheme,
-                                              fontFamily: AppFonts.gilroy,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-
-                                  if (selectedVenueId != null &&
-                                      selectedVenueRooms.isNotEmpty) ...[
-                                    const SizedBox(height: 32),
-                                    Text(
-                                      'Select Room Number',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColor.venueBookingTheme,
-                                        fontFamily: AppFonts.gilroy,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Wrap(
-                                      spacing: 12,
-                                      runSpacing: 12,
-                                      children: selectedVenueRooms.map((room) {
-                                        final isSelected =
-                                            selectedRoomId == room.roomId;
-                                        return GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              selectedRoomId = room.roomId;
-                                              selectedRoomName = room.name;
-                                            });
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                              vertical: 12,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: isSelected
-                                                  ? const Color(0xFF4F6BF5)
-                                                  : Colors.white,
-                                              border: Border.all(
-                                                color: isSelected
-                                                    ? const Color(0xFF4F6BF5)
-                                                    : const Color(0xFFE0E0E0),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  room.name ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: isSelected
-                                                        ? Colors.white
-                                                        : AppColor
-                                                              .venueBookingTheme,
-                                                    fontFamily: AppFonts.gilroy,
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  'Capacity: ${room.capacity}',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: isSelected
-                                                        ? Colors.white70
-                                                        : const Color(
-                                                            0xFF666666,
-                                                          ),
-                                                    fontFamily: AppFonts.gilroy,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ],
-                                ],
-                              ),
-                            );
-                          },
-                          failure: (message) => Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.error_outline,
-                                  size: 64,
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'App is under maintenance',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.red,
-                                    fontFamily: AppFonts.gilroy,
-                                  ),
-                                ),
-                                Text(
-                                  'Please try again later!',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.red,
-                                    fontFamily: AppFonts.gilroy,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    context.read<VenueBookingBloc>().add(
-                                      VenueBookingEvent.fetchVenues(
-                                        date: getFormattedDate(DateTime.now()),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Retry',
-                                    style: TextStyle(
-                                      fontFamily: AppFonts.gilroy,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          bookingInProgress: () =>
-                              const Center(child: CircularProgressIndicator()),
-                          bookingSuccess: (message) => Center(
-                            child: Text(message ?? 'Booking successful'),
-                          ),
-                        );
-                      },
-                    ),
+                  //! Select your venue and room grid
+                  VenueRoomSelector(
+                    selectedVenue: selectedVenue,
+                    selectedRoom: selectedRoom,
+                    onVenueSelected: _onVenueSelected,
+                    onRoomSelected: _onRoomSelected,
                   ),
-
+                  //! select time slot row
                   Container(
                     padding: const EdgeInsets.all(24),
                     child: Row(
@@ -424,7 +189,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                selectedRoomName ?? '',
+                                selectedRoom?.name ?? '',
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
@@ -433,7 +198,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                                 ),
                               ),
                               Text(
-                                selectedVenueName ?? 'No Venue Selected',
+                                selectedVenue?.name ?? 'No Venue Selected',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -446,25 +211,16 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
                         ),
                         const SizedBox(width: 16),
                         ElevatedButton(
-                          onPressed:
-                              selectedVenueId != null && selectedRoomId != null
+                          onPressed: selectedVenue != null && selectedRoom != null
                               ? () {
-                                  final selectedVenue = venues.firstWhere(
-                                    (v) => v.venueId == selectedVenueId,
-                                  );
-                                  final selectedRoom = selectedVenue.rooms!
-                                      .firstWhere(
-                                        (r) => r.roomId == selectedRoomId,
-                                      );
-                                  
                                   context.push(
                                     AppRoute.timeSlot,
                                     extra: {
-                                      'venueName': selectedVenueName!,
-                                      'roomName': selectedRoomName!,
-                                      'venueId': selectedVenueId!,
-                                      'roomId': selectedRoomId!,
-                                      'bookings': selectedRoom.bookings ?? [],
+                                      'venueName': selectedVenue!.name!,
+                                      'roomName': selectedRoom!.name!,
+                                      'venueId': selectedVenue!.venueId!,
+                                      'roomId': selectedRoom!.roomId!,
+                                      'bookings': selectedRoom!.bookings ?? [],
                                     },
                                   );
                                 }
@@ -499,6 +255,235 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class VenueRoomSelector extends StatelessWidget {
+  final Venue? selectedVenue;
+  final Room? selectedRoom;
+  final Function(Venue) onVenueSelected;
+  final Function(Room) onRoomSelected;
+
+  const VenueRoomSelector({
+    super.key,
+    required this.selectedVenue,
+    required this.selectedRoom,
+    required this.onVenueSelected,
+    required this.onRoomSelected,
+  });
+
+  String getFormattedDate(DateTime now) {
+    return DateFormat('yyyy-MM-dd').format(now);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: BlocConsumer<VenueBookingBloc, VenueBookingState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            failure: (message) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    message ?? 'An error occurred',
+                    style: TextStyle(fontFamily: AppFonts.gilroy),
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            },
+            orElse: () {},
+          );
+        },
+        builder: (context, state) {
+          return state.when(
+            initial: () => const Center(child: Text('Loading venues...')),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            venuesFetched: (response) {
+              final venues = response?.venues ?? [];
+              
+              if (venues.isEmpty) {
+                return const Center(child: Text('No venues available'));
+              }
+
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select Venue',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.venueBookingTheme,
+                        fontFamily: AppFonts.gilroy,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: venues.map((venue) {
+                        final isSelected = selectedVenue?.venueId == venue.venueId;
+                        return GestureDetector(
+                          onTap: () => onVenueSelected(venue),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? const Color(0xFF4F6BF5)
+                                  : Colors.white,
+                              border: Border.all(
+                                color: isSelected
+                                    ? const Color(0xFF4F6BF5)
+                                    : const Color(0xFFE0E0E0),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              venue.name ?? '',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: isSelected
+                                    ? Colors.white
+                                    : AppColor.venueBookingTheme,
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+
+                    if (selectedVenue != null &&
+                        selectedVenue!.rooms != null &&
+                        selectedVenue!.rooms!.isNotEmpty) ...[
+                      const SizedBox(height: 32),
+                      Text(
+                        'Select Room Number',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.venueBookingTheme,
+                          fontFamily: AppFonts.gilroy,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        children: selectedVenue!.rooms!.map((room) {
+                          final isSelected = selectedRoom?.roomId == room.roomId;
+                          return GestureDetector(
+                            onTap: () => onRoomSelected(room),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? const Color(0xFF4F6BF5)
+                                    : Colors.white,
+                                border: Border.all(
+                                  color: isSelected
+                                      ? const Color(0xFF4F6BF5)
+                                      : const Color(0xFFE0E0E0),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    room.name ?? '',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: isSelected
+                                          ? Colors.white
+                                          : AppColor.venueBookingTheme,
+                                      fontFamily: AppFonts.gilroy,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Capacity: ${room.capacity}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: isSelected
+                                          ? Colors.white70
+                                          : const Color(0xFF666666),
+                                      fontFamily: AppFonts.gilroy,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ],
+                ),
+              );
+            },
+            failure: (message) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                  const SizedBox(height: 16),
+                  Text(
+                    'App is under maintenance',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                      fontFamily: AppFonts.gilroy,
+                    ),
+                  ),
+                  Text(
+                    'Please try again later!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                      fontFamily: AppFonts.gilroy,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<VenueBookingBloc>().add(
+                        VenueBookingEvent.fetchVenues(
+                          date: getFormattedDate(DateTime.now()),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Retry',
+                      style: TextStyle(fontFamily: AppFonts.gilroy),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            bookingInProgress: () =>
+                const Center(child: CircularProgressIndicator()),
+            bookingSuccess: (message) =>
+                Center(child: Text(message ?? 'Booking successful')),
+          );
+        },
       ),
     );
   }
