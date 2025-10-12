@@ -306,23 +306,7 @@ class VenueRoomSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocConsumer<VenueBookingBloc, VenueBookingState>(
-        listener: (context, state) {
-          state.maybeWhen(
-            failure: (message) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    message ?? 'An error occurred',
-                    style: TextStyle(fontFamily: AppFonts.gilroy),
-                  ),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            },
-            orElse: () {},
-          );
-        },
+      child: BlocBuilder<VenueBookingBloc, VenueBookingState>(
         builder: (context, state) {
           return state.maybeMap(
             orElse: () {

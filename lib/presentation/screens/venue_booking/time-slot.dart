@@ -227,19 +227,44 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
             bookingSuccess: (message) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(message ?? 'Booking confirmed!'),
+                  content: Text(
+                    message ?? 'Booking confirmed!',
+                    style: TextStyle(fontFamily: AppFonts.gilroy),
+                  ),
                   backgroundColor: Colors.green,
+                  duration: const Duration(seconds: 3),
                 ),
               );
               Navigator.of(context).popUntil((route) => route.isFirst);
             },
             failure: (message) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(message ?? 'Booking failed'),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              // Extract the actual error message if it contains JSON
+              String errorMessage = 'Booking failed';
+              if (message != null && message.contains('Only Authorized For Club Members')) {
+                errorMessage = 'Only Authorized For Club Members';
+              } else if (message != null) {
+                errorMessage = message;
+              }
+              
+              ScaffoldMessenger.of(context)
+                ..clearSnackBars() // Clear any existing snackbars
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      errorMessage,
+                      style: TextStyle(fontFamily: AppFonts.gilroy),
+                    ),
+                    backgroundColor: Colors.red,
+                    duration: const Duration(seconds: 4),
+                    action: SnackBarAction(
+                      label: 'Dismiss',
+                      textColor: Colors.white,
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      },
+                    ),
+                  ),
+                );
             },
             orElse: () {},
           );
