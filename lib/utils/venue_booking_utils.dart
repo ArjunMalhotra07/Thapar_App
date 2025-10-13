@@ -6,17 +6,23 @@ enum SlotState { available, booked, expired }
 
 class VenueBookingUtils {
   /// Checks if a time slot is booked by comparing hours from ISO timestamps
-  static bool isSlotBooked(String startTime, String endTime, List<Booking> bookings) {
+  static bool isSlotBooked(
+    String startTime,
+    String endTime,
+    List<Booking> bookings,
+  ) {
     // Convert slot times (HH:00 format) to hours for comparison
     final slotStartHour = int.parse(startTime.split(':')[0]);
-    
+
     for (final booking in bookings) {
       if (booking.startTime != null) {
         try {
           // Parse the ISO timestamp from booking
-          final bookingStart = DateTime.parse(booking.startTime!.replaceAll('Z', ''));
+          final bookingStart = DateTime.parse(
+            booking.startTime!.replaceAll('Z', ''),
+          );
           final bookingStartHour = bookingStart.hour;
-          
+
           // Check if this booking's hour matches our slot's hour
           if (bookingStartHour == slotStartHour) {
             return true;
@@ -38,7 +44,10 @@ class VenueBookingUtils {
   }
 
   /// Gets the state of a time slot (available, booked, expired)
-  static SlotState getSlotState(Map<String, dynamic> slot, List<Booking> bookings) {
+  static SlotState getSlotState(
+    Map<String, dynamic> slot,
+    List<Booking> bookings,
+  ) {
     if (isSlotExpired(slot['hour'])) {
       return SlotState.expired;
     }
@@ -92,7 +101,8 @@ class VenueBookingUtils {
 
   /// Extracts error message from API response
   static String extractErrorMessage(String? message) {
-    if (message != null && message.contains('Only Authorized For Club Members')) {
+    if (message != null &&
+        message.contains('Only Authorized For Club Members')) {
       return 'Only Authorized For Club Members';
     } else if (message != null) {
       return message;
@@ -115,18 +125,43 @@ class VenueBookingUtils {
             const Room(roomId: null, name: null, capacity: null, bookings: []),
       );
 
-      final userTodayBookings = room.bookings?.where((booking) {
-        if (booking.startTime == null) return false;
-        
-        // Handle both string and integer userId comparison
-        final bookingUserId = booking.userId?.toString();
-        final currentUserIdStr = currentUserId.toString();
-        
-        if (bookingUserId != currentUserIdStr) {
-          return false;
-        }
-        return DateTimeUtils.isTodayAndFuture(booking.startTime);
-      }).toList() ?? [];
+      final userTodayBookings =
+          room.bookings?.where((booking) {
+            if (booking.startTime == null) return false;
+
+            // Handle both string and integer userId comparison
+            final bookingUserId = booking.userId?.toString();
+            final currentUserIdStr = currentUserId.toString();
+
+            if (bookingUserId != currentUserIdStr) {
+              return false;
+            }
+
+            // Check if booking is for today or future (including past bookings today)
+            try {
+              final bookingDate = DateTime.parse(
+                booking.startTime!.replaceAll('Z', ''),
+              );
+              final now = DateTime.now();
+
+              // Check if booking is today (same date) or in future
+              final isToday =
+                  bookingDate.year == now.year &&
+                  bookingDate.month == now.month &&
+                  bookingDate.day == now.day;
+
+              final isFutureDate = bookingDate.isAfter(
+                DateTime(now.year, now.month, now.day, 23, 59, 59),
+              );
+
+              // For existing bookings, show them if they're today OR future
+              // This handles timezone differences and shows completed bookings
+              return isToday || isFutureDate;
+            } catch (e) {
+              return false;
+            }
+          }).toList() ??
+          [];
 
       if (userTodayBookings.isEmpty) return null;
 
@@ -145,19 +180,46 @@ class VenueBookingUtils {
   }
 
   /// Checks if user has any upcoming bookings today across all venues
-  static bool hasAnyUserUpcomingBooking(List<Venue> venues, String? currentUserId) {
+  static bool hasAnyUserUpcomingBooking(
+    List<Venue> venues,
+    String? currentUserId,
+  ) {
     if (currentUserId == null) return false;
 
     for (final venue in venues) {
       for (final room in venue.rooms ?? []) {
-        final userBookings = room.bookings
-                ?.where((booking) => booking.userId.toString() == currentUserId.toString())
+        final userBookings =
+            room.bookings
+                ?.where(
+                  (booking) =>
+                      booking.userId.toString() == currentUserId.toString(),
+                )
                 .toList() ??
             [];
 
         if (userBookings.isNotEmpty) {
           final todayBookings = userBookings.where((booking) {
-            return DateTimeUtils.isTodayAndFuture(booking.startTime);
+            // Check if booking is for today (including timezone differences) or future
+            try {
+              final bookingDate = DateTime.parse(
+                booking.startTime!.replaceAll('Z', ''),
+              );
+              final now = DateTime.now();
+
+              // Check if booking is today (same date) regardless of time, or in future
+              final isToday =
+                  bookingDate.year == now.year &&
+                  bookingDate.month == now.month &&
+                  bookingDate.day == now.day;
+
+              final isFuture = bookingDate.isAfter(
+                DateTime(now.year, now.month, now.day),
+              );
+
+              return isToday || isFuture;
+            } catch (e) {
+              return false;
+            }
           }).toList();
 
           if (todayBookings.isNotEmpty) return true;
@@ -173,8 +235,12 @@ class VenueBookingUtils {
 
     for (final venue in venues) {
       for (final room in venue.rooms ?? []) {
-        final userBookings = room.bookings
-                ?.where((booking) => booking.userId.toString() == currentUserId.toString())
+        final userBookings =
+            room.bookings
+                ?.where(
+                  (booking) =>
+                      booking.userId.toString() == currentUserId.toString(),
+                )
                 .toList() ??
             [];
 
@@ -201,11 +267,7 @@ class VenueBookingUtils {
       for (final room in venue.rooms ?? []) {
         final booking = getUpcomingBooking([room], room.roomId, currentUserId);
         if (booking != null) {
-          return {
-            'venue': venue,
-            'room': room,
-            'booking': booking,
-          };
+          return {'venue': venue, 'room': room, 'booking': booking};
         }
       }
     }

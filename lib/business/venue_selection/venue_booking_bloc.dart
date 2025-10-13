@@ -67,7 +67,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
 
       // Get current user ID from StartupRepo
       final user = await startupRepo.fetchUser();
-      final currentUserId = user?.id ?? user?.userId;
+      final currentUserId = user?.userId ?? user?.id;
 
       // Check if user has any bookings
       String? userVenueId;
