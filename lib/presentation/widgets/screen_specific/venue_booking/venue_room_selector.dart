@@ -18,7 +18,6 @@ class VenueRoomSelector extends StatelessWidget {
     required this.onRoomSelected,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -55,13 +54,24 @@ class VenueRoomSelector extends StatelessWidget {
                               currentUserId,
                             );
 
-                        // Check for pending booking status in this auth builder context too
-                        final venueState = context.read<VenueBookingBloc>().state;
+                        // Check for pending booking status specifically (not completed)
+                        final venueState = context
+                            .read<VenueBookingBloc>()
+                            .state;
                         final hasPendingBooking = venueState.maybeMap(
-                          venuesFetched: (state) => state.status != null && state.status != BookingStatus.none,
+                          venuesFetched: (state) =>
+                              state.status == BookingStatus.pending,
                           orElse: () => false,
                         );
-                        
+
+                        // Check if user has any booking (pending or completed)
+                        final hasAnyBooking = venueState.maybeMap(
+                          venuesFetched: (state) =>
+                              state.status != null &&
+                              state.status != BookingStatus.none,
+                          orElse: () => false,
+                        );
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -74,43 +84,45 @@ class VenueRoomSelector extends StatelessWidget {
                                 fontFamily: AppFonts.gilroy,
                               ),
                             ),
-                            if (hasBookingToday || hasPendingBooking) ...[
+                            if (hasBookingToday || hasAnyBooking) ...[
                               const SizedBox(height: 8),
                               Container(
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: hasPendingBooking 
-                                    ? const Color(0xFFF3E5F5) 
-                                    : const Color(0xFFFFF3E0),
+                                  color: hasPendingBooking
+                                      ? const Color(0xFFF3E5F5)
+                                      : const Color(0xFFFFF3E0),
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
-                                    color: hasPendingBooking 
-                                      ? const Color(0xFF9C27B0) 
-                                      : const Color(0xFFFFB74D),
+                                    color: hasPendingBooking
+                                        ? const Color(0xFF9C27B0)
+                                        : const Color(0xFFFFB74D),
                                     width: 1,
                                   ),
                                 ),
                                 child: Row(
                                   children: [
                                     Icon(
-                                      hasPendingBooking ? Icons.pending_outlined : Icons.info_outline,
-                                      color: hasPendingBooking 
-                                        ? const Color(0xFF7B1FA2) 
-                                        : const Color(0xFFE65100),
+                                      hasPendingBooking
+                                          ? Icons.pending_outlined
+                                          : Icons.info_outline,
+                                      color: hasPendingBooking
+                                          ? const Color(0xFF7B1FA2)
+                                          : const Color(0xFFE65100),
                                       size: 20,
                                     ),
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: Text(
-                                        hasPendingBooking 
-                                          ? 'Booking request in progress. Please wait...'
-                                          : 'You already have a booking for today. Only one booking per day is allowed.',
+                                        hasPendingBooking
+                                            ? 'Booking request in progress. Please wait...'
+                                            : 'You already have a booking for today. Only one booking per day is allowed.',
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
-                                          color: hasPendingBooking 
-                                            ? const Color(0xFF7B1FA2) 
-                                            : const Color(0xFFE65100),
+                                          color: hasPendingBooking
+                                              ? const Color(0xFF7B1FA2)
+                                              : const Color(0xFFE65100),
                                           fontFamily: AppFonts.gilroy,
                                         ),
                                       ),
@@ -146,13 +158,15 @@ class VenueRoomSelector extends StatelessWidget {
                                 state.venues,
                                 currentUserId,
                               );
-                          
-                          // Check for pending booking status
-                          final hasPendingBooking = state.status != null && state.status != BookingStatus.none;
+
+                          // Check for any booking status (pending or completed)
+                          final hasAnyBookingStatus =
+                              state.status != null &&
+                              state.status != BookingStatus.none;
 
                           return GestureDetector(
                             onTap: () {
-                              if (hasBookingToday || hasPendingBooking) {
+                              if (hasBookingToday || hasAnyBookingStatus) {
                                 // Booking limit reached or pending booking - no action needed
                                 return;
                               }
@@ -165,13 +179,13 @@ class VenueRoomSelector extends StatelessWidget {
                                 vertical: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: (hasBookingToday || hasPendingBooking)
+                                color: (hasBookingToday || hasAnyBookingStatus)
                                     ? const Color(0xFFF5F5F5)
                                     : isSelected
                                     ? const Color(0xFF4F6BF5)
                                     : Colors.white,
                                 border: Border.all(
-                                  color: (hasBookingToday || hasPendingBooking)
+                                  color: (hasBookingToday || hasAnyBookingStatus)
                                       ? const Color(0xFFBDBDBD)
                                       : isSelected
                                       ? const Color(0xFF4F6BF5)
@@ -186,7 +200,8 @@ class VenueRoomSelector extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: (hasBookingToday || hasPendingBooking)
+                                    color:
+                                        (hasBookingToday || hasAnyBookingStatus)
                                         ? const Color(0xFF9E9E9E)
                                         : isSelected
                                         ? Colors.white

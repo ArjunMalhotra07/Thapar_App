@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/data/repo/venue_booking_repo.dart';
+import 'package:thaparapp/data/repo/startup_repo.dart';
 import 'package:thaparapp/utils/date_time_utils.dart';
 import 'package:thaparapp/utils/venue_booking_utils.dart';
 
@@ -14,7 +14,7 @@ enum BookingStatus { none, pending, completed, rejected }
 
 class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   final VenueBookingRepo venueBookingRepo;
-  final AuthBloc authBloc;
+  final StartupRepo startupRepo;
   final List<Map<String, dynamic>> timeSlots = List.generate(24, (index) {
     final hour = index;
     final nextHour = (index + 1) % 24;
@@ -45,12 +45,18 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
     };
   });
 
-  VenueBookingBloc({required this.venueBookingRepo, required this.authBloc}) : super(_Initial()) {
+  VenueBookingBloc({required this.venueBookingRepo, required this.startupRepo})
+    : super(_Initial()) {
     on<_FetchVenues>(fetchVenues);
     on<_BookVenue>(bookVenue);
     on<_SelectedVenue>(selectVenue);
     on<_SelectedRoom>(selectRoom);
     on<_SelectedTimeSlot>(selectTimeSlot);
+    on<_Reset>(reset);
+  }
+  
+  void reset(event, emit) {
+    emit(const VenueBookingState.initial());
   }
 
   void fetchVenues(event, emit) async {
@@ -58,29 +64,33 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
       emit(const VenueBookingState.loading());
       final venuesData = await venueBookingRepo.fetchVenues(event.date);
       final venues = venuesData.venues ?? [];
-      
-      // Get current user ID from AuthBloc
-      final currentUserId = authBloc.user?.id ?? authBloc.user?.userId;
-      
+
+      // Get current user ID from StartupRepo
+      final user = await startupRepo.fetchUser();
+      final currentUserId = user?.id ?? user?.userId;
+
       // Check if user has any bookings
       String? userVenueId;
       String? userRoomId;
       String? userTimeSlotId;
       BookingStatus bookingStatus = BookingStatus.none;
       String? bookingMessage;
-      
+
       if (currentUserId != null) {
         // Find user's booking using utility function
-        final userBookingData = VenueBookingUtils.findUserUpcomingBooking(venues, currentUserId);
-        
+        final userBookingData = VenueBookingUtils.findUserUpcomingBooking(
+          venues,
+          currentUserId,
+        );
+
         if (userBookingData != null) {
           final venue = userBookingData['venue'] as Venue;
           final room = userBookingData['room'] as Room;
           final booking = userBookingData['booking'] as Booking;
-          
+
           userVenueId = venue.venueId;
           userRoomId = room.roomId;
-          
+
           // Extract time slot from booking
           if (booking.startTime != null) {
             final bookingStart = DateTimeUtils.parseDateTime(booking.startTime);
@@ -88,19 +98,21 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
               userTimeSlotId = bookingStart.hour.toString();
             }
           }
-          
-          // Determine booking status - check if booking is in progress or upcoming
-          final timeRemaining = DateTimeUtils.getTimeRemaining(booking.startTime);
+
+          // Determine booking status - existing bookings are always completed/confirmed
+          // Only bookings made through the app in this session are pending
+          bookingStatus = BookingStatus.completed;
+          final timeRemaining = DateTimeUtils.getTimeRemaining(
+            booking.startTime,
+          );
           if (timeRemaining == 'In progress') {
-            bookingStatus = BookingStatus.completed;
             bookingMessage = "Your booking is currently in progress";
           } else {
-            bookingStatus = BookingStatus.pending;
             bookingMessage = "You have an upcoming booking - $timeRemaining";
           }
         }
       }
-      
+
       // Set initial rooms if user has a booking
       List<Room> initialRooms = [];
       if (userVenueId != null) {
@@ -110,7 +122,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         );
         initialRooms = selectedVenue.rooms ?? [];
       }
-      
+
       emit(
         VenueBookingState.venuesFetched(
           venues: venues,
@@ -190,8 +202,9 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         currentState.copyWith(
           venueID: event.venueId,
           roomID: event.roomId,
-          timeSlotID: event.startTime != null ? 
-            DateTimeUtils.parseDateTime(event.startTime)?.hour.toString() : null,
+          timeSlotID: event.startTime != null
+              ? DateTimeUtils.parseDateTime(event.startTime)?.hour.toString()
+              : null,
           status: BookingStatus.pending,
           message: "Please wait for the admin to approve",
         ),
@@ -203,13 +216,13 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         "start_time": event.startTime,
         "end_time": event.endTime,
       };
-      
+
       // Wait 10 seconds before making API call
       await Future.delayed(const Duration(seconds: 10));
-      
+
       // Make booking API call
       await venueBookingRepo.bookVenue(body);
-      
+
       // Update to completed status
       final updatedState = state.mapOrNull(venuesFetched: (value) => value);
       if (updatedState != null) {

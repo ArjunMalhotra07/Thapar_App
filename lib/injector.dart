@@ -92,7 +92,7 @@ void init() {
           service: locator<BaseApiService>(),
         ),
       ),
-      authBloc: locator<AuthBloc>(),
+      startupRepo: locator<StartupRepo>(),
     ),
   );
 }

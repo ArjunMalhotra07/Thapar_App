@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:thaparapp/business/startup/startup_bloc.dart';
 import 'package:thaparapp/business/chat/chat_bloc.dart';
+import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/repo/auth_repo.dart';
 import 'package:thaparapp/data/repo/startup_repo.dart';
 import 'package:thaparapp/data/model/user/user.dart';
@@ -88,6 +89,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final chatBloc = locator<ChatBloc>();
       chatBloc.add(const ChatEvent.clearMessagesOnLogout());
+    } catch (_) {}
+    
+    try {
+      final venueBookingBloc = locator<VenueBookingBloc>();
+      venueBookingBloc.add(const VenueBookingEvent.reset());
     } catch (_) {}
 
     initBloc.save('', '');

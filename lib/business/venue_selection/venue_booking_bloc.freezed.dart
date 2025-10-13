@@ -31,6 +31,7 @@ mixin _$VenueBookingEvent {
       String? date,
     )
     bookVenue,
+    required TResult Function() reset,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -46,6 +47,7 @@ mixin _$VenueBookingEvent {
       String? date,
     )?
     bookVenue,
+    TResult? Function()? reset,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -61,6 +63,7 @@ mixin _$VenueBookingEvent {
       String? date,
     )?
     bookVenue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,6 +73,7 @@ mixin _$VenueBookingEvent {
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -78,6 +82,7 @@ mixin _$VenueBookingEvent {
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -86,6 +91,7 @@ mixin _$VenueBookingEvent {
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -194,6 +200,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
       String? date,
     )
     bookVenue,
+    required TResult Function() reset,
   }) {
     return fetchVenues(date);
   }
@@ -213,6 +220,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
       String? date,
     )?
     bookVenue,
+    TResult? Function()? reset,
   }) {
     return fetchVenues?.call(date);
   }
@@ -232,6 +240,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
       String? date,
     )?
     bookVenue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (fetchVenues != null) {
@@ -248,6 +257,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
   }) {
     return fetchVenues(this);
   }
@@ -260,6 +270,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
   }) {
     return fetchVenues?.call(this);
   }
@@ -272,6 +283,7 @@ class _$FetchVenuesImpl implements _FetchVenues {
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
     required TResult orElse(),
   }) {
     if (fetchVenues != null) {
@@ -375,6 +387,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
       String? date,
     )
     bookVenue,
+    required TResult Function() reset,
   }) {
     return selectedVenue(venueID);
   }
@@ -394,6 +407,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
       String? date,
     )?
     bookVenue,
+    TResult? Function()? reset,
   }) {
     return selectedVenue?.call(venueID);
   }
@@ -413,6 +427,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
       String? date,
     )?
     bookVenue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (selectedVenue != null) {
@@ -429,6 +444,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
   }) {
     return selectedVenue(this);
   }
@@ -441,6 +457,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
   }) {
     return selectedVenue?.call(this);
   }
@@ -453,6 +470,7 @@ class _$SelectedVenueImpl implements _SelectedVenue {
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
     required TResult orElse(),
   }) {
     if (selectedVenue != null) {
@@ -557,6 +575,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
       String? date,
     )
     bookVenue,
+    required TResult Function() reset,
   }) {
     return selectedRoom(roomID);
   }
@@ -576,6 +595,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
       String? date,
     )?
     bookVenue,
+    TResult? Function()? reset,
   }) {
     return selectedRoom?.call(roomID);
   }
@@ -595,6 +615,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
       String? date,
     )?
     bookVenue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (selectedRoom != null) {
@@ -611,6 +632,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
   }) {
     return selectedRoom(this);
   }
@@ -623,6 +645,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
   }) {
     return selectedRoom?.call(this);
   }
@@ -635,6 +658,7 @@ class _$SelectedRoomImpl implements _SelectedRoom {
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
     required TResult orElse(),
   }) {
     if (selectedRoom != null) {
@@ -743,6 +767,7 @@ class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
       String? date,
     )
     bookVenue,
+    required TResult Function() reset,
   }) {
     return selectedTimeSlot(timeSlotID);
   }
@@ -762,6 +787,7 @@ class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
       String? date,
     )?
     bookVenue,
+    TResult? Function()? reset,
   }) {
     return selectedTimeSlot?.call(timeSlotID);
   }
@@ -781,6 +807,7 @@ class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
       String? date,
     )?
     bookVenue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (selectedTimeSlot != null) {
@@ -797,6 +824,7 @@ class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
   }) {
     return selectedTimeSlot(this);
   }
@@ -809,6 +837,7 @@ class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
   }) {
     return selectedTimeSlot?.call(this);
   }
@@ -821,6 +850,7 @@ class _$SelectedTimeSlotImpl implements _SelectedTimeSlot {
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
     required TResult orElse(),
   }) {
     if (selectedTimeSlot != null) {
@@ -973,6 +1003,7 @@ class _$BookVenueImpl implements _BookVenue {
       String? date,
     )
     bookVenue,
+    required TResult Function() reset,
   }) {
     return bookVenue(venueId, roomId, startTime, endTime, date);
   }
@@ -992,6 +1023,7 @@ class _$BookVenueImpl implements _BookVenue {
       String? date,
     )?
     bookVenue,
+    TResult? Function()? reset,
   }) {
     return bookVenue?.call(venueId, roomId, startTime, endTime, date);
   }
@@ -1011,6 +1043,7 @@ class _$BookVenueImpl implements _BookVenue {
       String? date,
     )?
     bookVenue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (bookVenue != null) {
@@ -1027,6 +1060,7 @@ class _$BookVenueImpl implements _BookVenue {
     required TResult Function(_SelectedRoom value) selectedRoom,
     required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
     required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
   }) {
     return bookVenue(this);
   }
@@ -1039,6 +1073,7 @@ class _$BookVenueImpl implements _BookVenue {
     TResult? Function(_SelectedRoom value)? selectedRoom,
     TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
   }) {
     return bookVenue?.call(this);
   }
@@ -1051,6 +1086,7 @@ class _$BookVenueImpl implements _BookVenue {
     TResult Function(_SelectedRoom value)? selectedRoom,
     TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
     TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
     required TResult orElse(),
   }) {
     if (bookVenue != null) {
@@ -1080,6 +1116,158 @@ abstract class _BookVenue implements VenueBookingEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BookVenueImplCopyWith<_$BookVenueImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ResetImplCopyWith<$Res> {
+  factory _$$ResetImplCopyWith(
+    _$ResetImpl value,
+    $Res Function(_$ResetImpl) then,
+  ) = __$$ResetImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ResetImplCopyWithImpl<$Res>
+    extends _$VenueBookingEventCopyWithImpl<$Res, _$ResetImpl>
+    implements _$$ResetImplCopyWith<$Res> {
+  __$$ResetImplCopyWithImpl(
+    _$ResetImpl _value,
+    $Res Function(_$ResetImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of VenueBookingEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ResetImpl implements _Reset {
+  const _$ResetImpl();
+
+  @override
+  String toString() {
+    return 'VenueBookingEvent.reset()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ResetImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String date) fetchVenues,
+    required TResult Function(String venueID) selectedVenue,
+    required TResult Function(String roomID) selectedRoom,
+    required TResult Function(String timeSlotID) selectedTimeSlot,
+    required TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )
+    bookVenue,
+    required TResult Function() reset,
+  }) {
+    return reset();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String date)? fetchVenues,
+    TResult? Function(String venueID)? selectedVenue,
+    TResult? Function(String roomID)? selectedRoom,
+    TResult? Function(String timeSlotID)? selectedTimeSlot,
+    TResult? Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
+    bookVenue,
+    TResult? Function()? reset,
+  }) {
+    return reset?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String date)? fetchVenues,
+    TResult Function(String venueID)? selectedVenue,
+    TResult Function(String roomID)? selectedRoom,
+    TResult Function(String timeSlotID)? selectedTimeSlot,
+    TResult Function(
+      String? venueId,
+      String? roomId,
+      String? startTime,
+      String? endTime,
+      String? date,
+    )?
+    bookVenue,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (reset != null) {
+      return reset();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchVenues value) fetchVenues,
+    required TResult Function(_SelectedVenue value) selectedVenue,
+    required TResult Function(_SelectedRoom value) selectedRoom,
+    required TResult Function(_SelectedTimeSlot value) selectedTimeSlot,
+    required TResult Function(_BookVenue value) bookVenue,
+    required TResult Function(_Reset value) reset,
+  }) {
+    return reset(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchVenues value)? fetchVenues,
+    TResult? Function(_SelectedVenue value)? selectedVenue,
+    TResult? Function(_SelectedRoom value)? selectedRoom,
+    TResult? Function(_SelectedTimeSlot value)? selectedTimeSlot,
+    TResult? Function(_BookVenue value)? bookVenue,
+    TResult? Function(_Reset value)? reset,
+  }) {
+    return reset?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchVenues value)? fetchVenues,
+    TResult Function(_SelectedVenue value)? selectedVenue,
+    TResult Function(_SelectedRoom value)? selectedRoom,
+    TResult Function(_SelectedTimeSlot value)? selectedTimeSlot,
+    TResult Function(_BookVenue value)? bookVenue,
+    TResult Function(_Reset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (reset != null) {
+      return reset(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Reset implements VenueBookingEvent {
+  const factory _Reset() = _$ResetImpl;
 }
 
 /// @nodoc

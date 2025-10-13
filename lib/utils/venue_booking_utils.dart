@@ -116,7 +116,13 @@ class VenueBookingUtils {
       );
 
       final userTodayBookings = room.bookings?.where((booking) {
-        if (booking.startTime == null || booking.userId != currentUserId) {
+        if (booking.startTime == null) return false;
+        
+        // Handle both string and integer userId comparison
+        final bookingUserId = booking.userId?.toString();
+        final currentUserIdStr = currentUserId.toString();
+        
+        if (bookingUserId != currentUserIdStr) {
           return false;
         }
         return DateTimeUtils.isTodayAndFuture(booking.startTime);
@@ -145,7 +151,7 @@ class VenueBookingUtils {
     for (final venue in venues) {
       for (final room in venue.rooms ?? []) {
         final userBookings = room.bookings
-                ?.where((booking) => booking.userId == currentUserId)
+                ?.where((booking) => booking.userId.toString() == currentUserId.toString())
                 .toList() ??
             [];
 
@@ -168,7 +174,7 @@ class VenueBookingUtils {
     for (final venue in venues) {
       for (final room in venue.rooms ?? []) {
         final userBookings = room.bookings
-                ?.where((booking) => booking.userId == currentUserId)
+                ?.where((booking) => booking.userId.toString() == currentUserId.toString())
                 .toList() ??
             [];
 

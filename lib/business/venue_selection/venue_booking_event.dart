@@ -18,4 +18,5 @@ class VenueBookingEvent with _$VenueBookingEvent {
     required String? endTime,
     required String? date,
   }) = _BookVenue;
+  const factory VenueBookingEvent.reset() = _Reset;
 }
