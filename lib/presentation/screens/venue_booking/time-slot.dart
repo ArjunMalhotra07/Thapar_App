@@ -206,6 +206,12 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                   hour: endHour,
                   date: now,
                 );
+                
+                // Navigate back to venue booking screen first
+                Navigator.of(context).pop(); // Pop room selection
+                Navigator.of(context).pop(); // Pop venue booking
+                
+                // Then initiate booking
                 context.read<VenueBookingBloc>().add(
                   VenueBookingEvent.bookVenue(
                     venueId: widget.venueId,

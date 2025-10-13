@@ -35,6 +35,18 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
   }
 
   void _onVenueSelected(Venue venue) {
+    // Check if there's a pending booking - if so, don't allow navigation
+    final currentState = context.read<VenueBookingBloc>().state;
+    final hasPendingBooking = currentState.maybeMap(
+      venuesFetched: (state) => state.status != null && state.status != BookingStatus.none,
+      orElse: () => false,
+    );
+    
+    if (hasPendingBooking) {
+      // Don't navigate or select if there's a pending booking
+      return;
+    }
+    
     context.read<VenueBookingBloc>().add(
       VenueBookingEvent.selectedVenue(venueID: venue.venueId!),
     );

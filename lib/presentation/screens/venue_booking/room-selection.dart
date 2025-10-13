@@ -112,10 +112,6 @@ class RoomSelectionScreen extends StatelessWidget {
                               );
                             }
 
-                            // Check if user has existing booking to disable interaction
-                            final hasExistingBooking =
-                                status != null && status != BookingStatus.none;
-
                             return Column(
                               children: [
                                 // Room grid
@@ -127,9 +123,7 @@ class RoomSelectionScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          hasExistingBooking
-                                              ? 'Your Current Booking'
-                                              : 'Select Room Number',
+                                          'Select Room Number',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
@@ -137,18 +131,6 @@ class RoomSelectionScreen extends StatelessWidget {
                                             fontFamily: AppFonts.gilroy,
                                           ),
                                         ),
-                                        if (hasExistingBooking) ...[
-                                          const SizedBox(height: 8),
-                                          Text(
-                                            'You can only have one booking per day',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: const Color(0xFF666666),
-                                              fontFamily: AppFonts.gilroy,
-                                            ),
-                                          ),
-                                        ],
                                         const SizedBox(height: 16),
                                         Expanded(
                                           child: GridView.builder(
@@ -165,12 +147,10 @@ class RoomSelectionScreen extends StatelessWidget {
                                               final isSelected =
                                                   roomID == room.roomId;
                                               return GestureDetector(
-                                                onTap: hasExistingBooking
-                                                    ? null
-                                                    : () => _onRoomSelected(
-                                                        context,
-                                                        room,
-                                                      ),
+                                                onTap: () => _onRoomSelected(
+                                                  context,
+                                                  room,
+                                                ),
                                                 child: Container(
                                                   padding:
                                                       const EdgeInsets.symmetric(
@@ -182,23 +162,15 @@ class RoomSelectionScreen extends StatelessWidget {
                                                         ? const Color(
                                                             0xFF4F6BF5,
                                                           )
-                                                        : (hasExistingBooking
-                                                              ? Colors
-                                                                    .grey
-                                                                    .shade100
-                                                              : Colors.white),
+                                                        : Colors.white,
                                                     border: Border.all(
                                                       color: isSelected
                                                           ? const Color(
                                                               0xFF4F6BF5,
                                                             )
-                                                          : (hasExistingBooking
-                                                                ? Colors
-                                                                      .grey
-                                                                      .shade300
-                                                                : const Color(
-                                                                    0xFFE0E0E0,
-                                                                  )),
+                                                          : const Color(
+                                                              0xFFE0E0E0,
+                                                            ),
                                                       width: 1,
                                                     ),
                                                     borderRadius:
@@ -219,11 +191,8 @@ class RoomSelectionScreen extends StatelessWidget {
                                                               FontWeight.w500,
                                                           color: isSelected
                                                               ? Colors.white
-                                                              : (hasExistingBooking
-                                                                    ? Colors
-                                                                          .grey
-                                                                    : AppColor
-                                                                          .venueBookingTheme),
+                                                              : AppColor
+                                                                    .venueBookingTheme,
                                                           fontFamily:
                                                               AppFonts.gilroy,
                                                         ),
@@ -242,12 +211,9 @@ class RoomSelectionScreen extends StatelessWidget {
                                                               FontWeight.w400,
                                                           color: isSelected
                                                               ? Colors.white70
-                                                              : (hasExistingBooking
-                                                                    ? Colors
-                                                                          .grey
-                                                                    : const Color(
-                                                                        0xFF666666,
-                                                                      )),
+                                                              : const Color(
+                                                                  0xFF666666,
+                                                                ),
                                                           fontFamily:
                                                               AppFonts.gilroy,
                                                         ),
@@ -319,9 +285,7 @@ class RoomSelectionScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 16),
                                       ElevatedButton(
-                                        onPressed:
-                                            (roomID != null &&
-                                                !hasExistingBooking)
+                                        onPressed: roomID != null
                                             ? () {
                                                 final selectedRoom = rooms
                                                     .firstWhere(
@@ -347,9 +311,7 @@ class RoomSelectionScreen extends StatelessWidget {
                                               }
                                             : null,
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: hasExistingBooking
-                                              ? Colors.grey
-                                              : const Color(0xFF4F6BF5),
+                                          backgroundColor: const Color(0xFF4F6BF5),
                                           disabledBackgroundColor: Colors.grey,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 24,
@@ -363,9 +325,7 @@ class RoomSelectionScreen extends StatelessWidget {
                                           elevation: 0,
                                         ),
                                         child: Text(
-                                          hasExistingBooking
-                                              ? 'Booking Already Exists'
-                                              : 'Select Time Slot',
+                                          'Select Time Slot',
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
