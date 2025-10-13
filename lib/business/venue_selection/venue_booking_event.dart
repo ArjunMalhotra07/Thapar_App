@@ -8,6 +8,9 @@ class VenueBookingEvent with _$VenueBookingEvent {
       _SelectedVenue;
   const factory VenueBookingEvent.selectedRoom({required String roomID}) =
       _SelectedRoom;
+  const factory VenueBookingEvent.selectedTimeSlot({
+    required String timeSlotID,
+  }) = _SelectedTimeSlot;
   const factory VenueBookingEvent.bookVenue({
     required String? venueId,
     required String? roomId,
@@ -15,7 +18,4 @@ class VenueBookingEvent with _$VenueBookingEvent {
     required String? endTime,
     required String? date,
   }) = _BookVenue;
-
-  const factory VenueBookingEvent.selectedTimeSlot({required String timeSlotID}) =
-      _SelectedTimeSlot;
 }

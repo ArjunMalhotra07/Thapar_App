@@ -3,14 +3,18 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/data/repo/venue_booking_repo.dart';
-import 'package:thaparapp/injector.dart';
+import 'package:thaparapp/utils/date_time_utils.dart';
+import 'package:thaparapp/utils/venue_booking_utils.dart';
 
 part 'venue_booking_event.dart';
 part 'venue_booking_state.dart';
 part 'venue_booking_bloc.freezed.dart';
 
+enum BookingStatus { none, pending, completed, rejected }
+
 class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   final VenueBookingRepo venueBookingRepo;
+  final AuthBloc authBloc;
   final List<Map<String, dynamic>> timeSlots = List.generate(24, (index) {
     final hour = index;
     final nextHour = (index + 1) % 24;
@@ -41,7 +45,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
     };
   });
 
-  VenueBookingBloc({required this.venueBookingRepo}) : super(_Initial()) {
+  VenueBookingBloc({required this.venueBookingRepo, required this.authBloc}) : super(_Initial()) {
     on<_FetchVenues>(fetchVenues);
     on<_BookVenue>(bookVenue);
     on<_SelectedVenue>(selectVenue);
@@ -52,14 +56,70 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   void fetchVenues(event, emit) async {
     try {
       emit(const VenueBookingState.loading());
-      final venues = await venueBookingRepo.fetchVenues(event.date);
+      final venuesData = await venueBookingRepo.fetchVenues(event.date);
+      final venues = venuesData.venues ?? [];
+      
+      // Get current user ID from AuthBloc
+      final currentUserId = authBloc.user?.id ?? authBloc.user?.userId;
+      
+      // Check if user has any bookings
+      String? userVenueId;
+      String? userRoomId;
+      String? userTimeSlotId;
+      BookingStatus bookingStatus = BookingStatus.none;
+      String? bookingMessage;
+      
+      if (currentUserId != null) {
+        // Find user's booking using utility function
+        final userBookingData = VenueBookingUtils.findUserUpcomingBooking(venues, currentUserId);
+        
+        if (userBookingData != null) {
+          final venue = userBookingData['venue'] as Venue;
+          final room = userBookingData['room'] as Room;
+          final booking = userBookingData['booking'] as Booking;
+          
+          userVenueId = venue.venueId;
+          userRoomId = room.roomId;
+          
+          // Extract time slot from booking
+          if (booking.startTime != null) {
+            final bookingStart = DateTimeUtils.parseDateTime(booking.startTime);
+            if (bookingStart != null) {
+              userTimeSlotId = bookingStart.hour.toString();
+            }
+          }
+          
+          // Determine booking status - check if booking is in progress or upcoming
+          final timeRemaining = DateTimeUtils.getTimeRemaining(booking.startTime);
+          if (timeRemaining == 'In progress') {
+            bookingStatus = BookingStatus.completed;
+            bookingMessage = "Your booking is currently in progress";
+          } else {
+            bookingStatus = BookingStatus.pending;
+            bookingMessage = "You have an upcoming booking - $timeRemaining";
+          }
+        }
+      }
+      
+      // Set initial rooms if user has a booking
+      List<Room> initialRooms = [];
+      if (userVenueId != null) {
+        final selectedVenue = venues.firstWhere(
+          (venue) => venue.venueId == userVenueId,
+          orElse: () => const Venue(venueId: null, name: null, rooms: []),
+        );
+        initialRooms = selectedVenue.rooms ?? [];
+      }
+      
       emit(
         VenueBookingState.venuesFetched(
-          venues: venues.venues ?? [],
-          rooms: [],
-          venueID: null,
-          roomID: null,
-          timeSlotID: null,
+          venues: venues,
+          rooms: initialRooms,
+          venueID: userVenueId,
+          roomID: userRoomId,
+          timeSlotID: userTimeSlotId,
+          status: bookingStatus,
+          message: bookingMessage,
         ),
       );
     } catch (e) {
@@ -82,6 +142,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
           venueID: event.venueID,
           roomID: null, // Reset room selection when venue changes
           timeSlotID: null,
+          status: currentState.status,
         ),
       );
     }
@@ -97,6 +158,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
           venueID: currentState.venueID,
           roomID: event.roomID,
           timeSlotID: null,
+          status: currentState.status,
         ),
       );
     }
@@ -112,6 +174,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
           venueID: currentState.venueID,
           roomID: currentState.roomID,
           timeSlotID: event.timeSlotID,
+          status: currentState.status,
         ),
       );
     }
@@ -122,140 +185,49 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
       final currentState = state.mapOrNull(venuesFetched: (value) => value);
       if (currentState == null) return;
 
-      // Emit booking in progress with current state data
+      // Emit pending status immediately
       emit(
-        VenueBookingState.bookingInProgress(
-          venues: currentState.venues,
-          rooms: currentState.rooms,
-          venueID: currentState.venueID,
-          roomID: currentState.roomID,
-          timeSlotID: currentState.timeSlotID,
+        currentState.copyWith(
+          venueID: event.venueId,
+          roomID: event.roomId,
+          timeSlotID: event.startTime != null ? 
+            DateTimeUtils.parseDateTime(event.startTime)?.hour.toString() : null,
+          status: BookingStatus.pending,
+          message: "Please wait for the admin to approve",
         ),
       );
 
+      // Prepare booking request body
       Map<String, dynamic> body = {
-        "venue_id": event.venueId,
         "room_id": event.roomId,
         "start_time": event.startTime,
         "end_time": event.endTime,
-        "date": event.date,
       };
-      await Future.delayed(Duration(seconds: 10));
-      final res = await venueBookingRepo.bookVenue(body);
-
-      // Update the bookings for the selected room
-      final updatedVenues = currentState.venues.map((venue) {
-        if (venue.venueId == currentState.venueID) {
-          final updatedRooms = venue.rooms?.map((room) {
-            if (room.roomId == currentState.roomID) {
-              // Add the new booking to the room
-              final newBooking = Booking(
-                userId:
-                    "current_user", // You might want to get this from auth state
-                startTime: event.startTime,
-                endTime: event.endTime,
-              );
-              final updatedBookings = <Booking>[
-                ...(room.bookings ?? []),
-                newBooking,
-              ];
-              return room.copyWith(bookings: updatedBookings);
-            }
-            return room;
-          }).toList();
-          return venue.copyWith(rooms: updatedRooms);
-        }
-        return venue;
-      }).toList();
-
-      // Return to venuesFetched state with updated bookings
-      emit(
-        VenueBookingState.venuesFetched(
-          venues: updatedVenues,
-          rooms: currentState.rooms.map((room) {
-            if (room.roomId == currentState.roomID) {
-              final newBooking = Booking(
-                userId: locator<AuthBloc>().user?.userId ?? "unknown_user",
-                startTime: event.startTime,
-                endTime: event.endTime,
-              );
-              final updatedBookings = <Booking>[
-                ...(room.bookings ?? []),
-                newBooking,
-              ];
-              return room.copyWith(bookings: updatedBookings);
-            }
-            return room;
-          }).toList(),
-          venueID: currentState.venueID,
-          roomID: currentState.roomID,
-          timeSlotID: currentState.timeSlotID,
-        ),
-      );
-
-      // Emit success message briefly (will be handled by snackbar)
-      emit(
-        VenueBookingState.bookingSuccess(
-          message: "Booking confirmed successfully!",
-        ),
-      );
-
-      // Return to updated venuesFetched state
-      await Future.delayed(Duration(milliseconds: 100));
-      emit(
-        VenueBookingState.venuesFetched(
-          venues: updatedVenues,
-          rooms: currentState.rooms.map((room) {
-            if (room.roomId == currentState.roomID) {
-              final newBooking = Booking(
-                userId: locator<AuthBloc>().user?.userId ?? "unknown_user",
-                startTime: event.startTime,
-                endTime: event.endTime,
-              );
-              final updatedBookings = <Booking>[
-                ...(room.bookings ?? []),
-                newBooking,
-              ];
-              return room.copyWith(bookings: updatedBookings);
-            }
-            return room;
-          }).toList(),
-          venueID: currentState.venueID,
-          roomID: currentState.roomID,
-          timeSlotID: null, // Reset time slot after booking
-        ),
-      );
-    } catch (e) {
-      // On failure, return to previous state with error
-      final currentState = state.mapOrNull(
-        bookingInProgress: (value) => value,
-        venuesFetched: (value) => value,
-      );
-
-      if (currentState != null && currentState is _BookingInProgress) {
+      
+      // Wait 10 seconds before making API call
+      await Future.delayed(const Duration(seconds: 10));
+      
+      // Make booking API call
+      await venueBookingRepo.bookVenue(body);
+      
+      // Update to completed status
+      final updatedState = state.mapOrNull(venuesFetched: (value) => value);
+      if (updatedState != null) {
         emit(
-          VenueBookingState.venuesFetched(
-            venues: currentState.venues,
-            rooms: currentState.rooms,
-            venueID: currentState.venueID,
-            roomID: currentState.roomID,
-            timeSlotID: currentState.timeSlotID,
+          updatedState.copyWith(
+            status: BookingStatus.completed,
+            message: "Booking confirmed",
           ),
         );
       }
-
-      emit(VenueBookingState.failure(message: e.toString()));
-
-      // Return to venuesFetched state after showing error
-      await Future.delayed(Duration(milliseconds: 100));
-      if (currentState != null && currentState is _BookingInProgress) {
+    } catch (e) {
+      // On failure, update to rejected status
+      final currentState = state.mapOrNull(venuesFetched: (value) => value);
+      if (currentState != null) {
         emit(
-          VenueBookingState.venuesFetched(
-            venues: currentState.venues,
-            rooms: currentState.rooms,
-            venueID: currentState.venueID,
-            roomID: currentState.roomID,
-            timeSlotID: currentState.timeSlotID,
+          currentState.copyWith(
+            status: BookingStatus.rejected,
+            message: "Booking failed: ${e.toString()}",
           ),
         );
       }

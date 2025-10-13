@@ -5,7 +5,6 @@ import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
-import 'package:thaparapp/presentation/constants/routes.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/booking_status_sheet.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/date_time_widget.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/venue_room_selector.dart';
@@ -24,7 +23,7 @@ class _VenueSelectionScreenState extends State<VenueSelectionScreen> {
     super.initState();
     final currentState = context.read<VenueBookingBloc>().state;
     currentState.maybeWhen(
-      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {},
+      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID, _, _) {},
       orElse: () {
         context.read<VenueBookingBloc>().add(
           VenueBookingEvent.fetchVenues(

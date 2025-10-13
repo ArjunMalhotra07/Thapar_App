@@ -11,17 +11,12 @@ class TimeSlotSelector extends StatelessWidget {
 
   const TimeSlotSelector({super.key, required this.bookings});
 
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: BlocBuilder<VenueBookingBloc, VenueBookingState>(
         builder: (context, state) {
-          final isBookingInProgress = state.maybeWhen(
-            bookingInProgress: (venues, rooms, venueID, roomID, timeSlotID) => true,
-            orElse: () => false,
-          );
-
+          final isBookingInProgress = state.maybeWhen(orElse: () => false);
           if (isBookingInProgress) {
             return Center(
               child: Column(
@@ -55,7 +50,7 @@ class TimeSlotSelector extends StatelessWidget {
 
           final bloc = context.read<VenueBookingBloc>();
           final currentTimeSlotID = state.maybeWhen(
-            venuesFetched: (_, __, ___, ____, timeSlotID) => timeSlotID,
+            venuesFetched: (_, __, ___, ____, timeSlotID, _, _) => timeSlotID,
             orElse: () => null,
           );
 
@@ -87,7 +82,10 @@ class TimeSlotSelector extends StatelessWidget {
                   itemCount: bloc.timeSlots.length,
                   itemBuilder: (context, index) {
                     final slot = bloc.timeSlots[index];
-                    final slotState = VenueBookingUtils.getSlotState(slot, bookings);
+                    final slotState = VenueBookingUtils.getSlotState(
+                      slot,
+                      bookings,
+                    );
                     final isSelected = currentTimeSlotID == slot['id'];
                     final canSelect = slotState == SlotState.available;
 
@@ -107,9 +105,14 @@ class TimeSlotSelector extends StatelessWidget {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: VenueBookingUtils.getSlotColor(slotState, isSelected),
+                          color: VenueBookingUtils.getSlotColor(
+                            slotState,
+                            isSelected,
+                          ),
                           border: Border.all(
-                            color: VenueBookingUtils.getSlotBorderColor(slotState),
+                            color: VenueBookingUtils.getSlotBorderColor(
+                              slotState,
+                            ),
                             width: 1.5,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -120,7 +123,10 @@ class TimeSlotSelector extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: VenueBookingUtils.getSlotTextColor(slotState, isSelected),
+                              color: VenueBookingUtils.getSlotTextColor(
+                                slotState,
+                                isSelected,
+                              ),
                               fontFamily: AppFonts.gilroy,
                             ),
                           ),

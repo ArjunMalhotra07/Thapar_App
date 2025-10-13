@@ -95,7 +95,7 @@ class RoomSelectionScreen extends StatelessWidget {
                     child: BlocBuilder<VenueBookingBloc, VenueBookingState>(
                       builder: (context, state) {
                         return state.maybeWhen(
-                          venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
+                          venuesFetched: (venues, rooms, venueID, roomID, timeSlotID, status, message) {
                             final selectedVenue = venues.firstWhere(
                               (venue) => venue.venueId == venueID,
                               orElse: () => const Venue(
@@ -104,12 +104,17 @@ class RoomSelectionScreen extends StatelessWidget {
                                 rooms: [],
                               ),
                             );
-                            
+
                             if (rooms.isEmpty) {
                               return const Center(
-                                child: Text('No rooms available for this venue'),
+                                child: Text(
+                                  'No rooms available for this venue',
+                                ),
                               );
                             }
+
+                            // Check if user has existing booking to disable interaction
+                            final hasExistingBooking = status != null && status != BookingStatus.none;
                             
                             return Column(
                               children: [
@@ -118,10 +123,13 @@ class RoomSelectionScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(24),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Select Room Number',
+                                          hasExistingBooking 
+                                            ? 'Your Current Booking' 
+                                            : 'Select Room Number',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
@@ -129,53 +137,87 @@ class RoomSelectionScreen extends StatelessWidget {
                                             fontFamily: AppFonts.gilroy,
                                           ),
                                         ),
+                                        if (hasExistingBooking) ...[
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            'You can only have one booking per day',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: const Color(0xFF666666),
+                                              fontFamily: AppFonts.gilroy,
+                                            ),
+                                          ),
+                                        ],
                                         const SizedBox(height: 16),
                                         Expanded(
                                           child: GridView.builder(
-                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 12,
-                                              mainAxisSpacing: 12,
-                                              childAspectRatio: 2.2,
-                                            ),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  crossAxisSpacing: 12,
+                                                  mainAxisSpacing: 12,
+                                                  childAspectRatio: 2.2,
+                                                ),
                                             itemCount: rooms.length,
                                             itemBuilder: (context, index) {
                                               final room = rooms[index];
-                                              final isSelected = roomID == room.roomId;
+                                              final isSelected =
+                                                  roomID == room.roomId;
                                               return GestureDetector(
-                                                onTap: () => _onRoomSelected(context, room),
+                                                onTap: hasExistingBooking ? null : () => _onRoomSelected(
+                                                  context,
+                                                  room,
+                                                ),
                                                 child: Container(
-                                                  padding: const EdgeInsets.symmetric(
-                                                    horizontal: 12,
-                                                    vertical: 8,
-                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 8,
+                                                      ),
                                                   decoration: BoxDecoration(
                                                     color: isSelected
-                                                        ? const Color(0xFF4F6BF5)
-                                                        : Colors.white,
+                                                        ? const Color(
+                                                            0xFF4F6BF5,
+                                                          )
+                                                        : (hasExistingBooking ? Colors.grey.shade100 : Colors.white),
                                                     border: Border.all(
                                                       color: isSelected
-                                                          ? const Color(0xFF4F6BF5)
-                                                          : const Color(0xFFE0E0E0),
+                                                          ? const Color(
+                                                              0xFF4F6BF5,
+                                                            )
+                                                          : (hasExistingBooking ? Colors.grey.shade300 : const Color(
+                                                              0xFFE0E0E0,
+                                                            )),
                                                       width: 1,
                                                     ),
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          8,
+                                                        ),
                                                   ),
                                                   child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         room.name ?? '',
                                                         style: TextStyle(
                                                           fontSize: 14,
-                                                          fontWeight: FontWeight.w500,
+                                                          fontWeight:
+                                                              FontWeight.w500,
                                                           color: isSelected
                                                               ? Colors.white
-                                                              : AppColor.venueBookingTheme,
-                                                          fontFamily: AppFonts.gilroy,
+                                                              : (hasExistingBooking ? Colors.grey : AppColor
+                                                                    .venueBookingTheme),
+                                                          fontFamily:
+                                                              AppFonts.gilroy,
                                                         ),
-                                                        textAlign: TextAlign.center,
-                                                        overflow: TextOverflow.ellipsis,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         maxLines: 1,
                                                       ),
                                                       const SizedBox(height: 4),
@@ -183,13 +225,18 @@ class RoomSelectionScreen extends StatelessWidget {
                                                         'Capacity: ${room.capacity}',
                                                         style: TextStyle(
                                                           fontSize: 12,
-                                                          fontWeight: FontWeight.w400,
+                                                          fontWeight:
+                                                              FontWeight.w400,
                                                           color: isSelected
                                                               ? Colors.white70
-                                                              : const Color(0xFF666666),
-                                                          fontFamily: AppFonts.gilroy,
+                                                              : (hasExistingBooking ? Colors.grey : const Color(
+                                                                  0xFF666666,
+                                                                )),
+                                                          fontFamily:
+                                                              AppFonts.gilroy,
                                                         ),
-                                                        overflow: TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                     ],
                                                   ),
@@ -209,25 +256,36 @@ class RoomSelectionScreen extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
                                               roomID != null
-                                                  ? rooms.firstWhere(
-                                                      (room) => room.roomId == roomID,
-                                                      orElse: () => const Room(
-                                                        roomId: null,
-                                                        name: null,
-                                                        capacity: null,
-                                                        bookings: [],
-                                                      ),
-                                                    ).name ?? ''
+                                                  ? rooms
+                                                            .firstWhere(
+                                                              (room) =>
+                                                                  room.roomId ==
+                                                                  roomID,
+                                                              orElse: () =>
+                                                                  const Room(
+                                                                    roomId:
+                                                                        null,
+                                                                    name: null,
+                                                                    capacity:
+                                                                        null,
+                                                                    bookings:
+                                                                        [],
+                                                                  ),
+                                                            )
+                                                            .name ??
+                                                        ''
                                                   : '',
                                               style: TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.w700,
-                                                color: AppColor.venueBookingTheme,
+                                                color:
+                                                    AppColor.venueBookingTheme,
                                                 fontFamily: AppFonts.gilroy,
                                               ),
                                             ),
@@ -245,37 +303,51 @@ class RoomSelectionScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 16),
                                       ElevatedButton(
-                                        onPressed: roomID != null
+                                        onPressed: (roomID != null && !hasExistingBooking)
                                             ? () {
-                                                final selectedRoom = rooms.firstWhere(
-                                                  (room) => room.roomId == roomID,
-                                                );
+                                                final selectedRoom = rooms
+                                                    .firstWhere(
+                                                      (room) =>
+                                                          room.roomId == roomID,
+                                                    );
                                                 context.push(
                                                   AppRoute.timeSlot,
                                                   extra: {
-                                                    'venueName': selectedVenue.name!,
-                                                    'roomName': selectedRoom.name!,
-                                                    'venueId': selectedVenue.venueId!,
-                                                    'roomId': selectedRoom.roomId!,
-                                                    'bookings': selectedRoom.bookings ?? [],
+                                                    'venueName':
+                                                        selectedVenue.name!,
+                                                    'roomName':
+                                                        selectedRoom.name!,
+                                                    'venueId':
+                                                        selectedVenue.venueId!,
+                                                    'roomId':
+                                                        selectedRoom.roomId!,
+                                                    'bookings':
+                                                        selectedRoom.bookings ??
+                                                        [],
                                                   },
                                                 );
                                               }
                                             : null,
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFF4F6BF5),
+                                          backgroundColor: hasExistingBooking 
+                                            ? Colors.grey 
+                                            : const Color(0xFF4F6BF5),
                                           disabledBackgroundColor: Colors.grey,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 24,
                                             vertical: 16,
                                           ),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(12),
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
                                           ),
                                           elevation: 0,
                                         ),
                                         child: Text(
-                                          'Select Time Slot',
+                                          hasExistingBooking 
+                                            ? 'Booking Already Exists' 
+                                            : 'Select Time Slot',
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
@@ -290,9 +362,8 @@ class RoomSelectionScreen extends StatelessWidget {
                               ],
                             );
                           },
-                          orElse: () => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          orElse: () =>
+                              const Center(child: CircularProgressIndicator()),
                         );
                       },
                     ),

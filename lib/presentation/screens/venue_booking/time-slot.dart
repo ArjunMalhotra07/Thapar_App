@@ -70,125 +70,132 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
   void _showBookingConfirmationDialog() {
     final state = context.read<VenueBookingBloc>().state;
     state.maybeWhen(
-      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
-        if (timeSlotID != null) {
-          final bloc = context.read<VenueBookingBloc>();
-          final selectedSlot = bloc.timeSlots.firstWhere(
-            (slot) => slot['id'] == timeSlotID,
-            orElse: () => {},
-          );
+      venuesFetched:
+          (venues, rooms, venueID, roomID, timeSlotID, status, message) {
+            if (timeSlotID != null) {
+              final bloc = context.read<VenueBookingBloc>();
+              final selectedSlot = bloc.timeSlots.firstWhere(
+                (slot) => slot['id'] == timeSlotID,
+                orElse: () => {},
+              );
 
-          if (selectedSlot.isNotEmpty) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  contentPadding: const EdgeInsets.all(24),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      formatText('You are booking time slot for', false),
-                      formatText(selectedSlot['label'], true),
-                      Text.rich(
-                        TextSpan(
-                          children: [
+              if (selectedSlot.isNotEmpty) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      contentPadding: const EdgeInsets.all(24),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          formatText('You are booking time slot for', false),
+                          formatText(selectedSlot['label'], true),
+                          Text.rich(
                             TextSpan(
-                              text: 'for Room ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xFF333333),
-                                fontFamily: AppFonts.gilroy,
+                              children: [
+                                TextSpan(
+                                  text: 'for Room ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xFF333333),
+                                    fontFamily: AppFonts.gilroy,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: widget.roomName,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    color: const Color(0xFF333333),
+                                    fontFamily: AppFonts.gilroy,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          formatText(widget.venueName, true),
+                          formatText(
+                            'on ${DateTimeUtils.getFormattedDate()}',
+                            false,
+                          ),
+                          const SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              style: OutlinedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                side: const BorderSide(
+                                  color: Color(0xFF4F6BF5),
+                                  width: 1.5,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: widget.roomName,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800,
-                                color: const Color(0xFF333333),
-                                fontFamily: AppFonts.gilroy,
-                              ),
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      formatText(widget.venueName, true),
-                      formatText(
-                        'on ${DateTimeUtils.getFormattedDate()}',
-                        false,
-                      ),
-                      const SizedBox(height: 24),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(
-                              color: Color(0xFF4F6BF5),
-                              width: 1.5,
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xFF4F6BF5),
-                              fontFamily: AppFonts.gilroy,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            _handleBooking();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4F6BF5),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Text(
-                              'Confirm Booking',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontFamily: AppFonts.gilroy,
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF4F6BF5),
+                                  fontFamily: AppFonts.gilroy,
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                _handleBooking();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF4F6BF5),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                elevation: 0,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0,
+                                ),
+                                child: Text(
+                                  'Confirm Booking',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontFamily: AppFonts.gilroy,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          }
-        }
-      },
+              }
+            }
+          },
       orElse: () {},
     );
   }
@@ -196,40 +203,44 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
   void _handleBooking() {
     final state = context.read<VenueBookingBloc>().state;
     state.maybeWhen(
-      venuesFetched: (venues, rooms, venueID, roomID, timeSlotID) {
-        if (timeSlotID != null) {
-          final bloc = context.read<VenueBookingBloc>();
-          final selectedSlot = bloc.timeSlots.firstWhere(
-            (slot) => slot['id'] == timeSlotID,
-            orElse: () => {},
-          );
+      venuesFetched:
+          (venues, rooms, venueID, roomID, timeSlotID, status, message) {
+            if (timeSlotID != null) {
+              final bloc = context.read<VenueBookingBloc>();
+              final selectedSlot = bloc.timeSlots.firstWhere(
+                (slot) => slot['id'] == timeSlotID,
+                orElse: () => {},
+              );
 
-          if (selectedSlot.isNotEmpty) {
-            final now = DateTime.now();
-            final startHour = int.parse(
-              selectedSlot['startTime'].split(':')[0],
-            );
-            final endHour = int.parse(selectedSlot['endTime'].split(':')[0]);
-            final startTimeFormatted = DateTimeUtils.getIsoFormattedDateTime(
-              hour: startHour,
-              date: now,
-            );
-            final endTimeFormatted = DateTimeUtils.getIsoFormattedDateTime(
-              hour: endHour,
-              date: now,
-            );
-            context.read<VenueBookingBloc>().add(
-              VenueBookingEvent.bookVenue(
-                venueId: widget.venueId,
-                roomId: widget.roomId,
-                startTime: startTimeFormatted,
-                endTime: endTimeFormatted,
-                date: DateTimeUtils.getApiFormattedDate(),
-              ),
-            );
-          }
-        }
-      },
+              if (selectedSlot.isNotEmpty) {
+                final now = DateTime.now();
+                final startHour = int.parse(
+                  selectedSlot['startTime'].split(':')[0],
+                );
+                final endHour = int.parse(
+                  selectedSlot['endTime'].split(':')[0],
+                );
+                final startTimeFormatted =
+                    DateTimeUtils.getIsoFormattedDateTime(
+                      hour: startHour,
+                      date: now,
+                    );
+                final endTimeFormatted = DateTimeUtils.getIsoFormattedDateTime(
+                  hour: endHour,
+                  date: now,
+                );
+                context.read<VenueBookingBloc>().add(
+                  VenueBookingEvent.bookVenue(
+                    venueId: widget.venueId,
+                    roomId: widget.roomId,
+                    startTime: startTimeFormatted,
+                    endTime: endTimeFormatted,
+                    date: DateTimeUtils.getApiFormattedDate(),
+                  ),
+                );
+              }
+            }
+          },
       orElse: () {},
     );
   }
@@ -380,17 +391,15 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                           BlocBuilder<VenueBookingBloc, VenueBookingState>(
                             builder: (context, state) {
                               final isLoading = state.maybeWhen(
-                                bookingInProgress: (venues, rooms, venueID, roomID, timeSlotID) => true,
                                 orElse: () => false,
                               );
                               final hasSelectedTimeSlot = state.maybeWhen(
-                                venuesFetched: (_, __, ___, ____, timeSlotID) =>
-                                    timeSlotID != null,
-                                bookingInProgress: (_, __, ___, ____, timeSlotID) =>
-                                    timeSlotID != null,
+                                venuesFetched:
+                                    (_, __, ___, ____, timeSlotID, _, _) =>
+                                        timeSlotID != null,
                                 orElse: () => false,
                               );
-                              
+
                               if (isLoading) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
@@ -409,7 +418,10 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                         height: 16,
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
-                                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                Colors.white,
+                                              ),
                                         ),
                                       ),
                                       const SizedBox(width: 12),
@@ -426,7 +438,7 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                                   ),
                                 );
                               }
-                              
+
                               return ElevatedButton(
                                 onPressed: hasSelectedTimeSlot
                                     ? _showBookingConfirmationDialog

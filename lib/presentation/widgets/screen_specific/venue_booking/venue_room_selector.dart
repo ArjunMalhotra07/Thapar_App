@@ -263,8 +263,6 @@ class VenueRoomSelector extends StatelessWidget {
                 ],
               ),
             ),
-            bookingInProgress: (state) =>
-                const Center(child: CircularProgressIndicator()),
             bookingSuccess: (state) => Center(
               child: Text(
                 state.message ?? "Booking done successfully",
