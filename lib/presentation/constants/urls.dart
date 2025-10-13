@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class AppURL {
   static String get baseURL {
     // if (Platform.isAndroid) {
@@ -9,7 +7,7 @@ class AppURL {
     // } else {
     //   return "http://localhost:3000/api";
     // }
-    return "http://65.1.242.198:3000/api";
+    return "http://65.1.242.198/api";
   }
 
   static String get login => "$baseURL/login";
@@ -19,6 +17,9 @@ class AppURL {
   static String get getHistory => "$baseURL/getHistory";
 
   static String get lostAndFound => "$baseURL/items";
+
+  static String get venue => "$baseURL/venue";
+
 
   static String jwtValidation = "/verify";
   static String refreshToken = "/refresh";

@@ -27,6 +27,7 @@ mixin _$User {
   String? get userId => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
+  String? get clubId => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $UserCopyWith<$Res> {
     String? userId,
     String? gender,
     String? category,
+    String? clubId,
   });
 }
 
@@ -73,6 +75,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? userId = freezed,
     Object? gender = freezed,
     Object? category = freezed,
+    Object? clubId = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -100,6 +103,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
                 ? _value.category
                 : category // ignore: cast_nullable_to_non_nullable
                       as String?,
+            clubId: freezed == clubId
+                ? _value.clubId
+                : clubId // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -121,6 +128,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
     String? userId,
     String? gender,
     String? category,
+    String? clubId,
   });
 }
 
@@ -142,6 +150,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? gender = freezed,
     Object? category = freezed,
+    Object? clubId = freezed,
   }) {
     return _then(
       _$UserImpl(
@@ -169,6 +178,10 @@ class __$$UserImplCopyWithImpl<$Res>
             ? _value.category
             : category // ignore: cast_nullable_to_non_nullable
                   as String?,
+        clubId: freezed == clubId
+            ? _value.clubId
+            : clubId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -184,6 +197,7 @@ class _$UserImpl implements _User {
     required this.userId,
     required this.gender,
     required this.category,
+    required this.clubId,
   });
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -201,10 +215,12 @@ class _$UserImpl implements _User {
   final String? gender;
   @override
   final String? category;
+  @override
+  final String? clubId;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, userId: $userId, gender: $gender, category: $category)';
+    return 'User(id: $id, name: $name, email: $email, userId: $userId, gender: $gender, category: $category, clubId: $clubId)';
   }
 
   @override
@@ -218,13 +234,22 @@ class _$UserImpl implements _User {
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.category, category) ||
-                other.category == category));
+                other.category == category) &&
+            (identical(other.clubId, clubId) || other.clubId == clubId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, email, userId, gender, category);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    email,
+    userId,
+    gender,
+    category,
+    clubId,
+  );
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -248,6 +273,7 @@ abstract class _User implements User {
     required final String? userId,
     required final String? gender,
     required final String? category,
+    required final String? clubId,
   }) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -264,6 +290,8 @@ abstract class _User implements User {
   String? get gender;
   @override
   String? get category;
+  @override
+  String? get clubId;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

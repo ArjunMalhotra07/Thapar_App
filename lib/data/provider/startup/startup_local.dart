@@ -47,37 +47,43 @@ class StartupLocal implements StartupProvider {
       message: "succes",
       jwt: "dummy_jwt",
       refreshToken: "dummy_refreshToken",
-      user:User(id: 'userId', name: 'Arjun', email: 'arjun03.malhotra@gmail.com', userId: '', gender: '', category: ''
-        
+      user: User(
+        id: 'userId',
+        name: 'Arjun',
+        email: 'arjun03.malhotra@gmail.com',
+        userId: '',
+        gender: '',
+        category: '',
+        clubId: '',
       ),
     );
     return res;
   }
-  
+
   @override
   Future<void> clearUserData() {
     // TODO: implement clearUserData
     throw UnimplementedError();
   }
-  
+
   @override
   Future<String?> fetchToken() {
     // TODO: implement fetchToken
     throw UnimplementedError();
   }
-  
+
   @override
   Future<User?> fetchUser() {
     // TODO: implement fetchUser
     throw UnimplementedError();
   }
-  
+
   @override
   Future<void> storeToken({required String token}) {
     // TODO: implement storeToken
     throw UnimplementedError();
   }
-  
+
   @override
   Future<void> storeUser({required User user}) {
     // TODO: implement storeUser

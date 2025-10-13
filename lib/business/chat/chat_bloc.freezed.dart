@@ -22,8 +22,8 @@ mixin _$ChatEvent {
     required TResult Function() started,
     required TResult Function(String? chatID) initializeChat,
     required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearMessagesOnLogout,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,8 +31,8 @@ mixin _$ChatEvent {
     TResult? Function()? started,
     TResult? Function(String? chatID)? initializeChat,
     TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearMessagesOnLogout,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,8 +40,8 @@ mixin _$ChatEvent {
     TResult Function()? started,
     TResult Function(String? chatID)? initializeChat,
     TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearMessagesOnLogout,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -50,8 +50,8 @@ mixin _$ChatEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_InitializeChat value) initializeChat,
     required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearMessagesOnLogout value)
     clearMessagesOnLogout,
   }) => throw _privateConstructorUsedError;
@@ -60,8 +60,8 @@ mixin _$ChatEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(_InitializeChat value)? initializeChat,
     TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,8 +69,8 @@ mixin _$ChatEvent {
     TResult Function(_Started value)? started,
     TResult Function(_InitializeChat value)? initializeChat,
     TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -142,8 +142,8 @@ class _$StartedImpl implements _Started {
     required TResult Function() started,
     required TResult Function(String? chatID) initializeChat,
     required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearMessagesOnLogout,
   }) {
     return started();
@@ -155,8 +155,8 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function(String? chatID)? initializeChat,
     TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearMessagesOnLogout,
   }) {
     return started?.call();
@@ -168,8 +168,8 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function(String? chatID)? initializeChat,
     TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -185,8 +185,8 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_InitializeChat value) initializeChat,
     required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearMessagesOnLogout value)
     clearMessagesOnLogout,
   }) {
@@ -199,8 +199,8 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_InitializeChat value)? initializeChat,
     TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
   }) {
     return started?.call(this);
@@ -212,8 +212,8 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_InitializeChat value)? initializeChat,
     TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -304,8 +304,8 @@ class _$InitializeChatImpl implements _InitializeChat {
     required TResult Function() started,
     required TResult Function(String? chatID) initializeChat,
     required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearMessagesOnLogout,
   }) {
     return initializeChat(chatID);
@@ -317,8 +317,8 @@ class _$InitializeChatImpl implements _InitializeChat {
     TResult? Function()? started,
     TResult? Function(String? chatID)? initializeChat,
     TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearMessagesOnLogout,
   }) {
     return initializeChat?.call(chatID);
@@ -330,8 +330,8 @@ class _$InitializeChatImpl implements _InitializeChat {
     TResult Function()? started,
     TResult Function(String? chatID)? initializeChat,
     TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -347,8 +347,8 @@ class _$InitializeChatImpl implements _InitializeChat {
     required TResult Function(_Started value) started,
     required TResult Function(_InitializeChat value) initializeChat,
     required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearMessagesOnLogout value)
     clearMessagesOnLogout,
   }) {
@@ -361,8 +361,8 @@ class _$InitializeChatImpl implements _InitializeChat {
     TResult? Function(_Started value)? started,
     TResult? Function(_InitializeChat value)? initializeChat,
     TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
   }) {
     return initializeChat?.call(this);
@@ -374,8 +374,8 @@ class _$InitializeChatImpl implements _InitializeChat {
     TResult Function(_Started value)? started,
     TResult Function(_InitializeChat value)? initializeChat,
     TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -473,8 +473,8 @@ class _$SendMessageImpl implements _SendMessage {
     required TResult Function() started,
     required TResult Function(String? chatID) initializeChat,
     required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearMessagesOnLogout,
   }) {
     return sendMessage(userMessage);
@@ -486,8 +486,8 @@ class _$SendMessageImpl implements _SendMessage {
     TResult? Function()? started,
     TResult? Function(String? chatID)? initializeChat,
     TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearMessagesOnLogout,
   }) {
     return sendMessage?.call(userMessage);
@@ -499,8 +499,8 @@ class _$SendMessageImpl implements _SendMessage {
     TResult Function()? started,
     TResult Function(String? chatID)? initializeChat,
     TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -516,8 +516,8 @@ class _$SendMessageImpl implements _SendMessage {
     required TResult Function(_Started value) started,
     required TResult Function(_InitializeChat value) initializeChat,
     required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearMessagesOnLogout value)
     clearMessagesOnLogout,
   }) {
@@ -530,8 +530,8 @@ class _$SendMessageImpl implements _SendMessage {
     TResult? Function(_Started value)? started,
     TResult? Function(_InitializeChat value)? initializeChat,
     TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
   }) {
     return sendMessage?.call(this);
@@ -543,8 +543,8 @@ class _$SendMessageImpl implements _SendMessage {
     TResult Function(_Started value)? started,
     TResult Function(_InitializeChat value)? initializeChat,
     TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -566,6 +566,138 @@ abstract class _SendMessage implements ChatEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SendMessageImplCopyWith<_$SendMessageImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ClearChatImplCopyWith<$Res> {
+  factory _$$ClearChatImplCopyWith(
+    _$ClearChatImpl value,
+    $Res Function(_$ClearChatImpl) then,
+  ) = __$$ClearChatImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ClearChatImplCopyWithImpl<$Res>
+    extends _$ChatEventCopyWithImpl<$Res, _$ClearChatImpl>
+    implements _$$ClearChatImplCopyWith<$Res> {
+  __$$ClearChatImplCopyWithImpl(
+    _$ClearChatImpl _value,
+    $Res Function(_$ClearChatImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ChatEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ClearChatImpl implements _ClearChat {
+  const _$ClearChatImpl();
+
+  @override
+  String toString() {
+    return 'ChatEvent.clearChat()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ClearChatImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String? chatID) initializeChat,
+    required TResult Function(String? userMessage) sendMessage,
+    required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
+    required TResult Function() clearMessagesOnLogout,
+  }) {
+    return clearChat();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(String? chatID)? initializeChat,
+    TResult? Function(String? userMessage)? sendMessage,
+    TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
+    TResult? Function()? clearMessagesOnLogout,
+  }) {
+    return clearChat?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String? chatID)? initializeChat,
+    TResult Function(String? userMessage)? sendMessage,
+    TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
+    TResult Function()? clearMessagesOnLogout,
+    required TResult orElse(),
+  }) {
+    if (clearChat != null) {
+      return clearChat();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_InitializeChat value) initializeChat,
+    required TResult Function(_SendMessage value) sendMessage,
+    required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
+    required TResult Function(_ClearMessagesOnLogout value)
+    clearMessagesOnLogout,
+  }) {
+    return clearChat(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_InitializeChat value)? initializeChat,
+    TResult? Function(_SendMessage value)? sendMessage,
+    TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
+    TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
+  }) {
+    return clearChat?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_InitializeChat value)? initializeChat,
+    TResult Function(_SendMessage value)? sendMessage,
+    TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
+    TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
+    required TResult orElse(),
+  }) {
+    if (clearChat != null) {
+      return clearChat(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ClearChat implements ChatEvent {
+  const factory _ClearChat() = _$ClearChatImpl;
 }
 
 /// @nodoc
@@ -644,8 +776,8 @@ class _$LoadChatHistoryImpl implements _LoadChatHistory {
     required TResult Function() started,
     required TResult Function(String? chatID) initializeChat,
     required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearMessagesOnLogout,
   }) {
     return loadChatHistory(chatID);
@@ -657,8 +789,8 @@ class _$LoadChatHistoryImpl implements _LoadChatHistory {
     TResult? Function()? started,
     TResult? Function(String? chatID)? initializeChat,
     TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearMessagesOnLogout,
   }) {
     return loadChatHistory?.call(chatID);
@@ -670,8 +802,8 @@ class _$LoadChatHistoryImpl implements _LoadChatHistory {
     TResult Function()? started,
     TResult Function(String? chatID)? initializeChat,
     TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -687,8 +819,8 @@ class _$LoadChatHistoryImpl implements _LoadChatHistory {
     required TResult Function(_Started value) started,
     required TResult Function(_InitializeChat value) initializeChat,
     required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearMessagesOnLogout value)
     clearMessagesOnLogout,
   }) {
@@ -701,8 +833,8 @@ class _$LoadChatHistoryImpl implements _LoadChatHistory {
     TResult? Function(_Started value)? started,
     TResult? Function(_InitializeChat value)? initializeChat,
     TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
   }) {
     return loadChatHistory?.call(this);
@@ -714,8 +846,8 @@ class _$LoadChatHistoryImpl implements _LoadChatHistory {
     TResult Function(_Started value)? started,
     TResult Function(_InitializeChat value)? initializeChat,
     TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -737,138 +869,6 @@ abstract class _LoadChatHistory implements ChatEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadChatHistoryImplCopyWith<_$LoadChatHistoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ClearChatImplCopyWith<$Res> {
-  factory _$$ClearChatImplCopyWith(
-    _$ClearChatImpl value,
-    $Res Function(_$ClearChatImpl) then,
-  ) = __$$ClearChatImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ClearChatImplCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res, _$ClearChatImpl>
-    implements _$$ClearChatImplCopyWith<$Res> {
-  __$$ClearChatImplCopyWithImpl(
-    _$ClearChatImpl _value,
-    $Res Function(_$ClearChatImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ChatEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ClearChatImpl implements _ClearChat {
-  const _$ClearChatImpl();
-
-  @override
-  String toString() {
-    return 'ChatEvent.clearChat()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ClearChatImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String? chatID) initializeChat,
-    required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
-    required TResult Function() clearChat,
-    required TResult Function() clearMessagesOnLogout,
-  }) {
-    return clearChat();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String? chatID)? initializeChat,
-    TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
-    TResult? Function()? clearChat,
-    TResult? Function()? clearMessagesOnLogout,
-  }) {
-    return clearChat?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String? chatID)? initializeChat,
-    TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
-    TResult Function()? clearChat,
-    TResult Function()? clearMessagesOnLogout,
-    required TResult orElse(),
-  }) {
-    if (clearChat != null) {
-      return clearChat();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_InitializeChat value) initializeChat,
-    required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
-    required TResult Function(_ClearChat value) clearChat,
-    required TResult Function(_ClearMessagesOnLogout value)
-    clearMessagesOnLogout,
-  }) {
-    return clearChat(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_InitializeChat value)? initializeChat,
-    TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
-    TResult? Function(_ClearChat value)? clearChat,
-    TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
-  }) {
-    return clearChat?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_InitializeChat value)? initializeChat,
-    TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
-    TResult Function(_ClearChat value)? clearChat,
-    TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
-    required TResult orElse(),
-  }) {
-    if (clearChat != null) {
-      return clearChat(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ClearChat implements ChatEvent {
-  const factory _ClearChat() = _$ClearChatImpl;
 }
 
 /// @nodoc
@@ -918,8 +918,8 @@ class _$ClearMessagesOnLogoutImpl implements _ClearMessagesOnLogout {
     required TResult Function() started,
     required TResult Function(String? chatID) initializeChat,
     required TResult Function(String? userMessage) sendMessage,
-    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearChat,
+    required TResult Function(String? chatID) loadChatHistory,
     required TResult Function() clearMessagesOnLogout,
   }) {
     return clearMessagesOnLogout();
@@ -931,8 +931,8 @@ class _$ClearMessagesOnLogoutImpl implements _ClearMessagesOnLogout {
     TResult? Function()? started,
     TResult? Function(String? chatID)? initializeChat,
     TResult? Function(String? userMessage)? sendMessage,
-    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearChat,
+    TResult? Function(String? chatID)? loadChatHistory,
     TResult? Function()? clearMessagesOnLogout,
   }) {
     return clearMessagesOnLogout?.call();
@@ -944,8 +944,8 @@ class _$ClearMessagesOnLogoutImpl implements _ClearMessagesOnLogout {
     TResult Function()? started,
     TResult Function(String? chatID)? initializeChat,
     TResult Function(String? userMessage)? sendMessage,
-    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearChat,
+    TResult Function(String? chatID)? loadChatHistory,
     TResult Function()? clearMessagesOnLogout,
     required TResult orElse(),
   }) {
@@ -961,8 +961,8 @@ class _$ClearMessagesOnLogoutImpl implements _ClearMessagesOnLogout {
     required TResult Function(_Started value) started,
     required TResult Function(_InitializeChat value) initializeChat,
     required TResult Function(_SendMessage value) sendMessage,
-    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearChat value) clearChat,
+    required TResult Function(_LoadChatHistory value) loadChatHistory,
     required TResult Function(_ClearMessagesOnLogout value)
     clearMessagesOnLogout,
   }) {
@@ -975,8 +975,8 @@ class _$ClearMessagesOnLogoutImpl implements _ClearMessagesOnLogout {
     TResult? Function(_Started value)? started,
     TResult? Function(_InitializeChat value)? initializeChat,
     TResult? Function(_SendMessage value)? sendMessage,
-    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearChat value)? clearChat,
+    TResult? Function(_LoadChatHistory value)? loadChatHistory,
     TResult? Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
   }) {
     return clearMessagesOnLogout?.call(this);
@@ -988,8 +988,8 @@ class _$ClearMessagesOnLogoutImpl implements _ClearMessagesOnLogout {
     TResult Function(_Started value)? started,
     TResult Function(_InitializeChat value)? initializeChat,
     TResult Function(_SendMessage value)? sendMessage,
-    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearChat value)? clearChat,
+    TResult Function(_LoadChatHistory value)? loadChatHistory,
     TResult Function(_ClearMessagesOnLogout value)? clearMessagesOnLogout,
     required TResult orElse(),
   }) {

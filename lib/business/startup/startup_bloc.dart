@@ -59,6 +59,7 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
             userId: '',
             gender: '',
             category: '',
+            clubId: '',
           ),
         ),
       );
@@ -88,6 +89,7 @@ class StartupBloc extends Bloc<StartupEvent, StartupState> {
             userId: '',
             gender: '',
             category: '',
+            clubId: '',
           ),
         ),
       );

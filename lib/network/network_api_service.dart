@@ -27,7 +27,7 @@ class NetworkApiService implements BaseApiService {
           // if (options.extra['skipAuthInterceptor'] == true) {
           //   logger.i('Request [${options.method}] ${options.uri} [SKIP AUTH]');
           // } else {
-            logger.i('Request [${options.method}] ${options.uri}');
+          logger.i('Request [${options.method}] ${options.uri}');
           // }
           // logger.i('Request Headers: ${options.headers}');
           // logger.i('Request Data: ${options.data}');
@@ -160,7 +160,7 @@ class NetworkApiService implements BaseApiService {
         e.type == DioExceptionType.receiveTimeout) {
       throw RequestTimeoutException(message: "Please try again later!");
     } else if (e.type == DioExceptionType.connectionError) {
-      throw Exception("Can't make an API call");
+      throw Exception("App is under maintenance! Please try in some time");
     } else if (e.response != null) {
       switch (e.response!.statusCode) {
         case 400:

@@ -1,5 +1,4 @@
 import 'package:thaparapp/data/model/api_models/locations_response/locations_response.dart';
-import 'package:thaparapp/data/model/location_service/location/location.dart';
 import 'package:thaparapp/data/model/location_service/location_response/location_response.dart';
 import 'package:thaparapp/data/provider/locations/locations_abs.dart';
 import 'package:thaparapp/network/base_api_service.dart';
