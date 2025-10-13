@@ -90,7 +90,7 @@ class RoomSelectionScreen extends StatelessWidget {
                   CurrentDateTime(),
                   //! divider
                   AppDivider(),
-                  //! Room selection grid
+                  //! Room selection grid + Bottommost widget
                   Expanded(
                     child: BlocBuilder<VenueBookingBloc, VenueBookingState>(
                       builder: (context, state) {
@@ -106,13 +106,13 @@ class RoomSelectionScreen extends StatelessWidget {
                             );
 
                             if (state.rooms.isEmpty) {
-                              return const Center(
+                              return Center(
                                 child: Text(
                                   'No rooms available for this venue',
+                                  style: TextStyle(fontFamily: AppFonts.gilroy),
                                 ),
                               );
                             }
-
                             return Column(
                               children: [
                                 RoomSelectionGrid(

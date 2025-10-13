@@ -206,11 +206,11 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                   hour: endHour,
                   date: now,
                 );
-                
+
                 // Navigate back to venue booking screen first
                 Navigator.of(context).pop(); // Pop room selection
                 Navigator.of(context).pop(); // Pop venue booking
-                
+
                 // Then initiate booking
                 context.read<VenueBookingBloc>().add(
                   VenueBookingEvent.bookVenue(
@@ -298,7 +298,10 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: GestureDetector(
-                        onTap: () => GoRouter.of(context).pop(),
+                        onTap: () {
+                          GoRouter.of(context).pop();
+                          GoRouter.of(context).pop();
+                        },
                         child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(vertical: 16),

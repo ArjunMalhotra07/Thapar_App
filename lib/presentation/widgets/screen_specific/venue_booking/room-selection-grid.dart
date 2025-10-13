@@ -8,7 +8,11 @@ import 'package:thaparapp/presentation/constants/app_fonts.dart';
 class RoomSelectionGrid extends StatelessWidget {
   final List<Room> rooms;
   final Function(Room) onRoomSelected;
-  const RoomSelectionGrid({required this.rooms, required this.onRoomSelected, super.key});
+  const RoomSelectionGrid({
+    required this.rooms,
+    required this.onRoomSelected,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +38,13 @@ class RoomSelectionGrid extends StatelessWidget {
                     const SizedBox(height: 16),
                     Expanded(
                       child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 2.2,
-                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 2.2,
+                            ),
                         itemCount: rooms.length,
                         itemBuilder: (context, index) {
                           final room = rooms[index];
@@ -52,11 +57,11 @@ class RoomSelectionGrid extends StatelessWidget {
                                 vertical: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: isSelected
+                                color: state.roomID == room.roomId
                                     ? const Color(0xFF4F6BF5)
                                     : Colors.white,
                                 border: Border.all(
-                                  color: isSelected
+                                  color: state.roomID == room.roomId
                                       ? const Color(0xFF4F6BF5)
                                       : const Color(0xFFE0E0E0),
                                   width: 1,

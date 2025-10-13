@@ -54,7 +54,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
     on<_SelectedTimeSlot>(selectTimeSlot);
     on<_Reset>(reset);
   }
-  
+
   void reset(event, emit) {
     emit(const VenueBookingState.initial());
   }
@@ -147,13 +147,16 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
         orElse: () => const Venue(venueId: null, name: null, rooms: []),
       );
 
+      // Only reset room selection if venue actually changes
+      final shouldResetRoom = currentState.venueID != event.venueID;
+
       emit(
         currentState.copyWith(
           venues: currentState.venues,
           rooms: selectedVenue.rooms ?? [],
           venueID: event.venueID,
-          roomID: null, // Reset room selection when venue changes
-          timeSlotID: null,
+          roomID: shouldResetRoom ? null : currentState.roomID,
+          timeSlotID: shouldResetRoom ? null : currentState.timeSlotID,
           status: currentState.status,
         ),
       );
@@ -163,13 +166,16 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   void selectRoom(event, emit) {
     final currentState = state.mapOrNull(venuesFetched: (value) => value);
     if (currentState != null) {
+      // Only reset timeSlot selection if room actually changes
+      final shouldResetTimeSlot = currentState.roomID != event.roomID;
+
       emit(
         currentState.copyWith(
           venues: currentState.venues,
           rooms: currentState.rooms,
           venueID: currentState.venueID,
           roomID: event.roomID,
-          timeSlotID: null,
+          timeSlotID: shouldResetTimeSlot ? null : currentState.timeSlotID,
           status: currentState.status,
         ),
       );
@@ -179,6 +185,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
   void selectTimeSlot(event, emit) {
     final currentState = state.mapOrNull(venuesFetched: (value) => value);
     if (currentState != null) {
+      // final shouldResetRoom = currentState.roomID != event.roomID;
       emit(
         currentState.copyWith(
           venues: currentState.venues,
