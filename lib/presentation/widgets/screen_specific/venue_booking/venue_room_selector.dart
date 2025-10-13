@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
@@ -19,38 +18,6 @@ class VenueRoomSelector extends StatelessWidget {
     required this.onRoomSelected,
   });
 
-  void _showCustomSnackbar(
-    BuildContext context,
-    String message,
-    ContentType contentType,
-  ) {
-    final snackBar = SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: contentType == ContentType.warning
-            ? 'Booking Limit Reached'
-            : 'Info',
-        titleTextStyle: TextStyle(
-          fontFamily: AppFonts.gilroy,
-          fontSize: 15,
-          fontWeight: FontWeight.w800,
-        ),
-        messageTextStyle: TextStyle(
-          fontFamily: AppFonts.gilroy,
-          fontSize: 15,
-          fontWeight: FontWeight.w800,
-        ),
-        message: message,
-        contentType: contentType,
-      ),
-    );
-
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +133,7 @@ class VenueRoomSelector extends StatelessWidget {
                           return GestureDetector(
                             onTap: () {
                               if (hasBookingToday) {
-                                _showCustomSnackbar(
-                                  context,
-                                  'You can only make one booking per day',
-                                  ContentType.warning,
-                                );
+                                // Booking limit reached - no action needed as UI already shows warning
                                 return;
                               }
 
@@ -261,12 +224,6 @@ class VenueRoomSelector extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            ),
-            bookingSuccess: (state) => Center(
-              child: Text(
-                state.message ?? "Booking done successfully",
-                style: TextStyle(fontFamily: AppFonts.gilroy),
               ),
             ),
           );

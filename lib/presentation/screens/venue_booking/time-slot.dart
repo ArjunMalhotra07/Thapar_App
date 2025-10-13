@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
@@ -9,7 +8,6 @@ import 'package:thaparapp/presentation/constants/app_fonts.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/date_time_widget.dart';
 import 'package:thaparapp/presentation/widgets/screen_specific/venue_booking/time_slot_selector.dart';
 import 'package:thaparapp/utils/date_time_utils.dart';
-import 'package:thaparapp/utils/venue_booking_utils.dart';
 
 class TimeSlotSelectionScreen extends StatefulWidget {
   final String venueName;
@@ -44,27 +42,6 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
       ),
       textAlign: TextAlign.center,
     );
-  }
-
-  void showCustomSnackbar(String message, ContentType contentType) {
-    final snackBar = SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: contentType == ContentType.success
-            ? 'Success!'
-            : contentType == ContentType.warning
-            ? 'Warning!'
-            : 'Error!',
-        message: message,
-        contentType: contentType,
-      ),
-    );
-
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 
   void _showBookingConfirmationDialog() {
@@ -289,22 +266,8 @@ class _TimeSlotSelectionScreenState extends State<TimeSlotSelectionScreen> {
       body: BlocListener<VenueBookingBloc, VenueBookingState>(
         listener: (context, state) {
           state.maybeWhen(
-            bookingSuccess: (message) {
-              showCustomSnackbar(
-                message ?? 'Booking confirmed successfully!',
-                ContentType.success,
-              );
-              // Pop back to venue selection after short delay
-              Future.delayed(Duration(milliseconds: 500), () {
-                Navigator.of(context).pop(); // Go back to room selection
-                Navigator.of(context).pop(); // Go back to venue selection
-              });
-            },
             failure: (message) {
-              final errorMessage = VenueBookingUtils.extractErrorMessage(
-                message,
-              );
-              showCustomSnackbar(errorMessage, ContentType.failure);
+              // Error handling can be added here if needed
             },
             orElse: () {},
           );

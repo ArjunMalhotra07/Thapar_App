@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thaparapp/business/login/auth_bloc.dart';
 import 'package:thaparapp/business/venue_selection/venue_booking_bloc.dart';
 import 'package:thaparapp/data/model/venue/venue.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
@@ -17,9 +16,10 @@ class BookingStatusSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VenueBookingBloc, VenueBookingState>(
-          builder: (context, venueState) {
-            return venueState.maybeWhen(
-              venuesFetched: (venues, rooms, venueID, roomID, timeSlotID, status, message) {
+      builder: (context, venueState) {
+        return venueState.maybeWhen(
+          venuesFetched:
+              (venues, rooms, venueID, roomID, timeSlotID, status, message) {
                 // Only show booking status if user has a booking status
                 if (status == null || status == BookingStatus.none) {
                   return const SizedBox.shrink();
@@ -28,18 +28,24 @@ class BookingStatusSheet extends StatelessWidget {
                 // Get venue and room information if available
                 Venue? selectedVenue;
                 Room? selectedRoom;
-                
+
                 if (venueID != null) {
                   selectedVenue = venues.firstWhere(
                     (v) => v.venueId == venueID,
-                    orElse: () => const Venue(venueId: null, name: null, rooms: []),
+                    orElse: () =>
+                        const Venue(venueId: null, name: null, rooms: []),
                   );
                 }
-                
+
                 if (roomID != null && selectedVenue != null) {
                   selectedRoom = selectedVenue.rooms?.firstWhere(
                     (r) => r.roomId == roomID,
-                    orElse: () => const Room(roomId: null, name: null, capacity: null, bookings: []),
+                    orElse: () => const Room(
+                      roomId: null,
+                      name: null,
+                      capacity: null,
+                      bookings: [],
+                    ),
                   );
                 }
 
@@ -47,7 +53,7 @@ class BookingStatusSheet extends StatelessWidget {
                 Color cardColor;
                 String statusText;
                 String titleText;
-                
+
                 switch (status) {
                   case BookingStatus.pending:
                     cardColor = const Color(0xFF4F6BF5); // Blue
@@ -99,7 +105,8 @@ class BookingStatusSheet extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            if (selectedRoom != null && selectedVenue != null) ...[
+                            if (selectedRoom != null &&
+                                selectedVenue != null) ...[
                               Text(
                                 '${selectedRoom.name ?? ''} • ${selectedVenue.name ?? ''}',
                                 style: TextStyle(
@@ -148,9 +155,9 @@ class BookingStatusSheet extends StatelessWidget {
                   ),
                 );
               },
-              orElse: () => const SizedBox.shrink(),
-            );
-          },
+          orElse: () => const SizedBox.shrink(),
         );
+      },
+    );
   }
 }

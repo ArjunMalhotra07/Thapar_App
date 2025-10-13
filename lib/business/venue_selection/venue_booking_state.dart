@@ -3,6 +3,9 @@ part of 'venue_booking_bloc.dart';
 @freezed
 class VenueBookingState with _$VenueBookingState {
   const factory VenueBookingState.initial() = _Initial;
+  const factory VenueBookingState.loading() = _Loading;
+  const factory VenueBookingState.failure({required String? message}) =
+      _Failure;
   const factory VenueBookingState.venuesFetched({
     required List<Venue> venues,
     required List<Room> rooms,
@@ -12,9 +15,4 @@ class VenueBookingState with _$VenueBookingState {
     required BookingStatus? status,
     String? message,
   }) = _VenuesFetched;
-  const factory VenueBookingState.bookingSuccess({required String? message}) =
-      _BookingSuccess;
-  const factory VenueBookingState.failure({required String? message}) =
-      _Failure;
-  const factory VenueBookingState.loading() = _Loading;
 }
