@@ -7,7 +7,7 @@ class AppURL {
     // } else {
     //   return "http://localhost:3000/api";
     // }
-    return "http://65.1.242.198/api";
+    return "http://13.201.14.109/api";
   }
 
   static String get login => "$baseURL/login";
