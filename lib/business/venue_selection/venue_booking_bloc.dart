@@ -225,7 +225,7 @@ class VenueBookingBloc extends Bloc<VenueBookingEvent, VenueBookingState> {
       };
 
       // Wait 10 seconds before making API call
-      await Future.delayed(const Duration(seconds: 10));
+      await Future.delayed(const Duration(seconds: 5));
 
       // Make booking API call
       await venueBookingRepo.bookVenue(body);
