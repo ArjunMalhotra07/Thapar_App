@@ -12,6 +12,8 @@ import 'package:thaparapp/presentation/screens/home/home.dart';
 import 'package:thaparapp/presentation/screens/auth/login_screen.dart';
 import 'package:thaparapp/presentation/screens/locations/location_screen.dart';
 import 'package:thaparapp/presentation/screens/lost_and_found/lost_and_found_screen.dart';
+import 'package:thaparapp/presentation/screens/medicine/add_medicine_screen.dart';
+import 'package:thaparapp/presentation/screens/medicine/medi_share_screen.dart';
 import 'package:thaparapp/presentation/screens/onboarding/onboarding.dart';
 import 'package:thaparapp/presentation/screens/splash/splash.dart';
 import 'package:thaparapp/presentation/screens/splash/start_up.dart';
@@ -128,6 +130,20 @@ class Routing {
               bookings: args['bookings'],
             ),
           );
+        },
+      ),
+      //! MediShare
+      GoRoute(
+        path: AppRoute.medishare,
+        builder: (context, state) {
+          return MedicineBoxScreen();
+        },
+      ),
+      //! Add Medicine
+      GoRoute(
+        path: AppRoute.medishare,
+        builder: (context, state) {
+          return AddMedicineScreen();
         },
       ),
     ],

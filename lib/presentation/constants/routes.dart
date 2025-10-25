@@ -11,4 +11,6 @@ class AppRoute {
   static const String venueBooking = '/venue-booking';
   static const String roomSeletion = '/room-selection';
   static const String timeSlot = '/time-slot';
+  static const String medishare = '/medi-share';
+  static const String addMedicine = '/add-medicine';
 }

@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         subtitle: 'A helping hand \n  for your health.',
                         backgroundColor: const Color(0xFF56C167),
                         onTap: () {
-                          // TODO: Navigate to MediShare screen (coming soon)
+                          GoRouter.of(context).push(AppRoute.medishare);
                         },
                       );
                     default:
