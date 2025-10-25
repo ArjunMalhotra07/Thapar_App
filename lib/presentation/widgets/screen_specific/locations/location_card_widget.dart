@@ -29,31 +29,20 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
       vsync: this,
     );
 
-    // Slide animation for image and title (subtle upward movement)
-    _slideAnimation =
-        Tween<double>(
-          begin: 0,
-          end: -12, // Move up by 12 pixels (less than your current -20)
-        ).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: Curves.easeInOutQuart,
-          ),
-        );
-
-    // Fade in animation for description
-    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+    _slideAnimation = Tween<double>(begin: 0, end: -12).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Interval(
-          0.2,
-          1.0,
-          curve: Curves.easeOut,
-        ), // Start fade after slide begins
+        curve: Curves.easeInOutQuart,
       ),
     );
 
-    // Height animation for smooth expansion
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Interval(0.2, 1.0, curve: Curves.easeOut),
+      ),
+    );
+
     _heightAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -82,21 +71,16 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(
-        3,
-        3,
-        3,
-        16,
-      ), // Add margin on all sides for shadow space
+      margin: EdgeInsets.fromLTRB(3, 3, 3, 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.grey.shade300),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.15),
-            blurRadius: 2, // Reduced blur for sharper shadow
-            spreadRadius: 0, // This creates even shadow on all sides
-            offset: Offset(0, 2), // Slight downward offset for depth
+            blurRadius: 2,
+            spreadRadius: 0,
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -105,28 +89,23 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image section - clickable for animation
+            // Image section
             GestureDetector(
               onTap: _toggleDescription,
               child: Stack(
                 children: [
-                  // Image container with fixed height and white background
                   Container(
                     height: 180,
                     width: double.infinity,
                     clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      color: Colors.white, // White background instead of grey
-                    ),
+                    decoration: BoxDecoration(color: Colors.white),
                     child: AnimatedBuilder(
                       animation: _slideAnimation,
                       builder: (context, child) {
                         return Transform.translate(
                           offset: Offset(0, _slideAnimation.value),
                           child: Container(
-                            height:
-                                180 +
-                                20, // Extra height to cover gap when sliding up
+                            height: 200,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -142,7 +121,6 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
                       },
                     ),
                   ),
-                  // Category tag - STAYS IN PLACE (no animation)
                   Positioned(
                     top: 12,
                     right: 12,
@@ -185,7 +163,7 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title with slide animation
+                  // Title
                   AnimatedBuilder(
                     animation: _slideAnimation,
                     builder: (context, child) {
@@ -207,7 +185,7 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
                     },
                   ),
 
-                  // Animated description container
+                  // Description
                   AnimatedBuilder(
                     animation: _heightAnimation,
                     builder: (context, child) {
@@ -246,7 +224,7 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
                     },
                   ),
 
-                  // Tags and button section (no animation)
+                  // Tags and button
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Column(
@@ -330,61 +308,81 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
   }
 
   void _showLocationOnMap(BuildContext context, Location location) async {
-    // Check if location has valid coordinates
     if (location.latitude == null || location.longitude == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Location coordinates not available'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    // Create Google Maps directions URL
-    // 'origin=current_location' uses the device's current location automatically
-    // 'destination' is set to the lat,lng from the API
-    // 'travelmode=driving' can be changed to walking, transit, or bicycling
-    final String mapsUrl =
-        'https://www.google.com/maps/dir/?api=1'
-        '&origin=current_location'
-        '&destination=${location.latitude},${location.longitude}'
-        '&travelmode=driving';
-
-    try {
-      final Uri uri = Uri.parse(mapsUrl);
-      final bool launched = await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
-
-      if (!launched && context.mounted) {
-        final bool launchedDefault = await launchUrl(
-          uri,
-          mode: LaunchMode.platformDefault,
-        );
-
-        if (!launchedDefault && context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Could not open Google Maps'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      }
-    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Unable to open maps. Error: ${e.toString()}',
+              'Location coordinates not available',
               style: TextStyle(fontFamily: AppFonts.gilroy),
             ),
             backgroundColor: Colors.red,
           ),
         );
       }
+      return;
+    }
+
+    // Try multiple URL formats for maximum compatibility
+    final List<String> urlsToTry = [
+      // Format 1: Direct coordinates with query (works best on most devices)
+      'geo:${location.latitude},${location.longitude}?q=${location.latitude},${location.longitude}(${Uri.encodeComponent(location.name ?? 'Location')})',
+
+      // Format 2: Google Maps with coordinates
+      'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}',
+
+      // Format 3: Comgooglemaps scheme (for Google Maps app)
+      'comgooglemaps://?q=${location.latitude},${location.longitude}&center=${location.latitude},${location.longitude}',
+
+      // Format 4: Standard geo URI
+      'geo:${location.latitude},${location.longitude}',
+    ];
+
+    bool launched = false;
+
+    for (String url in urlsToTry) {
+      try {
+        final Uri uri = Uri.parse(url);
+
+        // Check if URL can be launched
+        if (await canLaunchUrl(uri)) {
+          launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+          if (launched) {
+            print('Successfully launched with URL: $url');
+            break;
+          }
+        }
+      } catch (e) {
+        print('Failed to launch URL: $url - Error: $e');
+        continue;
+      }
+    }
+
+    if (!launched && context.mounted) {
+      // Fallback: Try opening in browser
+      try {
+        final browserUrl =
+            'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}';
+        final Uri uri = Uri.parse(browserUrl);
+
+        launched = await launchUrl(uri, mode: LaunchMode.platformDefault);
+      } catch (e) {
+        print('Browser fallback failed: $e');
+      }
+    }
+
+    if (!launched && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Could not open maps. Please ensure Google Maps is installed.',
+            style: TextStyle(fontFamily: AppFonts.gilroy),
+          ),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 4),
+        ),
+      );
     }
   }
 }
