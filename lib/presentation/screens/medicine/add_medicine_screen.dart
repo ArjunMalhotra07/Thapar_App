@@ -115,7 +115,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       side: const BorderSide(
                         color: Color(0xFF5FD068),
-                        width: 2,
+                        width: 1.5,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -165,456 +165,433 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF5FD068),
-      body: SafeArea(
-        child: Column(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF5FD068),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
+            Text(
+              'MediShare',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                fontFamily: AppFonts.gilroy,
+              ),
+            ),
+            Text(
+              'A helping hand for your health.',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontFamily: AppFonts.gilroy,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(top: 24),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
+                  const SizedBox(height: 32),
+                  // Title
+                  Text(
+                    'Agira Hall - Add Medicine',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF2C2C2C),
+                      fontFamily: AppFonts.gilroy,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(height: 8),
+                  AppDivider(),
+                  const SizedBox(height: 24),
+
+                  // Form
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Form(
+                        key: _formKey,
+                        onChanged: () => setState(() {}),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Basic Medicine Details',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF5FD068),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Medicine Name
+                            Text(
+                              'Medicine Name',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF666666),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _medicineNameController,
+                              decoration: InputDecoration(
+                                hintText: 'Paracetamol, Dolo, Crocin...',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFBDBDBD),
+                                  fontFamily: AppFonts.gilroy,
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xFFF5F5F5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
+                              ),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF2C2C2C),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Medicine Type
+                            Text(
+                              'Medicine Type',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF666666),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _medicineTypeController,
+                              decoration: InputDecoration(
+                                hintText: 'Tablet, Syrup, Capsule...',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFBDBDBD),
+                                  fontFamily: AppFonts.gilroy,
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xFFF5F5F5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
+                              ),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF2C2C2C),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Quantity Available
+                            Text(
+                              'Quantity Available',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF666666),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _quantityController,
+                              decoration: InputDecoration(
+                                hintText: '6 Capsules...',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFBDBDBD),
+                                  fontFamily: AppFonts.gilroy,
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xFFF5F5F5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
+                              ),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF2C2C2C),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Used For
+                            Text(
+                              'Used For',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF666666),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _usedForController,
+                              decoration: InputDecoration(
+                                hintText: 'Headache...',
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFBDBDBD),
+                                  fontFamily: AppFonts.gilroy,
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xFFF5F5F5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
+                              ),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF2C2C2C),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // MFG and EXP Dates
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'MFG Date',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF666666),
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      TextFormField(
+                                        controller: _mfgDateController,
+                                        decoration: InputDecoration(
+                                          hintText: '22/10/2025',
+                                          hintStyle: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: const Color(0xFFBDBDBD),
+                                            fontFamily: AppFonts.gilroy,
+                                          ),
+                                          filled: true,
+                                          fillColor: const Color(0xFFF5F5F5),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                horizontal: 16,
+                                                vertical: 16,
+                                              ),
+                                        ),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(0xFF2C2C2C),
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'EXP Date',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xFF666666),
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      TextFormField(
+                                        controller: _expDateController,
+                                        decoration: InputDecoration(
+                                          hintText: '03/12/2026',
+                                          hintStyle: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: const Color(0xFFBDBDBD),
+                                            fontFamily: AppFonts.gilroy,
+                                          ),
+                                          filled: true,
+                                          fillColor: const Color(0xFFF5F5F5),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                horizontal: 16,
+                                                vertical: 16,
+                                              ),
+                                        ),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(0xFF2C2C2C),
+                                          fontFamily: AppFonts.gilroy,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 32),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Bottom Buttons
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 24,
+                      left: 24,
+                      right: 24,
+                    ),
+                    child: Row(
                       children: [
-                        Text(
-                          'MediShare',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            fontFamily: AppFonts.gilroy,
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () => Navigator.pop(context),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              side: const BorderSide(
+                                color: Color(0xFF5FD068),
+                                width: 1.2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: Text(
+                              'Back to Box',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF5FD068),
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
                           ),
                         ),
-                        Text(
-                          'A helping hand for your health.',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                            fontFamily: AppFonts.gilroy,
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: _isFormValid ? _showSuccessDialog : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF5FD068),
+                              disabledBackgroundColor: const Color(0xFFE0E0E0),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              'Save Medicine',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontFamily: AppFonts.gilroy,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.menu, color: Colors.white),
-                      onPressed: () {},
-                    ),
-                  ),
                 ],
               ),
             ),
-
-            // White Content Container
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(top: 16),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 32),
-                    // Title
-                    Text(
-                      'Agira Hall - Add Medicine',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFF2C2C2C),
-                        fontFamily: AppFonts.gilroy,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    AppDivider(),
-                    const SizedBox(height: 24),
-
-                    // Form
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Form(
-                          key: _formKey,
-                          onChanged: () => setState(() {}),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Basic Medicine Details',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF5FD068),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-
-                              // Medicine Name
-                              Text(
-                                'Medicine Name',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF666666),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                controller: _medicineNameController,
-                                decoration: InputDecoration(
-                                  hintText: 'Paracetamol, Dolo, Crocin...',
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xFFBDBDBD),
-                                    fontFamily: AppFonts.gilroy,
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFF5F5F5),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF2C2C2C),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-
-                              // Medicine Type
-                              Text(
-                                'Medicine Type',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF666666),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                controller: _medicineTypeController,
-                                decoration: InputDecoration(
-                                  hintText: 'Tablet, Syrup, Capsule...',
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xFFBDBDBD),
-                                    fontFamily: AppFonts.gilroy,
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFF5F5F5),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF2C2C2C),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-
-                              // Quantity Available
-                              Text(
-                                'Quantity Available',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF666666),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                controller: _quantityController,
-                                decoration: InputDecoration(
-                                  hintText: '6 Capsules...',
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xFFBDBDBD),
-                                    fontFamily: AppFonts.gilroy,
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFF5F5F5),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF2C2C2C),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-
-                              // Used For
-                              Text(
-                                'Used For',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF666666),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                controller: _usedForController,
-                                decoration: InputDecoration(
-                                  hintText: 'Headache...',
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xFFBDBDBD),
-                                    fontFamily: AppFonts.gilroy,
-                                  ),
-                                  filled: true,
-                                  fillColor: const Color(0xFFF5F5F5),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xFF2C2C2C),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-
-                              // MFG and EXP Dates
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'MFG Date',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF666666),
-                                            fontFamily: AppFonts.gilroy,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        TextFormField(
-                                          controller: _mfgDateController,
-                                          decoration: InputDecoration(
-                                            hintText: '22/10/2025',
-                                            hintStyle: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: const Color(0xFFBDBDBD),
-                                              fontFamily: AppFonts.gilroy,
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0xFFF5F5F5),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16,
-                                                  vertical: 16,
-                                                ),
-                                          ),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: const Color(0xFF2C2C2C),
-                                            fontFamily: AppFonts.gilroy,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'EXP Date',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF666666),
-                                            fontFamily: AppFonts.gilroy,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        TextFormField(
-                                          controller: _expDateController,
-                                          decoration: InputDecoration(
-                                            hintText: '03/12/2026',
-                                            hintStyle: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: const Color(0xFFBDBDBD),
-                                              fontFamily: AppFonts.gilroy,
-                                            ),
-                                            filled: true,
-                                            fillColor: const Color(0xFFF5F5F5),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16,
-                                                  vertical: 16,
-                                                ),
-                                          ),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: const Color(0xFF2C2C2C),
-                                            fontFamily: AppFonts.gilroy,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 32),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Bottom Buttons
-                    Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: () => Navigator.pop(context),
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                side: const BorderSide(
-                                  color: Color(0xFF5FD068),
-                                  width: 2,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: Text(
-                                'Back to Box',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF5FD068),
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: _isFormValid
-                                  ? _showSuccessDialog
-                                  : null,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF5FD068),
-                                disabledBackgroundColor: const Color(
-                                  0xFFE0E0E0,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                elevation: 0,
-                              ),
-                              child: Text(
-                                'Save Medicine',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontFamily: AppFonts.gilroy,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
