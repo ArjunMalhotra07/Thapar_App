@@ -341,9 +341,15 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
       return;
     }
 
-    // Use Google Maps URL with proper zoom level (17 = street level zoom)
+    // Create Google Maps directions URL
+    // 'origin=current_location' uses the device's current location automatically
+    // 'destination' is set to the lat,lng from the API
+    // 'travelmode=driving' can be changed to walking, transit, or bicycling
     final String mapsUrl =
-        'https://www.google.com/maps/@${location.latitude},${location.longitude},17z';
+        'https://www.google.com/maps/dir/?api=1'
+        '&origin=current_location'
+        '&destination=${location.latitude},${location.longitude}'
+        '&travelmode=driving';
 
     try {
       final Uri uri = Uri.parse(mapsUrl);
@@ -369,7 +375,6 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
       }
     } catch (e) {
       if (context.mounted) {
-        print('Error launching maps: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
