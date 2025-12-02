@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:thaparapp/data/model/lost_and_found_item/lost_found_item.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
+import 'package:thaparapp/presentation/constants/urls.dart';
 
 class LostFoundItemCard extends StatelessWidget {
   final LostFoundItem item;
@@ -41,7 +42,9 @@ class LostFoundItemCard extends StatelessWidget {
                     image: DecorationImage(
                       // image: NetworkImage(item.imageUrl ?? ""),
                       image: NetworkImage(
-                        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
+                        item.imageUrl != null
+                            ? AppURL.baseImageURL + item.imageUrl!
+                            : 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',
                       ),
                       fit: BoxFit.cover,
                     ),

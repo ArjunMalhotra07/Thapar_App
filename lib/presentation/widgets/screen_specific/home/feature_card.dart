@@ -58,6 +58,7 @@ class FeatureCard extends StatelessWidget {
             // Subtitle
             Text(
               subtitle,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: AppFonts.gilroy,
                 fontSize: 12,

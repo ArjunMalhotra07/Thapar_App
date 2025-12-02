@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             iconPath: AppIcons.lostandfound,
                             title: 'Lost & Found',
                             subtitle:
-                                'Helping you reconnect\n    with lost things.',
+                                'Helping you reconnect\nwith lost things.',
                             backgroundColor: AppColor.lostAndFoundTheme,
                             onTap: () {
                               GoRouter.of(context).push(AppRoute.lostAndFound);
@@ -196,60 +196,60 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 40),
 
               // Upcoming Features Section
-              Text(
-                'Upcoming Features',
-                style: TextStyle(
-                  fontFamily: AppFonts.gilroy,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-              ),
+              // Text(
+              //   'Upcoming Features',
+              //   style: TextStyle(
+              //     fontFamily: AppFonts.gilroy,
+              //     fontSize: 24,
+              //     fontWeight: FontWeight.w700,
+              //     color: Colors.black,
+              //   ),
+              // ),
 
-              const SizedBox(height: 8),
+              // const SizedBox(height: 8),
 
-              Text(
-                'Here\'s a sneak peek at what\'s coming next for you.',
-                style: TextStyle(
-                  fontFamily: AppFonts.gilroy,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
-                ),
-              ),
+              // Text(
+              //   'Here\'s a sneak peek at what\'s coming next for you.',
+              //   style: TextStyle(
+              //     fontFamily: AppFonts.gilroy,
+              //     fontSize: 14,
+              //     fontWeight: FontWeight.w500,
+              //     color: Colors.grey,
+              //   ),
+              // ),
 
-              const SizedBox(height: 24),
+              // const SizedBox(height: 24),
 
               // Upcoming Features Grid
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.85,
-                ),
-                itemCount: 1, // MediShare and Venue Booking
-                itemBuilder: (context, index) {
-                  switch (index) {
-                    case 0:
-                      return FeatureCard(
-                        iconPath: AppIcons.medishare,
-                        title: 'MediShare',
-                        subtitle: 'A helping hand \n  for your health.',
-                        backgroundColor: const Color(0xFF56C167),
-                        onTap: () {
-                          GoRouter.of(context).push(AppRoute.medishare);
-                        },
-                      );
-                    default:
-                      return const SizedBox.shrink();
-                  }
-                },
-              ),
+              // GridView.builder(
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //     crossAxisSpacing: 16,
+              //     mainAxisSpacing: 16,
+              //     childAspectRatio: 0.85,
+              //   ),
+              //   itemCount: 1, // MediShare and Venue Booking
+              //   itemBuilder: (context, index) {
+              //     switch (index) {
+              //       case 0:
+              //         return FeatureCard(
+              //           iconPath: AppIcons.medishare,
+              //           title: 'MediShare',
+              //           subtitle: 'A helping hand \n  for your health.',
+              //           backgroundColor: const Color(0xFF56C167),
+              //           onTap: () {
+              //             GoRouter.of(context).push(AppRoute.medishare);
+              //           },
+              //         );
+              //       default:
+              //         return const SizedBox.shrink();
+              //     }
+              //   },
+              // ),
 
-              const SizedBox(height: 32),
+              // const SizedBox(height: 32),
             ],
           ),
         ),

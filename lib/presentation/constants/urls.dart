@@ -7,9 +7,10 @@ class AppURL {
     // } else {
     //   return "http://localhost:3000/api";
     // }
-    return "http://13.201.14.109/api";
+    return "http://3.110.70.39/api";
   }
 
+  static String get baseImageURL => "http://3.110.70.39";
   static String get login => "$baseURL/login";
   static String get locations => "$baseURL/locations";
 
@@ -19,7 +20,6 @@ class AppURL {
   static String get lostAndFound => "$baseURL/items";
 
   static String get venue => "$baseURL/venue";
-
 
   static String jwtValidation = "/verify";
   static String refreshToken = "/refresh";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thaparapp/data/model/location_service/location/location.dart';
 import 'package:thaparapp/presentation/constants/app_color.dart';
 import 'package:thaparapp/presentation/constants/app_fonts.dart';
+import 'package:thaparapp/presentation/constants/urls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LocationCardWidget extends StatefulWidget {
@@ -110,8 +111,10 @@ class _LocationCardWidgetState extends State<LocationCardWidget>
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  widget.location.imageUrl ??
-                                      'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=400&q=80',
+                                  widget.location.imageUrl != null
+                                      ? AppURL.baseImageURL +
+                                            widget.location.imageUrl!
+                                      : 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=400&q=80',
                                 ),
                                 fit: BoxFit.cover,
                               ),
