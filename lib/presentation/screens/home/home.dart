@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSpacing: 16,
                           childAspectRatio: 0.85,
                         ),
-                    itemCount: 4, // Only showing first 3 cards
+                    itemCount: 5, // Only showing first 3 cards
                     itemBuilder: (context, index) {
                       switch (index) {
                         case 0:
@@ -185,6 +185,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 )
                               : const SizedBox.shrink();
+                        case 4:
+                          return FeatureCard(
+                            iconPath: AppIcons.medishare,
+                            title: 'MediShare',
+                            subtitle: 'A helping hand \n  for your health.',
+                            backgroundColor: const Color(0xFF56C167),
+                            onTap: () {
+                              GoRouter.of(context).push(AppRoute.medishare);
+                            },
+                          );
                         default:
                           return const SizedBox.shrink();
                       }
@@ -248,8 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //     }
               //   },
               // ),
-
-              // const SizedBox(height: 32),
+              const SizedBox(height: 32),
             ],
           ),
         ),
