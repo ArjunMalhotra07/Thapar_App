@@ -14,7 +14,8 @@ class MessageKeyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(16), // Add margin to make it float
+      padding: EdgeInsets.all(16),
+      color: Colors.white,
       child: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),

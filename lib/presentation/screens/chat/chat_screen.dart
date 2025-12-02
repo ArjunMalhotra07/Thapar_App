@@ -27,10 +27,10 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     _chatBloc = locator<ChatBloc>();
     _authBloc = locator<AuthBloc>();
-    
+
     // Get current user ID from AuthBloc
     final userId = _authBloc.user?.id?.toString() ?? _generateUserId();
-    
+
     // Only initialize if chat hasn't been loaded yet
     _chatBloc.state.when(
       initial: () => _chatBloc.add(ChatEvent.initializeChat(chatID: userId)),
@@ -53,7 +53,9 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage() {
     if (_messageController.text.trim().isEmpty) return;
 
-    _chatBloc.add(ChatEvent.sendMessage(userMessage: _messageController.text.trim()));
+    _chatBloc.add(
+      ChatEvent.sendMessage(userMessage: _messageController.text.trim()),
+    );
     _messageController.clear();
     _scrollToBottom();
   }
@@ -75,7 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return BlocProvider.value(
       value: _chatBloc,
       child: Scaffold(
-        backgroundColor: Colors.grey[50],
+        backgroundColor: AppColor.aiChatBotTheme,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: AppBar(
@@ -83,9 +85,15 @@ class _ChatScreenState extends State<ChatScreen> {
             elevation: 0,
             leading: Padding(
               padding: const EdgeInsets.only(left: 16, top: 12),
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white, size: 24),
-                onPressed: () => Navigator.pop(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 24),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
             ),
             title: Padding(
@@ -141,70 +149,90 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           children: [
             Expanded(
-              child: BlocBuilder<ChatBloc, ChatState>(
-                builder: (context, state) {
-                  return state.when(
-                    initial: () => Center(
-                      child: Text(
-                        'Starting chat...',
-                        style: TextStyle(
-                          fontFamily: AppFonts.gilroy,
-                          color: Colors.grey[600],
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    loading: () => Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColor.aiChatBotTheme,
-                        ),
-                      ),
-                    ),
-                    typing: (messages) => _buildMessagesList(messages, isTyping: true),
-                    success: (messages) => _buildMessagesList(messages),
-                    failure: (errorMessage) => Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            size: 48,
-                            color: Colors.red[400],
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: BlocBuilder<ChatBloc, ChatState>(
+                  builder: (context, state) {
+                    return state.when(
+                      initial: () => Center(
+                        child: Text(
+                          'Starting chat...',
+                          style: TextStyle(
+                            fontFamily: AppFonts.gilroy,
+                            color: Colors.grey[600],
+                            fontSize: 16,
                           ),
-                          SizedBox(height: 16),
-                          Text(
-                            errorMessage ?? 'Something went wrong',
-                            style: TextStyle(
-                              fontFamily: AppFonts.gilroy,
-                              color: Colors.red[600],
-                              fontSize: 16,
+                        ),
+                      ),
+                      loading: () => Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            AppColor.aiChatBotTheme,
+                          ),
+                        ),
+                      ),
+                      typing: (messages) =>
+                          _buildMessagesList(messages, isTyping: true),
+                      success: (messages) => _buildMessagesList(messages),
+                      failure: (errorMessage) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.error_outline,
+                              size: 48,
+                              color: Colors.red[400],
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              final userId = _authBloc.user?.id?.toString() ?? _generateUserId();
-                              _chatBloc.add(ChatEvent.initializeChat(chatID: userId));
-                            },
-                            child: Text('Retry'),
-                          ),
-                        ],
+                            SizedBox(height: 16),
+                            Text(
+                              errorMessage ?? 'Something went wrong',
+                              style: TextStyle(
+                                fontFamily: AppFonts.gilroy,
+                                color: Colors.red[600],
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                final userId =
+                                    _authBloc.user?.id?.toString() ??
+                                    _generateUserId();
+                                _chatBloc.add(
+                                  ChatEvent.initializeChat(chatID: userId),
+                                );
+                              },
+                              child: Text('Retry'),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
-            MessageKeyboard(onSend: _sendMessage, controller: _messageController),
+            MessageKeyboard(
+              onSend: _sendMessage,
+              controller: _messageController,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMessagesList(List<ChatMessage> messages, {bool isTyping = false}) {
+  Widget _buildMessagesList(
+    List<ChatMessage> messages, {
+    bool isTyping = false,
+  }) {
     return ListView.builder(
       controller: _scrollController,
       reverse: true,
@@ -241,7 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           );
         }
-        
+
         final messageIndex = isTyping ? index - 1 : index;
         final message = messages[messages.length - 1 - messageIndex];
         return MessageBubble(message: message);
